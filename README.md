@@ -8,6 +8,4 @@ Wind ist ein unsteter Zeitgenosse. Gleichzeitig wird Wind immer wichtiger für d
 
 Die unten stehende Quelle versucht, das ganze über Ensemble-Forecast unter Verwendung von Neuronalen Netzen zu tun. Im Rahmen der Arbeit soll das Konzept näher beleuchtet werden. Der Ansatz soll verstanden und aufgearbeitet werden sowie ggfs. an einem Beispieldatensatz umgesetzt werden. Daten dazu gäbe es genug. Wie weit diese Arbeit reicht hängt von der Gruppengröße und dem individuellen Vorwissen ab.
 
-TODO Test
-FIXME
-BUG
+![Ich hoffe dieses Bild ist nicht lizensiert](dokumentation/images/windraeder_schlueter.jpg)
