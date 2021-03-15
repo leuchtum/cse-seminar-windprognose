@@ -1,1 +1,6 @@
 .vscode
+dokumentation/*.aux
+dokumentation/*.fdb*
+dokumentation/*.log
+dokumentation/*.synctex*
+dokumentation/*.fls
