@@ -4,3 +4,9 @@ dokumentation/*.fdb*
 dokumentation/*.log
 dokumentation/*.synctex*
 dokumentation/*.fls
+dokumentation/*.out
+dokumentation/*.run*
+dokumentation/*.bcf
+dokumentation/*.bbl
+dokumentation/*.blg
+dokumentation/*.toc

@@ -1,5 +1,144 @@
-\documentclass{article}
-\usepackage[utf8]{inputenc}
+% CSE Seminararbeit
+% Thema: Ein auf Neuronalen Netzen basierendes Ensemble-Modell zur Windprognose
+% Autoren: Alicia Pirwass, Daniel Müller
+
+\documentclass[
+12pt, %Schriftgröße
+toc=listofnumbered, %Tab.- & Abb.verzeichnis ins TOC
+toc=chapterentrydotfill, %TOC: Punkte auch nach Kapitel
+numbers=noenddot, %Kapitelüberschrift: Kein Endpunkt z.B. 2.2. --> 2.2
+captions=tableheading, %Mehr Platz bei Captionüberschriften (Tabelle)
+bibliography=numbered %Bib ins TOC
+]{scrreprt}
+
+
+%%%%% SCHRIFTSATZ, SPRACHE, SCHRIFTART
+\usepackage[T1]{fontenc}
+\usepackage[ngerman]{babel}
+% Nur mit LuaTex Interpreter nutzbar
+%\usepackage{mathfont} % Dieses Packet läd auch fontspec
+%\setmainfont{Segoe Pro} % Textschrift separat setzen
+
+
+%%%%% INHALTSVERZEICHNIS
+%\setuptoc{toc}{numbered} % TOC ins TOC, benötigen wir hier nicht 
+\addtokomafont{chapterentrypagenumber}{\normalfont\textbf}
+\RedeclareSectionCommand[tocnumwidth=2.5em]{chapter}
+\RedeclareSectionCommand[tocnumwidth=2.5em,tocindent=2.5em]{section}
+\RedeclareSectionCommand[tocnumwidth=2.5em,tocindent=5em]{subsection}
+%\newcounter{romanchapter} Benötigen wir nur, wenn z.B. Abstract, Literaturverz. und Anhang römisch nummeriert werden soll
+
+
+%%%%% MATHEMATIK
+\usepackage{amssymb, amsmath}
+\usepackage{isomath}
+
+
+%%%%% BIBLIOGRAPHIE
+\usepackage[style=ieee, mincitenames=1, maxcitenames=1]{biblatex}
+\usepackage{url} % Damit URLs in der Quelle schön umgebrochen werden
+\setcounter{biburllcpenalty}{7000} % Einstellungen für Packet url
+\setcounter{biburlucpenalty}{8000} % Einstellungen für Packet url
+\DefineBibliographyStrings{ngerman}{andothers = {{et\,al\adddot}},}
+\addbibresource{bib.bib} %
+\usepackage{csquotes}
+%\emergencystretch=1em
+\usepackage[final]{microtype}
+%\usepackage[expansion, final]{microtype}
+%\usepackage{natbib}
+%\setcounter{biburlnumpenalty}{9000}
+%\setcounter{biburllcpenalty}{9000}
+%\setcounter{biburlucpenalty}{9000}
+
+
+%%%%% ANHANG
+\usepackage{appendix}
+
+
+%%%%% FARBEN
+\usepackage[table,xcdraw]{xcolor}
+\definecolor{blue20}{RGB}{40, 49, 62}
+\definecolor{blue25}{RGB}{50, 61, 78}
+\definecolor{blue30}{RGB}{60, 73, 93}
+\definecolor{blue80}{RGB}{193, 201, 215}
+\definecolor{blue90}{RGB}{224, 228, 235}
+
+
+%%%%% ÜBERSCHRIFTEN DER EBENEN ÄNDERN
+\addtokomafont{chapter}{\color{blue20}\normalfont\textbf}
+\addtokomafont{section}{\color{blue25}\normalfont\textbf}
+\addtokomafont{subsection}{\color{blue30}\normalfont\textbf}
+\addtokomafont{caption}{\small\color{blue30}\textit}
+\addtokomafont{captionlabel}{\small\color{blue30}\textit}
+
+
+%%%%% LAYOUT
+\usepackage[left=2cm,right=2cm,top=3cm,bottom=3cm]{geometry}
+\setlength\parindent{0pt} %Kein Einzug nach Ebenenbeginn
+\usepackage[onehalfspacing]{setspace} %Zeilenabstand 1,5
+\RedeclareSectionCommand[beforeskip=20pt,afterskip=1cm]{chapter} %Wenn neues Chapter startet, gehts auf ne neue Seite. Damit Abstand zur Kopfzeile nicht zu groß, beforeskip = 20
+\usepackage[justification=justified,labelfont=bf,format = plain]{caption}
+
+
+%%%%% KOPF- & FUẞZEILE
+\usepackage[headsepline,automark]{scrlayer-scrpage}
+\pagestyle{scrheadings}
+\clearscrheadfoot
+\clearscrplain 
+\ihead{\headmark} 
+\renewcommand*\chapterpagestyle{scrheadings} %K.&F.zeile auch bei Chapterbeg.
+
+
+%%%%% BILDER
+\usepackage{graphicx}
+\usepackage[section]{placeins}
+\let\Oldsection\section
+\renewcommand{\section}{\FloatBarrier\Oldsection}
+\let\Oldsubsection\subsection
+\renewcommand{\subsection}{\FloatBarrier\Oldsubsection}
+\let\Oldsubsubsection\subsubsection
+\renewcommand{\subsubsection}{\FloatBarrier\Oldsubsubsection}
+%\usepackage{here} % mit H in includegrafix wird Bildpos gezwungen
+
+
+%%%%% TABELLE
+\usepackage{multirow}
+\usepackage{tabularx} % Nachfolgende 3 Befehle, damit Tabellen Spaltengröße definiert werden kann. z.B. nicht mehr {ccc} sondern {C{2cm}C{2cm}C{2cm}}, Folgende befehle zur neudefinierung:
+\newcolumntype{L}[1]{>{\raggedright\arraybackslash}p{#1}}
+\newcolumntype{C}[1]{>{\centering\arraybackslash}p{#1}}
+\newcolumntype{R}[1]{>{\raggedleft\arraybackslash}p{#1}}
+\usepackage{longtable} %Mehrseitige Tabellen (Abkürzungsverz.)
+
+
+%%%%% QUICK COMMANDS
+\newcommand{\WY}{Weyarn }
+\newcommand{\qm}[1]{\glqq#1\grqq{}} %Anfzeichen
+\newcommand{\gradC}[1]{#1$^\circ C$}
+\newcommand{\abs}[1]{\lvert #1 \rvert}
+\newcommand{\warning}[1]{\textbf{\textcolor{red}{#1}}}
+\newcommand{\finalize}[1]{\textcolor{orange}{#1}}
+
+%%%%% VERLINKUNG
+\usepackage[hidelinks,hypertexnames=false]{hyperref}
+\hypersetup{pdftitle={CSE Projektarbeit, Pirwass und Müller}}
+
 \begin{document}
-(Type your content here.)
+\tableofcontents
+\chapter{Einleitung}
+sfhfdgs
+\section{Test section}
+\subsection{Test subsection}
+\subsubsection{Test subsubsection}
+\subsubsection{Test subsubsection}
+\subsubsection{Test subsubsection}
+\subsection{Test subsection}
+\subsubsection{Test subsubsection}
+\subsubsection{Test subsubsection}
+\subsubsection{Test subsubsection}
+\subsection{Test subsection}
+\subsubsection{Test subsubsection}
+\subsubsection{Test subsubsection}
+\subsubsection{Test subsubsection}
+\chapter{Hauptteil}
+\chapter{Schluss}
 \end{document}
