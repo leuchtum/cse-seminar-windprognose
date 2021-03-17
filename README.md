@@ -1,6 +1,6 @@
 # **CSE Seminar** :  Ein auf Neuronalen Netzen basierendes Ensemble-Modell zur Windprognose
 
-![](dokumentation/images/windturbine.jpg "htps://unsplash.com/@karyatid")
+![](dokumentation/images/windturbine.jpg "https://unsplash.com/@karyatid")
 ___
 ## Hintergrund
 
