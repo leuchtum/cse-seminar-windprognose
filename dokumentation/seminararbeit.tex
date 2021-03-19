@@ -8,7 +8,6 @@ toc=listofnumbered, %Tab.- & Abb.verzeichnis ins TOC
 toc=chapterentrydotfill, %TOC: Punkte auch nach Kapitel
 numbers=noenddot, %Kapitelüberschrift: Kein Endpunkt z.B. 2.2. --> 2.2
 captions=tableheading, %Mehr Platz bei Captionüberschriften (Tabelle)
-bibliography=numbered %Bib ins TOC
 ]{scrreprt}
 
 
@@ -22,7 +21,10 @@ bibliography=numbered %Bib ins TOC
 
 %%%%% INHALTSVERZEICHNIS
 %\setuptoc{toc}{numbered} % TOC ins TOC, benötigen wir hier nicht 
-\addtokomafont{chapterentrypagenumber}{\normalfont\textbf}
+%\addtokomafont{chapterentrypagenumber}{\normalfont\textbf}
+
+\addtokomafont{disposition}{\rmfamily}
+\addtokomafont{chapterentry}{\textbf}
 \RedeclareSectionCommand[tocnumwidth=2.5em]{chapter}
 \RedeclareSectionCommand[tocnumwidth=2.5em,tocindent=2.5em]{section}
 \RedeclareSectionCommand[tocnumwidth=2.5em,tocindent=5em]{subsection}
@@ -57,26 +59,25 @@ bibliography=numbered %Bib ins TOC
 
 %%%%% FARBEN
 \usepackage[table,xcdraw]{xcolor}
-\definecolor{blue20}{RGB}{40, 49, 62}
-\definecolor{blue25}{RGB}{50, 61, 78}
-\definecolor{blue30}{RGB}{60, 73, 93}
-\definecolor{blue80}{RGB}{193, 201, 215}
-\definecolor{blue90}{RGB}{224, 228, 235}
+\definecolor{color20}{RGB}{35,35,35}
+\definecolor{color25}{RGB}{69,69,69}
+\definecolor{color30}{RGB}{80,80,80}
+\definecolor{color80}{RGB}{190,190,190}
 
 
 %%%%% ÜBERSCHRIFTEN DER EBENEN ÄNDERN
-\addtokomafont{chapter}{\color{blue20}\normalfont\textbf}
-\addtokomafont{section}{\color{blue25}\normalfont\textbf}
-\addtokomafont{subsection}{\color{blue30}\normalfont\textbf}
-\addtokomafont{caption}{\small\color{blue30}\textit}
-\addtokomafont{captionlabel}{\small\color{blue30}\textit}
+\addtokomafont{chapter}{\color{color30}\normalfont\textbf}
+\addtokomafont{section}{\color{color30}\normalfont\textbf}
+\addtokomafont{subsection}{\color{color30}\normalfont\textbf}
+\addtokomafont{caption}{\small\color{color30}\textit}
+\addtokomafont{captionlabel}{\small\color{color30}\textit}
 
 
 %%%%% LAYOUT
 \usepackage[left=2cm,right=2cm,top=3cm,bottom=3cm]{geometry}
 \setlength\parindent{0pt} %Kein Einzug nach Ebenenbeginn
 \usepackage[onehalfspacing]{setspace} %Zeilenabstand 1,5
-\RedeclareSectionCommand[beforeskip=20pt,afterskip=1cm]{chapter} %Wenn neues Chapter startet, gehts auf ne neue Seite. Damit Abstand zur Kopfzeile nicht zu groß, beforeskip = 20
+\RedeclareSectionCommand[beforeskip=20pt,afterskip=20pt]{chapter} %Wenn neues Chapter startet, gehts auf ne neue Seite. Damit Abstand zur Kopfzeile nicht zu groß, beforeskip = 20
 \usepackage[justification=justified,labelfont=bf,format = plain]{caption}
 
 
@@ -85,7 +86,8 @@ bibliography=numbered %Bib ins TOC
 \pagestyle{scrheadings}
 \clearscrheadfoot
 \clearscrplain 
-\ihead{\headmark} 
+\ihead{\headmark}
+\ofoot{\pagemark}
 \renewcommand*\chapterpagestyle{scrheadings} %K.&F.zeile auch bei Chapterbeg.
 
 
@@ -108,6 +110,8 @@ bibliography=numbered %Bib ins TOC
 \newcolumntype{C}[1]{>{\centering\arraybackslash}p{#1}}
 \newcolumntype{R}[1]{>{\raggedleft\arraybackslash}p{#1}}
 \usepackage{longtable} %Mehrseitige Tabellen (Abkürzungsverz.)
+\setlength{\tabcolsep}{0.5em} % for the horizontal padding
+\renewcommand{\arraystretch}{1.2}% for the vertical padding
 
 
 %%%%% QUICK COMMANDS
@@ -115,8 +119,8 @@ bibliography=numbered %Bib ins TOC
 \newcommand{\qm}[1]{\glqq#1\grqq{}} %Anfzeichen
 \newcommand{\gradC}[1]{#1$^\circ C$}
 \newcommand{\abs}[1]{\lvert #1 \rvert}
-\newcommand{\warning}[1]{\textbf{\textcolor{red}{#1}}}
-\newcommand{\finalize}[1]{\textcolor{orange}{#1}}
+\newcommand{\highlight}[1]{\textbf{\textcolor{red}{#1}}}
+\newcommand{\finalize}[1]{\textcolor{red}{#1}}
 
 %%%%% VERLINKUNG
 \usepackage[hidelinks,hypertexnames=false]{hyperref}
@@ -124,21 +128,242 @@ bibliography=numbered %Bib ins TOC
 
 \begin{document}
 \tableofcontents
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%                                                                     %
+%                                                                     %
+%                                                                     %
+%                               KAPITEL                               %
+%                                                                     %
+%                                                                     %
+%                                                                     %
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \chapter{Einleitung}
-sfhfdgs
-\section{Test section}
-\subsection{Test subsection}
-\subsubsection{Test subsubsection}
-\subsubsection{Test subsubsection}
-\subsubsection{Test subsubsection}
-\subsection{Test subsection}
-\subsubsection{Test subsubsection}
-\subsubsection{Test subsubsection}
-\subsubsection{Test subsubsection}
-\subsection{Test subsection}
-\subsubsection{Test subsubsection}
-\subsubsection{Test subsubsection}
-\subsubsection{Test subsubsection}
-\chapter{Hauptteil}
-\chapter{Schluss}
+
+\section{Einleitende Worte \highlight{Gerne anderer Name!}}
+\highlight{Sehr gute einleitende Graphiken zur aktuellen Lage der Windkraft in Deutschland, Bilder lassen sich als PDF runterladen!\\
+https://www.wind-energie.de/themen/zahlen-und-fakten/deutschland/}
+
+%%%%%BILD ANFANG
+\begin{figure}[ht]
+	\begin{center}
+		\includegraphics[width=.8\textwidth]{./images/windanlagen_deutschland.pdf}
+		\caption{Aktueller Stand der Windkraft in Deutschland; Massiver Rückgang im Zubau in den letzten drei Jahren. \highlight{https://www.wind-energie.de/themen/zahlen-und-fakten/deutschland/ am 19.03.2021}}
+		\label{fig:windkraft_deutschland}
+	\end{center}
+\end{figure}
+%%%%%BILD ENDE
+
+\section{Zielsetzung und Aufbau dieser Arbeit}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%                                                                     %
+%                                                                     %
+%                                                                     %
+%                               KAPITEL                               %
+%                                                                     %
+%                                                                     %
+%                                                                     %
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\chapter{Neuronale Netze zur Zeitreihenprognose}
+\highlight{Hier hätte ich überlegt, dass wir ein paar Grundlagen zu neuronalen Netzen (nicht zu tief gehend) beschreiben. Dann können wir im Kapitel \qm{Das Ensemble Model} mehr auf das Wesentliche konzentrieren und auf die Grundlagen verweisen}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%                                                                     %
+%                                                                     %
+%                                                                     %
+%                               KAPITEL                               %
+%                                                                     %
+%                                                                     %
+%                                                                     %
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\chapter{Das Ensemble-Model nach Ranganayaki und Deepa}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%                                                                     %
+%                                                                     %
+%                                                                     %
+%                               KAPITEL                               %
+%                                                                     %
+%                                                                     %
+%                                                                     %
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\chapter{Implementierung des Ensemble-Models}
+
+\section{Datenbasis}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%                                                                     %
+%                                                                     %
+%                                                                     %
+%                               KAPITEL                               %
+%                                                                     %
+%                                                                     %
+%                                                                     %
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\chapter{Fazit und Ausblick}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%                                                                     %
+%                                                                     %
+%                                                                     %
+%                               KAPITEL                               %
+%                                                                     %
+%                                                                     %
+%                                                                     %
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\chapter{Test und Wissen}
+
+\section{Tabelle}
+%%%%%TABELLE ANFANG
+\begin{table}[ht]
+	\centering
+	\caption{Das hier ist eine Testtabelle, man beachte die gezwungene Breite in der rechten Spalte. Lässt sich einfach durch den Befehl C\{5cm\} erzeugen.}
+	\begin{tabular}{|l|C{5cm}|}
+		\hline
+        \rowcolor{color80}
+		\textbf{Erste Zelle}&\textbf{Ein Header}\\
+		\hline
+		Moin: & Zusammen\\\hline
+		leer:&\\\hline
+		Moin: & Zusammen\\\hline
+		leer:&\\\hline
+	\end{tabular}
+\label{tab:testtabelle}
+\end{table}
+%%%%%TABELLE ENDE
+
+%%%%%LANGTABELLE ANFANG
+\begin{longtable}{|L{3.6cm}|L{6cm}|L{6cm}|}
+	\caption{Finale Merkmale}\label{tab:longtable}\\
+    % Definition des Tabellenkopfes auf der ersten Seite
+	\hline
+    \rowcolor{color80}
+	\textbf{Abkürzung}&\textbf{Englisch}&\textbf{Deutsch}\\
+	\hline
+	\endfirsthead % Erster Kopf zu Ende
+	% Definition des Tabellenkopfes auf den folgenden Seiten
+	\hline
+	\rowcolor{color80}
+	\textbf{Abkürzung}&\textbf{Englisch}&\textbf{Deutsch}\\
+	\hline
+	\endhead % Zweiter Kopf ist zu Ende
+    \hline
+    \endfoot
+    \hline
+    \endlastfoot
+	% Ab hier kommt der Inhalt der Tabelle
+	$test_{\mathrm{abk}}$&ein sehr sehr sehr langertextmit langen wörternein sehr sehr sehr langertextmit langen wörternein sehr sehr sehr langertextmit langen wörternein sehr sehr sehr langertextmit langen wörternein sehr sehr sehr langertextmit langen wörtern&Einzeilig\\
+	Z&5&as\\\hline
+	A&1&91\\\hline
+	B&2&97\\\hline
+	Z&5&as\\\hline
+	A&1&91\\\hline
+	B&2&97\\\hline
+	A&1&91\\\hline
+	B&2&97\\\hline
+	Z&5&as\\\hline
+	A&1&91\\\hline
+	B&2&97\\\hline
+    Z&5&as\\\hline
+	A&1&91\\\hline
+	B&2&97\\\hline
+	Z&5&as\\\hline
+	A&1&91\\\hline
+	B&2&97\\\hline
+    Z&5&as\\\hline
+	A&1&91\\\hline
+	B&2&97\\\hline
+	Z&5&as\\\hline
+	A&1&91\\\hline
+	B&2&97\\\hline
+    Z&5&as\\\hline
+	A&1&91\\\hline
+	B&2&97\\\hline
+	Z&5&as\\\hline
+	A&1&91\\\hline
+	B&2&97\\\hline
+    Z&5&as\\\hline
+	A&1&91\\\hline
+	B&2&97\\\hline
+	Z&5&as\\\hline
+	A&1&91\\\hline
+	B&2&97\\\hline
+    Z&5&as\\\hline
+	A&1&91\\\hline
+	B&2&97\\\hline
+	Z&5&as\\\hline
+	A&1&91\\\hline
+	B&2&97\\\hline
+	Z&5&as\\\hline
+	A&1&91\\\hline
+	B&2&97\\\hline
+	Z&5&as\\\hline
+	A&1&91\\\hline
+	B&2&97\\\hline
+	Z&5&KEINE hline AMSCHLUSS!!!\\
+\end{longtable}
+%%%%%LANGTABELLE ENDE
+
+\section{Bild}
+
+%%%%%BILD ANFANG
+\begin{figure}[ht]
+	\begin{center}
+		\includegraphics[scale = 1]{./images/0_testbild.png}
+		\caption{TEST Hier ist ein wunderschönes Testbild zu erkennen, und das hier ist ein wunderschönes Testbild zu erkennen, und das hier ist ein wunderschönes Testbild zu erkennen, und das hier ist ein wunderschönes Testbild zu erkennen, und das hier ist ein wunderschönes Testbild zu erkennen, und das hier ist ein wunderschönes Testbild zu erkennen, und das hier ist ein}
+		\label{fig:testbild}
+	\end{center}
+\end{figure}
+%%%%%BILD ENDE
+
+%%%%%DOPPELBILD ANFANG
+\begin{figure}
+	\centering
+	\begin{minipage}[b]{.4\linewidth} % [b] => Ausrichtung an \caption
+		\includegraphics[width=\linewidth]{./images/0_testbild.png}
+		\caption{Beschreibung und so}
+		\label{fig:testbild_klein_links}
+	\end{minipage}
+	\hspace{.1\linewidth}% Abstand zwischen Bilder
+	\begin{minipage}[b]{.4\linewidth} % [b] => Ausrichtung an \caption
+		\includegraphics[width=\linewidth]{./images/0_testbild.png}
+		\caption{Zweite Beschreibung}
+		\label{fig:testbild_klein_rechts}
+	\end{minipage}
+\caption*{Hier steht eine etwas längere Bildunterschrift, die dieses Doppelbild beschreibt. Zu sehen sind weder Land noch Wasser, das macht bei Testbildern aber nix.}
+\end{figure}
+%%%%%DOPPELBILD ENDE
+
+\section{Formeln}
+
+Aufpassen, hier kommt jetzt eine einfache Testformel hin:
+
+\begin{equation}
+\label{eq:1}
+x=10
+\end{equation}
+
+Diese Formel \autoref{eq:1} kann auch referenziert werden.
+
+\begin{equation}
+x=Ma_{\mathrm{blabla}} \cdot y
+\end{equation}
+
+\section{Zitate}
+
+Um Bib zu kompilieren, einmal F8 drücken.
+
+Bild \autoref{fig:testbild} referenzieren.
+%Auch ein Autorname \citeauthor{ernstGrundkursInformatikGrundlagen2015} oder ein Jahr geht \citeyear{ernstGrundkursInformatikGrundlagen2015}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%                                                                     %
+%                                                                     %
+%                                                                     %
+%                               KAPITEL                               %
+%                                                                     %
+%                                                                     %
+%                                                                     %
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\chapter{Quellen}
 \end{document}
