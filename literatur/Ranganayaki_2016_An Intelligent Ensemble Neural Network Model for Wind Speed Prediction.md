@@ -1,6 +1,8 @@
 # Alis Zusammenfassung
 ## Introduction
 
+TODO: Unterteilen in Themenbereiche. Das ist zu viel Input auf einmal :D
+
 - Wind ist natürliche Ressource, die massenweise zur Verfügung steht
 - Windenergie ist dazu noch sauber (keine Umweltverschmutzung) und kann auch so erzeugt werden, dass es den regulären Bedarf des Landes deckt
 - Wind kann über Richtung, Geschwindigkeit und zeitliches Aufkommen eingeordnet werden
@@ -15,6 +17,12 @@
 - Hauptmerkmale NN: Nichlinearität, Anpassungsfähigkeit, Fähigkeit große Datenmengen zu verarbeiten
 - Wegen der genannten Eigenschaften ist NN effektives Werkzeug zur Vorhersage von Windgeschwindigkeit auf Grundlage der definierten Eingabeparameter
 - Leistungskennzahl ("performance metric") ist der mittlere quadratische Fehlerwert, der zur Messung der Qualität der prognostizierten Windgeschwindigkeit mit Hilfe des neuronalen Netzes verwendet wird
+- Hauptproblem bei anderen Papern: Fixierung der versteckten Neuronen im hidden Layer (hidden Neurons und hidden Layer wichtig für Berechnung minimaler Fehler)
+- In dieser Arbeit wird das entwickelte Ensemble-Neuronalnetz-Modell mit den vorgeschlagenen 102 Kriterien getestet, um die geeignete Anzahl von versteckten Neuronen im hidden layer jedes MLP, Madaline, BPN und PNN festzulegen.
+- Kriterien werden aus Übereinstimmung mit Konvergenzkriterium ausgewählt und vorgeschlagenes NN wird in dieser Arbeit an Windgeschw.prognose angepasst
+- Hauptaugenmerk: Minimaler Fehler, Verbessung der Netzstabilität, bessere Genauigkeit im Vergleich zu anderen existierenden Ansätzen
+
+## Related Work
 
 # Daniel Zusammenfassung
 
