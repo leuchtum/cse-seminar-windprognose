@@ -17,3 +17,46 @@
 - Leistungskennzahl ("performance metric") ist der mittlere quadratische Fehlerwert, der zur Messung der Qualität der prognostizierten Windgeschwindigkeit mit Hilfe des neuronalen Netzes verwendet wird
 
 # Daniel Zusammenfassung
+
+## Introduction
+
+### Wind
+
+- Wind wird beschrieben durch:
+  - Richtung
+  - Geschwindigkeit
+  - Zeitpunkt des Auftretens
+- Wind verhält sich im Allgemeinen nichtlinear und fluktuiert stark
+- Windprognose mit hoher Genauigkeit und Verlässlichkeit stellen ein effizientes Werkzeug zur Optimierung der Betriebskosten dar.
+- Weitere Faktoren, die die Windgeschwindigkeit beeinflussen:
+  - Luftfeuchte
+  - Druck
+  - Temperatur
+  - Niederschlag
+
+### Neural Networks
+
+- Hauptvorteil von NNs:
+  - Nichtlinearität
+  - Anpassbarkeit
+  - Fähigkeit große Datenmengen zu verarbeiten
+  - Fähigkeit der Generalisierung
+- Zur Messung der Prognosequalität wurde MSE genutzt
+- Hauptfokus liegt auf:
+  - Stabilität
+  - Bessere Genauigkeit im Vergleich zur existierenden Forschung
+- Anzahl der Neuronen nur schwer festzusetzen, daher Entwicklung von 102 Kriterien um die Anzahl der Neuronen in den einzelnen SubNNs festzusetzen.
+
+## Related Work
+
+- 25+ verschiedene Paper werden erwähnt, allerdings wird auf fast keins tiefer eingegangen.
+- Die Forscher haben folgende Probleme bei den vorhandenen Paper'n festgestellt:
+  - Die Anzahl der Neuronen in den jeweiligen neuronalen Netzen wurden teils zufällig gewählt; Es kommt zu Over/Underfitting
+  - Die Prognosegüte wurde nicht signifikant verbessert
+  - Die Anzahl der Neuronen werden teilweise nicht fixiert
+
+## Problem Formulation
+
+- Die erzeugte Energie eines Windparks ist stark abhängig von dem stochastischen Verhalten des Windes
+- Die Beziehung zwischen Windgeschwindigkeit und der erzeugten Energie weißt eine hohe Nichtlinearität auf
+- Die genaue und verlässliche Windprognose ist Vorraussetzung für eine gute Gesamtnetzführung und fortschrittlichen Regelstrategien
