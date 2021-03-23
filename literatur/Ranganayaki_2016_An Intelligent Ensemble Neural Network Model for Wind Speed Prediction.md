@@ -33,7 +33,7 @@ TODO: Unterteilen in Themenbereiche. Das ist zu viel Input auf einmal :D
     * Zufällig gewählte Anzahl versteckter Neuronen führte zu Over-/Underfitting
     * Fehler wurde nicht erheblich verringert
     * Bestehende Methoden gehen mit Versuchen vor, dabei ist die Anzahl der versteckten Neuronen nicht festgesetzt
-- Aus diesen Gründen wird in dieser Arbeit ein NN ensemble-Modell entwickelt, das die Eigenschaften von MLP, BPN, Madaline und PNN kombiniert, um die Windgeschw. vorherzusagen
+- Aus diesen Gründen wird in dieser Arbeit ein NN ensemble-Modell entwickelt, das die Eigenschaften von MLP, BPN (back propagation network), Madaline und PNN (proposed probabilistic neural network) kombiniert, um die Windgeschw. vorherzusagen
 
 ## Problem Formulation
 
@@ -48,6 +48,30 @@ TODO: Unterteilen in Themenbereiche. Das ist zu viel Input auf einmal :D
     * Y_{predict} ist vorhergesagter Output
     * Y_{actual} ist der wahre Output
     * N ist Anzahl der Sample
+
+## Modeling the Proposed Ensemble Neural Network Architecture
+
+- Es existieren eigentlich noch keine Methoden, um die Anzahl der hidden Neurons zu wählen
+- Im paper werden alle neuen Kriterien ausprobiert, die das Konvergenztheorem erfüllen und letztlich das ausgewählt, das Fehler im Trainingsprozess optimal reduziert
+
+### Design of the Proposed Ensemble Neural Network
+
+- Ensemble-NN:
+    *  Ausgänge der unabhängig voneinander trainierten NN werden verglichen
+    * Beinhalten Multilayer Perceptron (MLP), Multilayer Adaptive Linear Neuron (Madaline), Back Propagation Neural Network (BPN), Probabilistic Neural Network (PNN)
+    * Jeder Output wird gemittelt, um einen besseren Output in Abhängigkeit des Problems zu erhalten
+
+### Model 1 (MLP)
+
+- Wird zusammen mit überwachtem Lernansatz verwendet
+- nichtlineare Sigmoidfunktion als Aktivierungsfunktion
+- Anzahl der hidden Neuronen werden durch Kriterium festgelegt
+- Jedes Layer des MLP ist innerhalb der hidden Neurons durch synaptische Gewichte verbunden
+
+### Model 2 (Madaline)
+
+- 
+
 
 # Daniel Zusammenfassung
 
