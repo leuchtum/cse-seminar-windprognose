@@ -1,5 +1,5 @@
 # Alis Zusammenfassung
-## Introduction
+## 1 Introduction
 
 TODO: Unterteilen in Themenbereiche. Das ist zu viel Input auf einmal :D
 
@@ -22,7 +22,7 @@ TODO: Unterteilen in Themenbereiche. Das ist zu viel Input auf einmal :D
 - Kriterien werden aus Übereinstimmung mit Konvergenzkriterium ausgewählt und vorgeschlagenes NN wird in dieser Arbeit an Windgeschw.prognose angepasst
 - Hauptaugenmerk: Minimaler Fehler, Verbessung der Netzstabilität, bessere Genauigkeit im Vergleich zu anderen existierenden Ansätzen
 
-## Related Work
+## 2 Related Work
 
 - Hauptziel: bestimmte ensemble NN Modelle zu entwicklen und die Anzahl der versteckten Neuronen im hidden Layer zu entwerfen und Modell für eine Windgeschw.vorhersage anzuwenden, basierend auf detaillierten Analysen, die in früheren Arbeiten zu diesem Thema durchgeführt wurden
 - In der Literatur gibt es schon viele Ansätze zu dem Thema:
@@ -35,7 +35,7 @@ TODO: Unterteilen in Themenbereiche. Das ist zu viel Input auf einmal :D
     * Bestehende Methoden gehen mit Versuchen vor, dabei ist die Anzahl der versteckten Neuronen nicht festgesetzt
 - Aus diesen Gründen wird in dieser Arbeit ein NN ensemble-Modell entwickelt, das die Eigenschaften von MLP, BPN (back propagation network), Madaline und PNN (proposed probabilistic neural network) kombiniert, um die Windgeschw. vorherzusagen
 
-## Problem Formulation
+## 3 Problem Formulation
 
 - Windenergie erzeugt in Windpark hängt von stochastischer Natur der Windgeschwindigkeit ab und unerwartete Abwichung der Windkraftleistung führt zu Erhöhung der Betriebskosten
 - Zusammenhang Windgeschwindigkeit und Windleistung sind hoch-nichtlinear --> Fehler in Windgeschwindigkeitsvorhersage führt zu großem Fehler in Windenergieerzeugung
@@ -49,26 +49,26 @@ TODO: Unterteilen in Themenbereiche. Das ist zu viel Input auf einmal :D
     * Y_{actual} ist der wahre Output
     * N ist Anzahl der Sample
 
-## Modeling the Proposed Ensemble Neural Network Architecture
+## 4 Modeling the Proposed Ensemble Neural Network Architecture
 
 - Es existieren eigentlich noch keine Methoden, um die Anzahl der hidden Neurons zu wählen
 - Im paper werden alle neuen Kriterien ausprobiert, die das Konvergenztheorem erfüllen und letztlich das ausgewählt, das Fehler im Trainingsprozess optimal reduziert
 
-### Design of the Proposed Ensemble Neural Network
+### 4.1 Design of the Proposed Ensemble Neural Network
 
 - Ensemble-NN:
     *  Ausgänge der unabhängig voneinander trainierten NN werden verglichen
     * Beinhalten Multilayer Perceptron (MLP), Multilayer Adaptive Linear Neuron (Madaline), Back Propagation Neural Network (BPN), Probabilistic Neural Network (PNN)
     * Jeder Output wird gemittelt, um einen besseren Output in Abhängigkeit des Problems zu erhalten
 
-### Model 1 (MLP)
+#### Module 1 (MLP)
 
 - Wird zusammen mit überwachtem Lernansatz verwendet
 - nichtlineare Sigmoidfunktion als Aktivierungsfunktion
 - Anzahl der hidden Neuronen werden durch Kriterium festgelegt
 - Jedes Layer des MLP ist innerhalb der hidden Neurons durch synaptische Gewichte verbunden
 
-### Model 2 (Madaline)
+#### Module 2 (Madaline)
 
 - Einzelne Adalines kombiniert, sodass Output einiger Input anderer wird -> Netz wird so zu Madaline
 - Vorgehen:
@@ -79,13 +79,42 @@ TODO: Unterteilen in Themenbereiche. Das ist zu viel Input auf einmal :D
     * passende gewichtete Verbindungen lassen netto in- und output berechnen
     * Vergleich mit target und Gewichtsanpassungen für neuen Schritt
 
-### Model 3 (BPN) 
+#### Module 3 (BPN) 
 
 - Input layer ist verbunden mit hidden layer ist verbunden mit output layer mit gewichteten Verbindungen
 - Während backpropagation des Trainings werden Signale in umgekehrter Reihenfolge gesendet
 - Erhöhen der Anzahl der hidden layers führt zu Rechenkomplexität des Netzes. Es wird grundsätzlich nur ein hidden layer verwendet
 - Kriterium ist in Trainingsalgorithmus eingebaut, um Anzahl der hidden Neurons im single hidden layer zu reparieren
-- 
+- bias (ist das in diesem Zusammenhang der Fehler?) wird dem hidden layer und dem output layer zur Verfügung gestellt, um Einfluss auf den zu berechnenden netto input zu haben
+
+#### Module 4 (PNN)
+
+- Konzept: Bayesian Classification und Schätzung von Wahrscheinlichkeitsdichtefunktionen
+- Inputvektoren werden Bayes-optimiert klassifiziert (2 Klassen)
+- f_{A}(x):
+    * dient als Schätzer, solange die übergeordnete Dichte glatt und kontinuierlich ist
+    * Wächst die Anzahl der Datenpunkte, nähert sich f_{A}(x) der übergeordneten Dichtefunktion an
+    * Ist die Summe der Gaussverteilungen
+
+#### Als Ensemble-NN
+
+- Alle vier Module beginnen ihren Trainingsprozess bis Fehler vernachlässigbar
+- Durchschnittwert der vier Module ergibt endgültigen Output
+
+### 4.2 The proposed Training Algorithm of Ensemble Neural Network
+- Step 1: Initialisieren der notwendigen Parameter aller vier Module
+- Step 2: Kriterium zur Festlegung der Anzahl der hidden Neurons in alle Module einführen
+- Step 3: Übergabe Input- und Zielvektorpaar an die Module. Jeweils Trainingsdaten und Testdaten.
+- Step 4: Berechne den netto Input der einzelnen Module und erhalte die entsprechenden Outputs indem Aktivierung auf die berechneten Netz-Inputs angewendet wird (Outputs: Y_{MLP}, ... für jedes Modul H_{MLP}, ...)
+- Step 5: Ensemble-Netz als Aggregation der Module entwickeln und endgültige Windgeschwindigkeit ermitteln
+    * Formel 2 im Paper (Aufstellen der Formeln des Ensemble-Netzes)
+- Step 6: Jedes Modul trainieren und Fehler berechnen (Formel 3)
+- Step 7: Auswahl Anzahl der hidden Neurons basierend auf Fehler
+- Step 8: Ausgewähltes Kriterium und minimaler Fehlerwert ausgeben
+- Step 9: Test auf Abbruchbedingungen (Erreichen eines minimalen Fehlerwerts oder bestimmte Anzahl Epochen)
+
+## 5 Numerical Experimentation ans Simulation Results
+
 
 # Daniel Zusammenfassung
 
