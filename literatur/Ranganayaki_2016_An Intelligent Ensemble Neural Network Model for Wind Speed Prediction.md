@@ -32,7 +32,7 @@ TODO: Unterteilen in Themenbereiche. Das ist zu viel Input auf einmal :D
 
 # Daniel Zusammenfassung
 
-## Introduction
+## 1. Introduction
 
 ### Wind
 
@@ -61,7 +61,7 @@ TODO: Unterteilen in Themenbereiche. Das ist zu viel Input auf einmal :D
   - Bessere Genauigkeit im Vergleich zur existierenden Forschung
 - Anzahl der Neuronen nur schwer festzusetzen, daher Entwicklung von 102 Kriterien um die Anzahl der Neuronen in den einzelnen SubNNs festzusetzen.
 
-## Related Work
+## 2. Related Work
 
 - 25+ verschiedene Paper werden erwähnt, allerdings wird auf fast keins tiefer eingegangen.
 - Die Forscher haben folgende Probleme bei den vorhandenen Paper'n festgestellt:
@@ -69,8 +69,43 @@ TODO: Unterteilen in Themenbereiche. Das ist zu viel Input auf einmal :D
   - Die Prognosegüte wurde nicht signifikant verbessert
   - Die Anzahl der Neuronen werden teilweise nicht fixiert
 
-## Problem Formulation
+## 3. Problem Formulation
 
 - Die erzeugte Energie eines Windparks ist stark abhängig von dem stochastischen Verhalten des Windes
 - Die Beziehung zwischen Windgeschwindigkeit und der erzeugten Energie weißt eine hohe Nichtlinearität auf
 - Die genaue und verlässliche Windprognose ist Vorraussetzung für eine gute Gesamtnetzführung und fortschrittlichen Regelstrategien
+
+## 4. Modeling the Proposed Ensemble Neural Network Architecture
+
+### 4.1 Design of the Proposed Ensemble Neural Network
+
+- Definition Ensemble Network: Kombiniert den Output selbstständig arbeitender Netzwerke
+- Hier vier selbstständige Netze:
+  - MLP Multilayer Perceptron
+  - Madaline: Miltilayer Adaptive linear neuron
+  - BPN: Back Propagation neural network
+  - PNN: probabilistic neural network
+- Jedes dieser Netzwerke wird (unter Berücksichtigung des gewählten Kriteriums) mittels des jeweiligen Trainingsalgorithmus trainiert.
+- **Zeile 11, Seite 4: Der Output der einzelnen Netzwerke wird gemittelt!**
+- Hierdurch wird die Fähigkeit der Generalisierung und die Stabilität verbessert. (Adressiert das "lokale Minimum"-Problem und die verzögerte Konvergenz)
+- Figure 2: Die einzelnen neuronalen Netze führen die Berechnungen mit den Input Daten unabhängig von einander aus. Die berechneten Ergebnisse werden in der nachfolgenden Schicht weiter verarbeitet und das finale Ergebnis berechnet.
+
+#### Module 1: MLP
+
+- supervised learning
+- nonlinear activation function: logistic sigmoid function
+
+> **1. WIDERSPRUCH**: In Module 1 auf Seite 4 heißt es, Sigmoid wird als Aktivierungsfunktion genutzt. In Tabelle 4 auf Seite 8 heißt es, "Binary linear activation funtion" wird genutzt.
+
+> **2. WIDERSPRUCH**: Eine Aktivierungsfunktion "Binary linear activation funtion" macht für mich keinen Sinn. Entweder Binär, oder Linear!
+
+> **3. WIDERSPRUCH**: Gleiches gilt für BPN: Tabelle 4 auf Seite 8 heißt es, "Binary sigmodial funtion" wird genutzt. Entweder Binär, oder Simodial!
+
+#### Module 2: Madaline
+
+- Einfache ADALINEs zusammengefügt -> M(any) ADALINE
+- Initialisierung der Gewichte zwischen den ADALINEs: Random numbers
+
+TODO Noch mehr dazu schreiben.
+
+#### Module 3: BPN

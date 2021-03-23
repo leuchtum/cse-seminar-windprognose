@@ -8,3 +8,8 @@
 
 - https://www.dwd.de/DE/forschung/wettervorhersage/num_modellierung/04_ensemble_methoden/ensemble_vorhersage/ensemble_vorhersage_node.html
 - Schöne Zusammenfassung des DWD über Ensemble-Forecasting. Bild von Ihnen ist auch toll für Verständnis.
+
+## Implementierung von (M)ADALINE und MLP
+
+- https://github.com/stellaxux/machine-learning-in-python
+- Unter MIT License
