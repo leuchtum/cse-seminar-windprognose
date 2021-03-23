@@ -24,6 +24,12 @@ TODO: Unterteilen in Themenbereiche. Das ist zu viel Input auf einmal :D
 
 ## Related Work
 
+- Hauptziel: bestimmte ensemble N Modelle zu entwicklen und die Anzahl der versteckten Neuronen im hidden Layer zu entwerfen und Modell für eine Windgeschw.vorhersage anzuwenden, basierend auf detaillierten Analysen, die in früheren Arbeiten zu diesem Thema durchgeführt wurden
+- In der Literatur gibt es schon viele Ansätze zu dem Thema:
+* Windgeschwindigkeitsvorhersage: physikalische Ansätze, Zeitreihen, statistische Methoden und auch Ansätze des maschinellen Lernens.
+* Windenergieerzeugung: BPN (Fehlerminimierung und genauere Vorhersagen)
+
+
 # Daniel Zusammenfassung
 
 ## Introduction
