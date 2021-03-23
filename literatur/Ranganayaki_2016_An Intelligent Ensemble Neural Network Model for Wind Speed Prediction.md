@@ -15,7 +15,7 @@ TODO: Unterteilen in Themenbereiche. Das ist zu viel Input auf einmal :D
 - Weitere Faktoren, die die Windgeschwindigkeit beeinflussen: Luftfeuchtigkeit, Feuchtigkeit in der atmosphärischen Luft, atmosphärischer Druck, Temperatur, Niederschläge
 - künstliche neuronale Netz ist intelligente Computertechnik, die der Charakteristik des menschlichen biologischen neuronalen Netzes ähnelt
 - Hauptmerkmale NN: Nichlinearität, Anpassungsfähigkeit, Fähigkeit große Datenmengen zu verarbeiten
-- Wegen der genannten Eigenschaften ist NN effektives Werkzeug zur Vorhersage von Windgeschwindigkeit auf Grundlage der definierten Eingabeparameter
+- Wegen der genannten Eigenschaften ist NN effektives Werkzeug zur Vorhersage von Windgeschwindigkeit auf Grundlage der definierten Inputs
 - Leistungskennzahl ("performance metric") ist der mittlere quadratische Fehlerwert, der zur Messung der Qualität der prognostizierten Windgeschwindigkeit mit Hilfe des neuronalen Netzes verwendet wird
 - Hauptproblem bei anderen Papern: Fixierung der versteckten Neuronen im hidden Layer (hidden Neurons und hidden Layer wichtig für Berechnung minimaler Fehler)
 - In dieser Arbeit wird das entwickelte Ensemble-Neuronalnetz-Modell mit den vorgeschlagenen 102 Kriterien getestet, um die geeignete Anzahl von versteckten Neuronen im hidden layer jedes MLP, Madaline, BPN und PNN festzulegen.
@@ -40,7 +40,7 @@ TODO: Unterteilen in Themenbereiche. Das ist zu viel Input auf einmal :D
 - Windenergie erzeugt in Windpark hängt von stochastischer Natur der Windgeschwindigkeit ab und unerwartete Abwichung der Windkraftleistung führt zu Erhöhung der Betriebskosten
 - Zusammenhang Windgeschwindigkeit und Windleistung sind hoch-nichtlinear --> Fehler in Windgeschwindigkeitsvorhersage führt zu großem Fehler in Windenergieerzeugung
 - NN lernt aus Daten der Vergangenheit und sagt mit dessen Hilfe zukünftige Daten voraus, ein genaues Modell ermöglicht wirtschaftlichen Betrieb um Anforderungen der Stromkunden zu erfüllen
-- Windgeschwindigkeitsverhalten nicht-stationär, was auf dynamische Eigenschaft während versch. Perioden deutet, die zu Schwankungen von Eingang und Ausgang führt
+- Windgeschwindigkeitsverhalten nicht-stationär, was auf dynamische Eigenschaft während versch. Perioden deutet, die zu Schwankungen von Input und Output führt
 - Ziel: geeignetes Kriterium zur Bestimmung der Anzahl der versteckten Neuronen, um Windgeschw. mit höherer Genauigkeit und minimalem Fehler vorherzusagen
 - Zu wenig versteckte Neuronen: lokales Minimum / zu viele: Instabiles Modell
 - Performance wird gemessen an minimal Mean Square Error (MSE)
@@ -70,8 +70,22 @@ TODO: Unterteilen in Themenbereiche. Das ist zu viel Input auf einmal :D
 
 ### Model 2 (Madaline)
 
-- 
+- Einzelne Adalines kombiniert, sodass Output einiger Input anderer wird -> Netz wird so zu Madaline
+- Vorgehen:
+    * Initialisierung der Gewichte zwischen Input und hidden units (kleine positive Zufallswerte)
+    * Input wird präsentiert und anhand der gewichteten Verschaltungen wird Netzeigabe für die hidden units berechnet
+    * Aktivierung wird angewendet um Ausgäge der hidden units zu erhalten
+    * hidden Output ist Input für output layer
+    * passende gewichtete Verbindungen lassen netto in- und output berechnen
+    * Vergleich mit target und Gewichtsanpassungen für neuen Schritt
 
+### Model 3 (BPN) 
+
+- Input layer ist verbunden mit hidden layer ist verbunden mit output layer mit gewichteten Verbindungen
+- Während backpropagation des Trainings werden Signale in umgekehrter Reihenfolge gesendet
+- Erhöhen der Anzahl der hidden layers führt zu Rechenkomplexität des Netzes. Es wird grundsätzlich nur ein hidden layer verwendet
+- Kriterium ist in Trainingsalgorithmus eingebaut, um Anzahl der hidden Neurons im single hidden layer zu reparieren
+- 
 
 # Daniel Zusammenfassung
 
