@@ -24,11 +24,30 @@ TODO: Unterteilen in Themenbereiche. Das ist zu viel Input auf einmal :D
 
 ## Related Work
 
-- Hauptziel: bestimmte ensemble N Modelle zu entwicklen und die Anzahl der versteckten Neuronen im hidden Layer zu entwerfen und Modell für eine Windgeschw.vorhersage anzuwenden, basierend auf detaillierten Analysen, die in früheren Arbeiten zu diesem Thema durchgeführt wurden
+- Hauptziel: bestimmte ensemble NN Modelle zu entwicklen und die Anzahl der versteckten Neuronen im hidden Layer zu entwerfen und Modell für eine Windgeschw.vorhersage anzuwenden, basierend auf detaillierten Analysen, die in früheren Arbeiten zu diesem Thema durchgeführt wurden
 - In der Literatur gibt es schon viele Ansätze zu dem Thema:
-* Windgeschwindigkeitsvorhersage: physikalische Ansätze, Zeitreihen, statistische Methoden und auch Ansätze des maschinellen Lernens.
-* Windenergieerzeugung: BPN (Fehlerminimierung und genauere Vorhersagen)
+    * Windgeschwindigkeitsvorhersage: physikalische Ansätze, Zeitreihen, statistische Methoden und auch Ansätze des maschinellen Lernens.
+    * Windenergieerzeugung: BPN (Fehlerminimierung und genauere Vorhersagen)
+    * Aufzählen von ca. 26 Papern und deren verwendeten Modellen/Algorithmen
+- Rückschlüsse aus review der in den Papern verwendeten NN zur Windgeschwindigkeitsvorhersage:
+    * Zufällig gewählte Anzahl versteckter Neuronen führte zu Over-/Underfitting
+    * Fehler wurde nicht erheblich verringert
+    * Bestehende Methoden gehen mit Versuchen vor, dabei ist die Anzahl der versteckten Neuronen nicht festgesetzt
+- Aus diesen Gründen wird in dieser Arbeit ein NN ensemble-Modell entwickelt, das die Eigenschaften von MLP, BPN, Madaline und PNN kombiniert, um die Windgeschw. vorherzusagen
 
+## Problem Formulation
+
+- Windenergie erzeugt in Windpark hängt von stochastischer Natur der Windgeschwindigkeit ab und unerwartete Abwichung der Windkraftleistung führt zu Erhöhung der Betriebskosten
+- Zusammenhang Windgeschwindigkeit und Windleistung sind hoch-nichtlinear --> Fehler in Windgeschwindigkeitsvorhersage führt zu großem Fehler in Windenergieerzeugung
+- NN lernt aus Daten der Vergangenheit und sagt mit dessen Hilfe zukünftige Daten voraus, ein genaues Modell ermöglicht wirtschaftlichen Betrieb um Anforderungen der Stromkunden zu erfüllen
+- Windgeschwindigkeitsverhalten nicht-stationär, was auf dynamische Eigenschaft während versch. Perioden deutet, die zu Schwankungen von Eingang und Ausgang führt
+- Ziel: geeignetes Kriterium zur Bestimmung der Anzahl der versteckten Neuronen, um Windgeschw. mit höherer Genauigkeit und minimalem Fehler vorherzusagen
+- Zu wenig versteckte Neuronen: lokales Minimum / zu viele: Instabiles Modell
+- Performance wird gemessen an minimal Mean Square Error (MSE)
+    * MSE = sum_{i=1}^{N}(frac{(Y_{predict}-Y_{actual})^2}{N})
+    * Y_{predict} ist vorhergesagter Output
+    * Y_{actual} ist der wahre Output
+    * N ist Anzahl der Sample
 
 # Daniel Zusammenfassung
 
