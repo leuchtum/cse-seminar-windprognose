@@ -1,3 +1,4 @@
-# Encoding Windgeschwindigkeit
-
-- Im Paper wird 1-360 Grad + Windgeschw. genutzt, wir sollten Wind lieber in zwei Vektoren aufteilen
+- Im Paper wird 1-360 Grad + Windgeschw. genutzt, wir sollten Wind lieber in zwei Vektoren aufteilen. 
+- Prognose von Vx und Vy. Damit können wir Windgeschwindigkeit und Windrichtung vorhersagen.
+- Wir sollten nicht nur die aktuellen Daten, sondern auch z.b. die letzten 24h mit hinzuziehen
+- Tag und Saison als Sinus codieren und dem NN mitgeben
