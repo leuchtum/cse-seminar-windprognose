@@ -114,7 +114,41 @@ TODO: Unterteilen in Themenbereiche. Das ist zu viel Input auf einmal :D
 - Step 9: Test auf Abbruchbedingungen (Erreichen eines minimalen Fehlerwerts oder bestimmte Anzahl Epochen)
 
 ## 5 Numerical Experimentation ans Simulation Results
+- Arbeit konzentriert sich darauf Anzahl der hidden Neurons festzulegen und damit MSE zu reduzieren und genaue Windgechwindigkeit vorherzusagen
+- Festlegung hidden Neurons sollte zu höherer Genauigkeit und schnellerer Konvergenz führen
+- 102 mögliche Kriterien, um hidden Neurons basierend auf Fehler während Lernphase zu berechnen
+- Windgeschwindigkeit wird aus output des Ensemble NN berechnet nach der "denormalization procedure"
 
+### 5.1 Description of Real Time Wind Farm Datasets
+- Viel Input woher die Daten, in welchem Zeitraum, wie gemessen, ...
+- 90000 Datensample über 2 Jahre (04.2013-05.2015), entspricht 5 Sample pro Stunde
+- Windrichtung:
+    * gemessen mit wind vane
+    * Vane zeigt in Richtung von der der Wind kommt
+    * Richtungsmessung startet bei true North in grad
+- Windgeschwindigkeit:
+    * Anemometer
+- Temperatur:
+    * Thermometer
+
+### 5.2 The Proposed Wind Speed Prediction Ensemble NN Simulation
+- Jedes Netz mit in 5.1 erwähnten Daten trainiert, bis minimaler Fehler erreicht wird
+- Input und Output Variablen, die Trainingsprozess als Input/Output Neuronen dienen sind in Tabelle 3
+- Erster Schritt ist Daten normalisieren mit min-max-Approach:
+    * Formel 4: Xnorm = ((Xactual-Xmininput) / (Xmaxinput-Xmininput)) * (Xmaxtarget-Xmintarget) + Xmintarget
+    * Xactual, Xmininput, Xmaxinput = Echter Input und min/max des Inputs
+    * Xmaxtarget, Xmintarget = max/min der Zieldaten der Windfarmdaten
+- Nettoinput ist gewichtete Summe der Inputs und Akrtivierungsfunktion der Ensembles wird verwendet, um Output zu berechnen
+- Tabelle 5 zeigt die 102 Kriterien, die die hidden Neuronen im Ensemlbe Network festlegen. Konvergenztheorem im Appendix
+    * Jedes Kriterium wird auf die einzelnen Ensembles angewendet
+    * Mean Square Error (MSE) wird für die einzelnen Ensembles berechnet
+
+- Letztlich wird jedes Kriterium auf alle Netze angewendet und im Anschluss der MSE von allen gemittelt berechnet. Das Kriterium, bei dem der kleinste gemittelte MSE Wert herauskommt wird verwendet um die Netze zu trainieren und um die anzahl der hidden Neurons des Ensemble Netzes zu bestimmen.
+- Gewähltes Kriterium:
+    * (6n + 7)/(n - 3)
+    * MSE: 0.015150
+
+## 6. Discussion on the Simulated Results
 
 # Daniel Zusammenfassung
 
