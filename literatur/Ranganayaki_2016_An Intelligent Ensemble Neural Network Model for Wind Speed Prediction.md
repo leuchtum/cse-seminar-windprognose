@@ -113,7 +113,7 @@ TODO: Unterteilen in Themenbereiche. Das ist zu viel Input auf einmal :D
 - Step 8: Ausgewähltes Kriterium und minimaler Fehlerwert ausgeben
 - Step 9: Test auf Abbruchbedingungen (Erreichen eines minimalen Fehlerwerts oder bestimmte Anzahl Epochen)
 
-## 5 Numerical Experimentation ans Simulation Results
+## 5 Numerical Experimentation and Simulation Results
 - Arbeit konzentriert sich darauf Anzahl der hidden Neurons festzulegen und damit MSE zu reduzieren und genaue Windgechwindigkeit vorherzusagen
 - Festlegung hidden Neurons sollte zu höherer Genauigkeit und schnellerer Konvergenz führen
 - 102 mögliche Kriterien, um hidden Neurons basierend auf Fehler während Lernphase zu berechnen
@@ -149,6 +149,26 @@ TODO: Unterteilen in Themenbereiche. Das ist zu viel Input auf einmal :D
     * MSE: 0.015150
 
 ## 6. Discussion on the Simulated Results
+- Benutzte MATLAB R2009, PC mit Intel Core 2 Duo Processor mit 2.27 GHz und 2.00 GB RAM
+- Figure 3 zeigt Vergleich zwischen wirklichem und vorhergesagter Windgeschwindigkeit über Iterationen
+    * Aussage: Modellvorhersage stimmt bei allen 2000 Samples mit echten Werten überein 
+    * (Figure ist aber nicht wirklich aufschlussreich, da sehr viele Daten dargestellt werden. Ein Ausschnitt, bei dem man die genaue Abweichung sehen kann wäre sehr schön)
+- Figure 4 zeigt den MSE über die Iterationen
+    * MSE erreicht Minimum von 0.01515 bei erwähltem Kriterium mit 31 hidden Neurons
+    * MSE ist mit den errechneten hidden Neurons wohl deutlich genauer als vorherige Literatur, die nur mit Trial and Error vorgegangen ist
+    * Das soll die Effektivität der Herangehensweise beweisen
+- Table 6: zu welchen Daten sind das predicted Windspeed und actual Windspeed??
+
+## 7. Conclusion
+- Nochmal erklären was gemacht wurde:
+    * Ensemble NN aus: Multilayer perceptron, Madaline, back propagation NN und probabilistic NN
+    * Alle trainiert mit vorgeschlagenem Kriterium für die Anzahl der hidden Neurons
+    * Mittel der jeweiligen vier Ergebnisse ist Endergebnis
+- Simulationsergebnisse zeigen, dass MSE gesunken im Vergleich zu früheren Herangehensweisen -> effektiver Approach
+- Tabelle 7 zeigt vergeliche der vorigen Literatur mit Ansatz des Papers und den MSE. Dieses Paper hat kleinsten MSE
+
+## Appendix
+- Erklärt nochmal genau das Konvergenztheorem auf denen die 102 Kriterien basieren
 
 # Daniel Zusammenfassung
 
