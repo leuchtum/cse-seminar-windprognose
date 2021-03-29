@@ -1,3 +1,4 @@
+.projectvenv
 .vscode
 dokumentation/seminararbeit.*
 !dokumentation/seminararbeit.tex
