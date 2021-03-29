@@ -266,4 +266,61 @@ TODO Noch mehr dazu schreiben.
 1. Parameter in den Subnetzen initialisiere
 2. Anzahl der hidden Neuronen anhand des Kriteriums festlegen
 3. Trainingsdaten werden präsentiert
-4. 
+4. Berechne Outputs der einzelnen Netzwerke
+5. Gesamtoutput durch Mittelwertbildung
+6. Training der Submodelle mit MSE
+7. Wahl der richtigen Anzahl an Neuronen
+8. Redundant zu 7.
+9. Stop training nach gewisser Anzahl an Iterationen
+
+> **WICHTIG:** Alle Algorithmen werden mit 2000 Iterationen trainiert. Das macht wenig Sinn, da die Algorithmen sehr unterschiedlich sind.
+
+> **WICHTIG:** Figure 8 Seite 12: Warum nicht weiter trainieren?
+
+## 5. Numerical Experimentation and Simulation Results
+
+- Die gezeigte Methode fokussiert sich auf die Fixierung der Anzahl der Neuronen
+- Dadurch soll das NN schneller konvergieren und stabiler und zuverlässiger sein
+- Es werden 102 Kriterien vorgestellt
+- Der Output wird über einen Denormalisierungsprozess zur Windprognose
+
+> **WICHTIG:** Denormalisierung eigentlich nicht notwendig!
+
+### 5.1 Datensatz
+
+- 04.2013 - 03.2015 -> 2 Jahre
+- Inputs:
+  - Temperatur
+  - Windrichtung
+  - Windgeschwindigkeit
+  - Luftfeuchte
+- Samples: 90000 -> 63000/27000 Train/Test
+
+> **THESE VON MIR:** Luftfeuchte nicht relevant für Windgeschwindigkeit
+
+> **THESE:** 90000Samples / ( 8760h/a * 2a) = 5,137 Samples/h --> Mit Datenausfällen wahrscheinlich 6 Samples/h -> 10min Auflösung
+
+### 5.2 Das Model
+
+- Jedes Subnetz wird individuell trainiert
+- Die Daten werden über min-max normalisiert
+- Die Anzahl der gewählten Kriterien (102) verfolgt keine weitere Logik
+- Es wird bei jedem Kriterium der MSE_ess berechnet, dieser entscheidet über die finale Performance
+- Die Kriterien werden nach einander getestet
+
+> **UNSINNIG:** Tabelle 2 und 3
+
+## 6. Diskussion
+
+- Ausgeführt auf MATLAB 2009 mit 2GB RAM
+- Bisherige in der Literatur beschriebene Versuche die Anzahl der Neuronen zu bestimmen, wurden mit "trail and error" beantwortet
+- Das hierbeschriebene Vorgehen beschreibt eine Mathematische Methode zur bestimmung der Anzahl von hidden neurons
+- Diese Methode liefert den geringsten MSE im vergleich zu den anderen in der Literatur genutzten Methoden
+
+## 7. Conclusion
+
+Reine Wiederholung
+
+## 8. Appendix
+
+Cauchy-Kriterium
