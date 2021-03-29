@@ -209,6 +209,7 @@ TODO: Unterteilen in Themenbereiche. Das ist zu viel Input auf einmal :D
 - **Zeile 11, Seite 4: Der Output der einzelnen Netzwerke wird gemittelt!**
 - Hierdurch wird die Fähigkeit der Generalisierung und die Stabilität verbessert. (Adressiert das "lokale Minimum"-Problem und die verzögerte Konvergenz)
 - Figure 2: Die einzelnen neuronalen Netze führen die Berechnungen mit den Input Daten unabhängig von einander aus. Die berechneten Ergebnisse werden in der nachfolgenden Schicht weiter verarbeitet und das finale Ergebnis berechnet.
+- Der Mittelwert der Subnetze ergibt das Ergebnis
 
 #### Module 1: MLP
 
@@ -229,3 +230,20 @@ TODO: Unterteilen in Themenbereiche. Das ist zu viel Input auf einmal :D
 TODO Noch mehr dazu schreiben.
 
 #### Module 3: BPN
+
+- Nur eine Hidden Layer
+- Bias wird für Hidden und Outputneuronen genutzt
+
+#### Module 4: PNN
+
+- Basiert auf Bayesian Klassifizierung
+- Prognostiziert über Dichtefunktionen
+
+> **4. WIDERSPRUCH**: Meines Wissens nach werden PNNs für Klassifizierungsprobleme und nicht Regressionsprobleme genutzt
+
+### 4.2 The proposed training algorithm of Ensemble Neural Network
+
+1. Parameter in den Subnetzen initialisiere
+2. Anzahl der hidden Neuronen anhand des Kriteriums festlegen
+3. Trainingsdaten werden präsentiert
+4. 
