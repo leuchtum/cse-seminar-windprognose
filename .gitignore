@@ -1,5 +1,10 @@
 .ipynb_checkpoints
 .projectvenv
 .vscode
+
 dokumentation/seminararbeit.*
 !dokumentation/seminararbeit.tex
+
+data/*.xlsx
+data/*.csv
+data/*.txt
