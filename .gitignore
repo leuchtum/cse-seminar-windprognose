@@ -8,3 +8,4 @@ dokumentation/seminararbeit.*
 data/*.xlsx
 data/*.csv
 data/*.txt
+data/*.pkl
