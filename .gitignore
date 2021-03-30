@@ -9,3 +9,4 @@ data/*.xlsx
 data/*.csv
 data/*.txt
 data/*.pkl
+data/*.zip
