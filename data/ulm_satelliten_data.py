@@ -21,7 +21,7 @@ df = df.rename(
     columns={
         "Temperature": "T",
         "Humidity": "RH",
-        "Pressure": "P",
+        "Pressure": "P0",
         "Wind Speed": "WS",
         "Wind Direction": "WD",
         "Global Irradiation": "GHI"
