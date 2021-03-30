@@ -6,6 +6,7 @@ dokumentation/seminararbeit.*
 !dokumentation/seminararbeit.tex
 
 data/*.xlsx
+!data/übersicht_datenlücken.xlsx
 data/*.csv
 data/*.txt
 data/*.pkl
