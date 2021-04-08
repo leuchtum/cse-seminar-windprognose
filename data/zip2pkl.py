@@ -69,6 +69,13 @@ for filename in os.listdir(path):
         # Make -999 to NaN
         df = df.replace(-999,np.nan)
         
+        # When it is night, SD will not be written. Write 0 instead of NaN if night
+        if "SD" in df:
+            for i in range(len(df.SD)):
+                idx = df.SD.index[i]
+                if idx.hour in [21,22,23,0,1,2]:
+                    df.SD.values[i] = 0
+        
         # Append stations with station_id as key
         station_id = filename.split("_")[2]
         if "akt" in filename:
