@@ -1,4 +1,5 @@
 import pandas as pd
+import numpy as np
 
 def load_merged_dataframe(path, filenames):
     """Load and merge DataFrames form pickle.
@@ -88,3 +89,42 @@ def split_at_gaps(df, minlength = 24):
         df.index = oldindex[df.index]
         
     return [df for df in dfs if len(df)>=minlength]
+
+
+def pol2cart(df, direction_name="WD", speed_name="WS", rename=("WX", "WY"), drop=("WS", "WD")):
+    def inner_pol2cart(rho, phi):
+        x = rho * np.cos(phi)
+        y = rho * np.sin(phi)
+        return(x, y)
+    
+    df = df.copy()
+    
+    w = df[[speed_name, direction_name]].dropna()
+    
+    ws = w[speed_name]
+    wd = w[direction_name]
+    wd = wd * np.pi / 180
+    
+    wx = ws * np.cos(wd)
+    wy = ws * np.sin(wd)
+    
+    wx.name = rename[0]
+    wy.name = rename[1]
+    
+    df = pd.concat([df, wx, wy], axis=1)
+    for d in drop:
+        df = df.drop(d, axis=1)
+    return df
+
+
+def make_targets(df, shift, target_cols=["WX", "WY"]):
+    df = df.copy()
+    shifted = df[target_cols].shift(-shift)
+    
+    names = shifted.keys().to_list()
+    new_names = {}
+    for n in names:
+        new_names[n] = f"TARGET_{shift}h_{n}"
+    shifted = shifted.rename(columns=new_names)
+    
+    return pd.concat([df,shifted], axis=1)
