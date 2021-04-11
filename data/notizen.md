@@ -1,3 +1,11 @@
+# Daten vom LUBW
+
+https://udo.lubw.baden-wuerttemberg.de/public/themes/default/images/custom/dokumente/gemesseneWindstatistiken/steckbrief_994469.html
+
+![LUBW](/home/daniel/Seafile/Studium/Master/2_SoSe-2021/4_Seminar/cse-seminar-windprognose/data/LUBW.png)
+
+
+
 # Datenübersicht
 
 * Koordinaten Ulm
