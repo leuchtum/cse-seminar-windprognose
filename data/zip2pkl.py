@@ -12,7 +12,8 @@ rename_lookup = {
     "RF_TU": "RH",
     "F": "WS",
     "D": "WD",
-    "SD_SO": "SD"
+    "SD_SO": "SD",
+    "P0": "P"
 }
 
 # Iterate over all files
@@ -22,8 +23,9 @@ path = __file__.replace("zip2pkl.py", "")
 for filename in os.listdir(path):
     # start, if file is zip
     if ".zip" in filename:
+        station_id = filename.split("_")[2]
         
-        print(f"READ IN: {filename}")
+        print(f"READ IN: ID={station_id} file={filename}")
         
         # Make temporary directory
         with tempfile.TemporaryDirectory() as tmppath:
@@ -64,20 +66,28 @@ for filename in os.listdir(path):
             clean_key = key.replace(" ", "")
             if clean_key in rename_lookup:
                 new_names[key] = rename_lookup[clean_key]
+            else:
+                new_names[key] = clean_key
+        
+        for key, clean_key in new_names.items():
+            new_names[key] = f"{clean_key}_{station_id}"
+            
         df = df.rename(columns=new_names)
         
         # Make -999 to NaN
         df = df.replace(-999,np.nan)
         
         # When it is night, SD will not be written. Write 0 instead of NaN if night
-        if "SD" in df:
-            for i in range(len(df.SD)):
-                idx = df.SD.index[i]
+        if any(["SD" in key for key in df.keys()]):
+            for key in df.keys():
+                if key[:2] == "SD":
+                    sd_key = key
+            for i in range(len(df[sd_key])):
+                idx = df[sd_key].index[i]
                 if idx.hour in [21,22,23,0,1,2]:
-                    df.SD.values[i] = 0
+                    df[sd_key].values[i] = 0
         
         # Append stations with station_id as key
-        station_id = filename.split("_")[2]
         if "akt" in filename:
             if station_id not in stations_recent:
                 stations_recent[station_id] = []
