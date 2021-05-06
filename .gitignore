@@ -11,3 +11,7 @@ data/*.csv
 data/*.txt
 data/*.pkl
 data/*.zip
+
+*/wandb/*
+
+*pyc
