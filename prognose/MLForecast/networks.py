@@ -56,10 +56,29 @@ class ModelBase:
 class ModelNN(ModelBase):
     def __init__(self):
         super().__init__()
-        self.loss = tf.losses.MeanSquaredError()
         self.optimizer = tf.optimizers.Adam()
-        self.metrics = [tf.metrics.MeanAbsoluteError(), tf.metrics.MeanSquaredError()]
         self.model = tf.keras.models.Sequential()
+
+        self.add_loss_and_metrics("mse")  # Standard
+
+    def add_loss_and_metrics(self, metric, y_width=None, shift=None, factor=0):
+        if metric == "mae":
+            self.loss = tf.metrics.MeanAbsoluteError()
+        elif metric == "mse":
+            self.loss = tf.metrics.MeanSquaredError()
+        elif metric == "rmse":
+            self.loss = tf.metrics.RootMeanSquaredError()
+
+        self.loss_weights = None
+        if bool(shift) ^ bool(y_width):  # XOR
+            raise(Exception("Specify shift and y_width"))
+        if shift and y_width:
+            self.loss_weights = [1 for _ in range(y_width)]
+            self.loss_weights[:-shift] = [i *
+                                          factor for i in self.loss_weights[:-shift]]
+
+        self.metrics = [tf.metrics.RootMeanSquaredError(),
+                        tf.metrics.MeanAbsoluteError()]
 
     def fit(self, train, val, epochs=10, batch_size=32, early_stop=None, save=False, track_wandb=False):
         callbacks = []
@@ -75,10 +94,9 @@ class ModelNN(ModelBase):
             # check if wandb is init
             if hasattr(wandb.config, "as_dict"):
                 callbacks.append(wandb.keras.WandbCallback())
-                
+
         if save:
             pass
-            
 
         self.history = self.model.fit(
             x=train[0],
@@ -93,7 +111,8 @@ class ModelNN(ModelBase):
         self.model.compile(
             loss=self.loss,
             optimizer=self.optimizer,
-            metrics=self.metrics
+            metrics=self.metrics,
+            loss_weights=self.loss_weights
         )
 
 
@@ -145,7 +164,8 @@ class LSTMseq2vec(ModelNN):
                 self.model.add(decode_layer(self.structure[i], cfg))
             else:
                 n_neurons = self.output_shape[0] * self.output_shape[1]
-                self.model.add(tf.keras.layers.Dense(n_neurons, name="out_dense"))
+                self.model.add(tf.keras.layers.Dense(
+                    n_neurons, name="out_dense"))
                 self.model.add(tf.keras.layers.Reshape(self.output_shape))
 
 
@@ -163,6 +183,7 @@ if __name__ == "__main__":
     my_model = LSTMseq2vec(structure, config)
     my_model.set_input_shape((24, 10))
     my_model.set_output_shape((24, 2))
+    my_model.add_loss_and_metrics("mae", y_width=24, shift=12)
     my_model.build()
     my_model.compile()
 
