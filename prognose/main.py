@@ -15,14 +15,14 @@ if __name__ == '__main__':
     SHIFT = 200
     INTERPOLATE = 4
     SPLIT = (.05, .3, .65) # TEST, VAL, TRAIN
-    LABEL_COLUMNS = ["WX_15444", "WY_15444"]
+    LABEL_COLUMNS = ["WX_01886", "WY_01886"]
     EPOCHS = 6
     EARLY_STOP = 2
     
     print("LOAD")
-    dwd = MLForecast.sources.DWDStationsHourly(["15444", "04887"], ["wind", "air_temperature", "pressure", "sun"])
-    df_dwd = dwd.get_data(drop_before=datetime(2017,1,1))
-    cal = MLForecast.sources.CalendricalDataHourly(start=datetime(2014,1,1))
+    dwd = MLForecast.sources.DWDStationsHourly(["01886", "02886", "03402", "04887"], ["wind", "air_temperature", "pressure", "sun"])
+    df_dwd = dwd.get_data(drop_before=datetime(2010,1,1))
+    cal = MLForecast.sources.CalendricalDataHourly(start=datetime(2010,1,1))
     df_cal = cal.get_data()
     
     df = pd.concat([df_dwd, df_cal], axis=1)
@@ -63,7 +63,6 @@ if __name__ == '__main__':
     val_np =  prep.df_tuple_to_np(val)
     train_np =  prep.df_tuple_to_np(train)
     
-    print("TRAIN")
     
     
     structure = ["LSTM_x", "DROP_d", "DENSE_y", "OUT"]
