@@ -139,7 +139,11 @@ captions=tableheading, %Mehr Platz bei Captionüberschriften (Tabelle)
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \chapter{Einleitung}
 
-\section{Einleitende Worte \highlight{Gerne anderer Name!}}
+\highlight{Windkraft in heutiger Zeit immer wichtiger (Zahlen und Fakten aus Quelle), 
+Windkraft kann effizienter generiert werden, wenn Prognosen über die folgenden Stunden bekannt sind. vgl Paper 
+Hier auch schon direkt Bezug auf Wichtigkeit zw Prognose von Wind und Windkraftwerken herstellen.
+}
+
 \highlight{Sehr gute einleitende Graphiken zur aktuellen Lage der Windkraft in Deutschland, Bilder lassen sich als PDF runterladen!\\
 https://www.wind-energie.de/themen/zahlen-und-fakten/deutschland/}
 
@@ -153,7 +157,25 @@ https://www.wind-energie.de/themen/zahlen-und-fakten/deutschland/}
 \end{figure}
 %%%%%BILD ENDE
 
-\section{Zielsetzung und Aufbau dieser Arbeit}
+\section{Verwandte Literatur}
+
+\highlight{Einige Herangehensweisen Thema Prognose der Windgeschwindigkeit: 
+deterministisch (Lorenz), Autoregressive Modelle (ARIMA,SARIMA), Autoregressive Modelle im Mehrdimensionalen (VAR, VARTA), 
+Decision Tree,  Neuronale Netze (häufig CNN mit LSTM kombiniert). 
+Hierbei waren Lösungsansätze mit letzterem häufig sehr vielversprechend, jedoch auch zahlreich.
+Wir grenzen Auswahl anhand uns wichtiger Merkmale ein. 
+Uns ist wichtig kurzzeitprognose (stündliche Vorhersage), ähnliche klimatische Bedingungen wie in Deutschland, Beachten und Vorhersage der Windgeschwindigkeit UND Windrichtung (selten in Literatur, meist ausschließlich Geschw.) 
+Deswegen etwas genauer: Kreuzer (wegen Deutschlanddaten, NN), USA Paper, Ranganayaki wegen Windrichtung
+}
+
+\section{Ziel dieser Arbeit}
+
+\highlight{Aus Einleitung (Windpark Windprognose) und Verwandte Literatur werden Ziele dieser Seminararbeit ersichtlich. 
+Mit Daten aus Deutschland (Erwähnte Paper in 1. Hatten ausschließlich Wetterdaten verwendet, dessen Klima stark von kontinentalem Klima abweicht) 
+soll mithilfe von Neuronalen Netzen, genauer CNN mit LSTM (erwies sich in Literaturrecherche als guter Ansatz für ähnliche Fragestellungen) ein 
+Modell entwickelt werden, welches Windgeschwindigkeit und -richtung stündlich bis zu 24h in die Zukunft prognostizieren kann. 
+Um die Güte dieses Modells einordnen zu können, soll mit dem bewährten Modell SARIMA und/oder einem anderen, ähnlichen Modell verglichen werden. 
+Der Einfluss von weiteren umliegenden Wetterstationen soll auch berücksichtigt werden.}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %                                                                     %
@@ -164,8 +186,13 @@ https://www.wind-energie.de/themen/zahlen-und-fakten/deutschland/}
 %                                                                     %
 %                                                                     %
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\chapter{Neuronale Netze zur Zeitreihenprognose}
-\highlight{Hier hätte ich überlegt, dass wir ein paar Grundlagen zu neuronalen Netzen (nicht zu tief gehend) beschreiben. Dann können wir im Kapitel \qm{Das Ensemble Model} mehr auf das Wesentliche konzentrieren und auf die Grundlagen verweisen}
+\chapter{Grundlagen}
+
+\section{Neuronale Netze zur Zeitreihenprognose}
+\highlight{ein paar Grundlagen zu neuronalen Netzen (nicht zu tief gehend)}
+
+\section{Das SARIMA-Modell}
+\highlight{Grob SARIMA-Modell erklären. Wenn wir es als Benchmark verwenden}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %                                                                     %
@@ -176,7 +203,24 @@ https://www.wind-energie.de/themen/zahlen-und-fakten/deutschland/}
 %                                                                     %
 %                                                                     %
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\chapter{Das Ensemble-Model nach Ranganayaki und Deepa}
+
+\chapter{Implementierung des Modells}
+
+\section{Datenaufbereitung}
+\highlight{hier geht es um die ausgewählten Datensätze, umgang mit Fehldaten, 
+Umwandeln der Daten, etc}
+
+\section{Entwicklung und Trainieren des Neuronalen Netzes}
+\highlight{Hier ist Platz für alles, was mit der implementierung des eigentlichen Modells zu tun hat. 
+Infos zu den Layers, zum Trainingsvorgang, Das mit den Decision Trees zur Auswahl der besten Paramter, 
+alles bis auf Ergebnisse}
+
+\section{Implementierung SARIMA und/oder anderes Vergleichsmodell}
+\highlight{Hier ist Platz für alles, was mit der implementierung des Vergleichsmodells zu tun hat. 
+alles bis auf Ergebnisse}
+
+\section{Ergebnisse}
+\highlight{Hier nur die Ergebnisse zeigen und nüchtern darauf eingehen. Diskussion kommt ein Kapitel später.}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %                                                                     %
@@ -187,20 +231,15 @@ https://www.wind-energie.de/themen/zahlen-und-fakten/deutschland/}
 %                                                                     %
 %                                                                     %
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\chapter{Implementierung des Ensemble-Models}
 
-\section{Datenbasis}
+\chapter{Diskussion und Ausblick}
 
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%                                                                     %
-%                                                                     %
-%                                                                     %
-%                               KAPITEL                               %
-%                                                                     %
-%                                                                     %
-%                                                                     %
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\chapter{Fazit und Ausblick}
+\section{Diskussion der Ergebnisse}
+\highlight{Was auch immer wir herausbekommen. In Kontext setzen. War unser Modell vergleichsweise gut? Hier vll auch 
+Diskussion über Unterschied zwischen eine und mehrere Wetterstationsdaten.}
+
+\section{Weiterentwicklung des Modells}
+\highlight{Das ist der Ausblick. Was könnte man noch tolles anstellen wo wir aber keine Zeit mehr für hatten?}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %                                                                     %
