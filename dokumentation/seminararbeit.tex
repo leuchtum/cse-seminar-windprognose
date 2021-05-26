@@ -219,8 +219,18 @@ Stichwort Windrose.}
 
 \subsubsection{Generierte Messdaten}
 \highlight{Kalendarische Daten: Tagessinus und Saisonalen Sinus (Korrelationskoeffizienten Wind zu Uhrzeit; Histogramm Uhrzeit und Windverteilung); 
-Formeln, kurz Zusammenhang zu Uhrzeit}
+Formeln, kurz Zusammenhang zu Uhrzeit}\\
 
+\highlight{DOY ist DayOfYear und HOD ist HourOfDay; $=$-Zeichen am besten übereinander}
+
+\begin{equation}
+	\label{eq:cal_seas}
+	cal_{seas,i} = \frac{1}{2}(\cos(\pi (\frac{DOY_i -1 + \frac{HOD_i}{24}}{\frac{365}{2}}+ 1)) + 1)
+\end{equation}
+\begin{equation}
+	\label{eq:cal_day}
+	cal_{day,i} = \frac{1}{2}(\cos(\pi (\frac{HOD_i}{12}+ 1)) + 1)
+\end{equation}
 
 \section{Datenaufbereitung}
 \highlight{hier geht es um die ausgewählten Datensätze, umgang mit Fehldaten, 
@@ -235,6 +245,25 @@ Formulieren wie es geht und formulieren warum (siehe Grafik2) x-y so viel besser
 \subsubsection{Festlegen der In- und Outputs (Arbeitstitel)}
 \highlight{Daten in Ein- und Ausgangsdaten trennen: Tabelle sind Eingabedaten (in normalisiert) und zwei Spalten (Windx und Windy) sind Ausgabedaten, aber nicht normalisiert; 
 Normalisieren: Mit  Min-Max Normalisierung; Tabelle und nach einzelnen Datenreihen unterscheiden (kalendarisch ausgeschlossen, Wind x-y sind -1 bis 1, damit 0=0)}
+
+%%%%%TABELLE ANFANG
+\begin{table}[ht]
+	\centering
+	\caption{Normalisierung der Eingabedaten}
+	\begin{tabular}{|c|c|c|c|c|c|c|c|}
+		\hline
+		\rowcolor{color80}
+		\textbf{$X$}     & \textbf{$w_x$}                 & \textbf{$w_y$}                 & \textbf{$p$}                   & \textbf{$T$}                   & \textbf{$RH$}                  & \textbf{$cal_{day}$} & \textbf{$cal_{seas}$} \\ \hline
+		Einheit X      & $m/s$                          & $m/s$                          & $hPa$                          & $^\circ C$                      & \%                            & 1                    & 1                     \\ \hline
+		$min(X)$       & \highlight{?} & \highlight{?} & \highlight{?} & \highlight{?} & \highlight{?} & 0                    & 0                     \\ \hline
+		$max(X)$       & \highlight{?} & \highlight{?} & \highlight{?} & \highlight{?} & \highlight{?} & 1                    & 1                     \\ \hline
+		$min(norm(X))$ & -1                             & -1                             & 0                              & 0                              & 0                              & -                    & -                     \\ \hline
+		$max(norm(X))$ & 1                              & 1                              & 1                              & 1                              & 1                              & -                    & -                     \\ \hline
+	\end{tabular}
+\label{tab:normalisierung}
+\end{table}
+%%%%%TABELLE ENDE
+
 
 \subsubsection{Datenlücken}
 \highlight{Zeitreihen separat angeschaut (Spaltenweise Lücken interpoliert/korrigiert (Nur eine Art Daten angesehen, wie z.B. Temperatur nur mit umliegenden Temperaturdaten verglichen) 
