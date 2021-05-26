@@ -98,8 +98,8 @@ captions=tableheading, %Mehr Platz bei Captionüberschriften (Tabelle)
 \renewcommand{\section}{\FloatBarrier\Oldsection}
 \let\Oldsubsection\subsection
 \renewcommand{\subsection}{\FloatBarrier\Oldsubsection}
-\let\Oldsubsection\subsection
-\renewcommand{\subsection}{\FloatBarrier\Oldsubsection}
+\let\Oldsubsubsection\subsubsection
+\renewcommand{\subsubsection}{\FloatBarrier\Oldsubsubsection}
 %\usepackage{here} % mit H in includegrafix wird Bildpos gezwungen
 
 
@@ -278,8 +278,11 @@ Details: wie lange sind die Fenster, wie hoch, Größendefinition, bla}
 
 \subsection{Datenaufteilung \highlight{(Arbeitstitel)}}
 \highlight{Blabla dass man Daten in drei Teile für NN teilt, warum das wichtig ist, bla; 
-	Wie viele Samples haben wir? Aufteilung in Trainings (65\%), Validierungs(30\%) und Testdaten (5\%)}
+Wie viele Samples haben wir? Aufteilung in Trainings (65\%), Validierungs(30\%) und Testdaten (5\%)}
 
+\section{Implementierung SARIMA und/oder anderes Vergleichsmodell}
+\highlight{Hier ist Platz für alles, was mit der implementierung des Vergleichsmodells zu tun hat. 
+alles bis auf Ergebnisse}
 
 \section{Entwicklung und Trainieren des Neuronalen Netzes}
 \highlight{Hier ist Platz für alles, was mit der implementierung des eigentlichen Modells zu tun hat. 
@@ -287,13 +290,17 @@ Infos zu den Layers, zum Trainingsvorgang, Das mit den Decision Trees zur Auswah
 alles bis auf Ergebnisse}
 
 \subsection{Festlegung der Modellarchitektur \highlight{(Arbeitstitel)}}
+\highlight{Begründen aus welchen Gründen wir uns für diese drei Methoden entschieden haben 
+(RNNseq2seq, RNNseq2vec, DNN) z.B. Datengrundlage, Zeitaspekt, bla; 
+Tabelele: Welche Lossfunktion, Metric, Prognosehorizont, Historie, tatsächliche Architektur (Schichten, Neuronen), 
+welche Regularisierung + dazu immer etwas schreiben }
 
-\section{Implementierung SARIMA und/oder anderes Vergleichsmodell}
-\highlight{Hier ist Platz für alles, was mit der implementierung des Vergleichsmodells zu tun hat. 
-alles bis auf Ergebnisse}
+\subsection{Trainingsphase}
+\highlight{Random search über Konfigurationen aus Tabelele und daraus optimales NN, hierüber schreiben; 
+optionale Grafik über Fehler, Loss, und so}
 
 \section{Ergebnisse}
-\highlight{Hier nur die Ergebnisse zeigen und nüchtern darauf eingehen. Diskussion kommt ein Kapitel später.}
+\highlight{Hier nur die Ergebnisse zeigen und nüchtern darauf eingehen. Diskussion kommt ein Kapitel später. Einige Grafiken.}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %                                                                     %
@@ -306,13 +313,27 @@ alles bis auf Ergebnisse}
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 \chapter{Diskussion und Ausblick}
+\highlight{Oben gezeigten Ergebnisse werden verglichen und die Ergebnisse anhand von Fehlermaß und Vergleich mit anderem Ansatz diskutiert ;
+Später noch Ausblick bla}
 
 \section{Diskussion der Ergebnisse}
 \highlight{Was auch immer wir herausbekommen. In Kontext setzen. War unser Modell vergleichsweise gut? Hier vll auch 
 Diskussion über Unterschied zwischen eine und mehrere Wetterstationsdaten.}
 
+\subsection{Vergleich der entwickelten Modelle}
+\highlight{Fehler (RMSE, MAE) anschauen und interpretieren der unterschiedlichen Netze; 
+Fehler pro Windgeschwindigkeit; Fehler über Prognosehorizont}
+
+\subsection{Einfluss kartesischer Winddaten}
+\highlight{Vergleich kartesisch und polar am besten Modell}, wieder auf Grafik oben eingehen
+
+\subsection{Einordnung in existierenden Prognosemodellen \highlight{(Arbeitstitel)}}
+\highlight{entweder SARIMA oder ein anderes Netz aus Paper (zB Amerika oder so) verwenden und grob vergleichen der Fehler und erklären, dass
+ Klima ähnlich und deswegen eher vergleichbar, aber nicht absolute Sicherheit!!! (Geht über Umfang der arbeit hinaus)}
+
 \section{Weiterentwicklung des Modells}
-\highlight{Das ist der Ausblick. Was könnte man noch tolles anstellen wo wir aber keine Zeit mehr für hatten?}
+\highlight{Das ist der Ausblick. Was könnte man noch tolles anstellen wo wir aber keine Zeit mehr für hatten? Idee Ensemble-Modell, andere Daten 
+verwenden, um Modell besser mit anderem bestehendem zu Vergleichen, Satellitendaten einbinden, weitere Modelle untereinander vergleichen mit Ulmer Klimadaten}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %                                                                     %
