@@ -175,7 +175,9 @@ Mit Daten aus Deutschland (Erwähnte Paper in 1. Hatten ausschließlich Wetterda
 soll mithilfe von Neuronalen Netzen, genauer CNN mit LSTM (erwies sich in Literaturrecherche als guter Ansatz für ähnliche Fragestellungen) ein 
 Modell entwickelt werden, welches Windgeschwindigkeit und -richtung stündlich bis zu 24h in die Zukunft prognostizieren kann. 
 Um die Güte dieses Modells einordnen zu können, soll mit dem bewährten Modell SARIMA und/oder einem anderen, ähnlichen Modell verglichen werden. 
-Der Einfluss von weiteren umliegenden Wetterstationen soll auch berücksichtigt werden.}
+Der Einfluss von weiteren umliegenden Wetterstationen soll auch berücksichtigt werden.} \\
+
+\highlight{mithilfe mehrerer umliegender Wetterstationen prognostizieren wir für eine Wetterstation}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %                                                                     %
@@ -206,9 +208,46 @@ Der Einfluss von weiteren umliegenden Wetterstationen soll auch berücksichtigt 
 
 \chapter{Implementierung des Modells}
 
+\section{Datenbasis}
+\highlight{Blabla über Daten die für Neuronales Netz bla. Vielleicht auch nur was unterschied reale und generierte Daten ist.}
+
+\subsubsection{Reale Messdaten}
+\highlight{Daten vom DWD, Windrichtung, -geschwindigkeit (Stundenmittel), Sonnenscheindauer, Druck, Temp, Luftfeuchtigkeit. 
+Stündliche Daten im Zeitraum 2008-2021, Wie viele Daten fehlen insgesamt (Maybe Grafik?). 
+Tabelle mit Wetterstationen. (plus PLZ oder Kilometer von prognos. Messtation entfernt) . 
+Stichwort Windrose.}
+
+\subsubsection{Generierte Messdaten}
+\highlight{Kalendarische Daten: Tagessinus und Saisonalen Sinus (Korrelationskoeffizienten Wind zu Uhrzeit; Histogramm Uhrzeit und Windverteilung); 
+Formeln, kurz Zusammenhang zu Uhrzeit}
+
+
 \section{Datenaufbereitung}
 \highlight{hier geht es um die ausgewählten Datensätze, umgang mit Fehldaten, 
-Umwandeln der Daten, etc}
+Umwandeln der Daten, etc;  
+Flowchart über einzelne Schitte der Datenaufbereitung von Roh zu fertige Daten für NN}
+
+\subsubsection{Winddaten als Vektoren}
+\highlight{GRAFIK (Von Radius und Betrag zu x und y Vektor)!!; 
+GRAFIK2 (die von Tensorflow für eine ausgewählte Wetterstation); 
+Formulieren wie es geht und formulieren warum (siehe Grafik2) x-y so viel besser sein solte als rad-betrag}
+
+\subsubsection{Festlegen der In- und Outputs (Arbeitstitel)}
+\highlight{Daten in Ein- und Ausgangsdaten trennen: Tabelle sind Eingabedaten (in normalisiert) und zwei Spalten (Windx und Windy) sind Ausgabedaten, aber nicht normalisiert; 
+Normalisieren: Mit  Min-Max Normalisierung; Tabelle und nach einzelnen Datenreihen unterscheiden (kalendarisch ausgeschlossen, Wind x-y sind -1 bis 1, damit 0=0)}
+
+\subsubsection{Datenlücken}
+\highlight{Zeitreihen separat angeschaut (Spaltenweise Lücken interpoliert/korrigiert (Nur eine Art Daten angesehen, wie z.B. Temperatur nur mit umliegenden Temperaturdaten verglichen) 
+Maximale Lücke 4 Stunden (wurde noch linear interpoliert); 
+Jetzt sind nur noch größere Lücken als 4 Stunden im Datensatz, wir teilen entlang dieser großen Lücken unsere Tabelle in kleinere Tabellen (chunks), keine Fehldaten mehr :)}
+
+\subsubsection{Sampling (Arbeitstitel)}
+\highlight{Grafik um das Verschieben zu visualisieren; chunks werden der Reihe nach durchlaufen; 
+innerhalb chink wird über ein moving window gesampelt; Ein- und Ausgabefesnter sind verschoben (zeitlich); 
+Details: wie lange sind die Fenster, wie hoch, Größendefinition, bla}
+
+\subsubsection{Datenaufteilung (Arbeitstitel)}
+\highlight{*}
 
 \section{Entwicklung und Trainieren des Neuronalen Netzes}
 \highlight{Hier ist Platz für alles, was mit der implementierung des eigentlichen Modells zu tun hat. 
