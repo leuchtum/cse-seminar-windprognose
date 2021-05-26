@@ -98,8 +98,8 @@ captions=tableheading, %Mehr Platz bei Captionüberschriften (Tabelle)
 \renewcommand{\section}{\FloatBarrier\Oldsection}
 \let\Oldsubsection\subsection
 \renewcommand{\subsection}{\FloatBarrier\Oldsubsection}
-\let\Oldsubsubsection\subsubsection
-\renewcommand{\subsubsection}{\FloatBarrier\Oldsubsubsection}
+\let\Oldsubsection\subsection
+\renewcommand{\subsection}{\FloatBarrier\Oldsubsection}
 %\usepackage{here} % mit H in includegrafix wird Bildpos gezwungen
 
 
@@ -191,7 +191,8 @@ Der Einfluss von weiteren umliegenden Wetterstationen soll auch berücksichtigt 
 \chapter{Grundlagen}
 
 \section{Neuronale Netze zur Zeitreihenprognose}
-\highlight{ein paar Grundlagen zu neuronalen Netzen (nicht zu tief gehend)}
+\highlight{ein paar Grundlagen zu neuronalen Netzen (nicht zu tief gehend): 
+Beschreibung versch Architekturen}
 
 \section{Das SARIMA-Modell}
 \highlight{Grob SARIMA-Modell erklären. Wenn wir es als Benchmark verwenden}
@@ -211,13 +212,13 @@ Der Einfluss von weiteren umliegenden Wetterstationen soll auch berücksichtigt 
 \section{Datenbasis}
 \highlight{Blabla über Daten die für Neuronales Netz bla. Vielleicht auch nur was unterschied reale und generierte Daten ist.}
 
-\subsubsection{Reale Messdaten}
+\subsection{Reale Messdaten}
 \highlight{Daten vom DWD, Windrichtung, -geschwindigkeit (Stundenmittel), Sonnenscheindauer, Druck, Temp, Luftfeuchtigkeit. 
 Stündliche Daten im Zeitraum 2008-2021, Wie viele Daten fehlen insgesamt (Maybe Grafik?). 
 Tabelle mit Wetterstationen. (plus PLZ oder Kilometer von prognos. Messtation entfernt) . 
 Stichwort Windrose.}
 
-\subsubsection{Generierte Messdaten}
+\subsection{Generierte Messdaten}
 \highlight{Kalendarische Daten: Tagessinus und Saisonalen Sinus (Korrelationskoeffizienten Wind zu Uhrzeit; Histogramm Uhrzeit und Windverteilung); 
 Formeln, kurz Zusammenhang zu Uhrzeit}\\
 
@@ -237,12 +238,12 @@ Formeln, kurz Zusammenhang zu Uhrzeit}\\
 Umwandeln der Daten, etc;  
 Flowchart über einzelne Schitte der Datenaufbereitung von Roh zu fertige Daten für NN}
 
-\subsubsection{Winddaten als Vektoren}
+\subsection{Winddaten als Vektoren}
 \highlight{GRAFIK (Von Radius und Betrag zu x und y Vektor)!!; 
 GRAFIK2 (die von Tensorflow für eine ausgewählte Wetterstation); 
 Formulieren wie es geht und formulieren warum (siehe Grafik2) x-y so viel besser sein solte als rad-betrag}
 
-\subsubsection{Festlegen der In- und Outputs (Arbeitstitel)}
+\subsection{Festlegen der In- und Outputs \highlight{(Arbeitstitel)}}
 \highlight{Daten in Ein- und Ausgangsdaten trennen: Tabelle sind Eingabedaten (in normalisiert) und zwei Spalten (Windx und Windy) sind Ausgabedaten, aber nicht normalisiert; 
 Normalisieren: Mit  Min-Max Normalisierung; Tabelle und nach einzelnen Datenreihen unterscheiden (kalendarisch ausgeschlossen, Wind x-y sind -1 bis 1, damit 0=0)}
 
@@ -265,23 +266,27 @@ Normalisieren: Mit  Min-Max Normalisierung; Tabelle und nach einzelnen Datenreih
 %%%%%TABELLE ENDE
 
 
-\subsubsection{Datenlücken}
+\subsection{Datenlücken}
 \highlight{Zeitreihen separat angeschaut (Spaltenweise Lücken interpoliert/korrigiert (Nur eine Art Daten angesehen, wie z.B. Temperatur nur mit umliegenden Temperaturdaten verglichen) 
 Maximale Lücke 4 Stunden (wurde noch linear interpoliert); 
 Jetzt sind nur noch größere Lücken als 4 Stunden im Datensatz, wir teilen entlang dieser großen Lücken unsere Tabelle in kleinere Tabellen (chunks), keine Fehldaten mehr :)}
 
-\subsubsection{Sampling (Arbeitstitel)}
+\subsection{Sampling \highlight{(Arbeitstitel)}}
 \highlight{Grafik um das Verschieben zu visualisieren; chunks werden der Reihe nach durchlaufen; 
 innerhalb chink wird über ein moving window gesampelt; Ein- und Ausgabefesnter sind verschoben (zeitlich); 
 Details: wie lange sind die Fenster, wie hoch, Größendefinition, bla}
 
-\subsubsection{Datenaufteilung (Arbeitstitel)}
-\highlight{*}
+\subsection{Datenaufteilung \highlight{(Arbeitstitel)}}
+\highlight{Blabla dass man Daten in drei Teile für NN teilt, warum das wichtig ist, bla; 
+	Wie viele Samples haben wir? Aufteilung in Trainings (65\%), Validierungs(30\%) und Testdaten (5\%)}
+
 
 \section{Entwicklung und Trainieren des Neuronalen Netzes}
 \highlight{Hier ist Platz für alles, was mit der implementierung des eigentlichen Modells zu tun hat. 
 Infos zu den Layers, zum Trainingsvorgang, Das mit den Decision Trees zur Auswahl der besten Paramter, 
 alles bis auf Ergebnisse}
+
+\subsection{Festlegung der Modellarchitektur \highlight{(Arbeitstitel)}}
 
 \section{Implementierung SARIMA und/oder anderes Vergleichsmodell}
 \highlight{Hier ist Platz für alles, was mit der implementierung des Vergleichsmodells zu tun hat. 
