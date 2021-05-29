@@ -77,8 +77,8 @@ def pol2cart(df, speed="WS", direction="WD", x="WX", y="WY"):
         wd = wind[d]
         wd = wd * np.pi / 180
 
-        wx = ws * np.cos(wd)
-        wy = ws * np.sin(wd)
+        wx = ws * np.sin(wd)
+        wy = ws * np.cos(wd)
 
         appendix = ws.name.replace(speed, "")
         assert appendix == wd.name.replace(direction, "")

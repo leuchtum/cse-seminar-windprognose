@@ -239,9 +239,28 @@ Umwandeln der Daten, etc;
 Flowchart über einzelne Schitte der Datenaufbereitung von Roh zu fertige Daten für NN}
 
 \subsection{Winddaten als Vektoren}
-\highlight{GRAFIK (Von Radius und Betrag zu x und y Vektor)!!; 
-GRAFIK2 (die von Tensorflow für eine ausgewählte Wetterstation); 
+\highlight{GRAFIK2 (die von Tensorflow für eine ausgewählte Wetterstation); 
 Formulieren wie es geht und formulieren warum (siehe Grafik2) x-y so viel besser sein solte als rad-betrag}
+
+%%%%%BILD ANFANG
+\begin{figure}[ht]
+	\begin{center}
+		\includegraphics[scale = 1]{./images/pol2cart.pdf}
+		\caption{Interpretation der Windgeschwindigkeit und Windrichtung als Vektorkomponenten}
+		\label{fig:pol2cart}
+	\end{center}
+\end{figure}
+%%%%%BILD ENDE
+
+%%%%%BILD ANFANG
+\begin{figure}[ht]
+	\begin{center}
+		\includegraphics[scale = 1]{./images/pol2cart2.pdf}
+		\caption{Verteilung des Windes bei $(v,\phi)$ bzw. $(v_x,v_y)$-Interpretation für die Messtation Ulm-Mähringen im Zeitraum 01.2016 bis 03.2021}
+		\label{fig:pol2cart2}
+	\end{center}
+\end{figure}
+%%%%%BILD ENDE
 
 \subsection{Festlegen der In- und Outputs \highlight{(Arbeitstitel)}}
 \highlight{Daten in Ein- und Ausgangsdaten trennen: Tabelle sind Eingabedaten (in normalisiert) und zwei Spalten (Windx und Windy) sind Ausgabedaten, aber nicht normalisiert; 
