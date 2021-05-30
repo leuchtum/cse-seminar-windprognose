@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<mxfile host="Electron" modified="2021-05-30T21:19:11.371Z" agent="5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) draw.io/14.5.1 Chrome/89.0.4389.82 Electron/12.0.1 Safari/537.36" etag="zljyj92uNA2Qe2jji0zN" version="14.5.1" type="device">
+  <diagram id="m7cO5cNPS4ZPl64WzPPN" name="Seite-1">
+    <mxGraphModel dx="981" dy="559" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="827" pageHeight="1169" math="0" shadow="0">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+        <mxCell id="5fElV-Dy6RkIU18KxIFr-101" value="" style="endArrow=classic;html=1;fontSize=10;exitX=0.5;exitY=1;exitDx=0;exitDy=0;entryX=0;entryY=0.3;entryDx=0;entryDy=0;fontFamily=Computer Modern;" parent="1" source="5fElV-Dy6RkIU18KxIFr-97" target="5fElV-Dy6RkIU18KxIFr-100" edge="1">
+          <mxGeometry width="50" height="50" relative="1" as="geometry">
+            <mxPoint x="440" y="300" as="sourcePoint" />
+            <mxPoint x="490" y="250" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="5fElV-Dy6RkIU18KxIFr-102" value="" style="endArrow=classic;html=1;fontSize=10;exitX=0.5;exitY=1;exitDx=0;exitDy=0;entryX=0.15;entryY=0.05;entryDx=0;entryDy=0;entryPerimeter=0;fontFamily=Computer Modern;" parent="1" source="5fElV-Dy6RkIU18KxIFr-84" target="5fElV-Dy6RkIU18KxIFr-100" edge="1">
+          <mxGeometry width="50" height="50" relative="1" as="geometry">
+            <mxPoint x="190" y="210" as="sourcePoint" />
+            <mxPoint x="410" y="302.0000000000001" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="5fElV-Dy6RkIU18KxIFr-103" value="" style="endArrow=classic;html=1;fontSize=10;exitX=0.5;exitY=1;exitDx=0;exitDy=0;entryX=0.5;entryY=0;entryDx=0;entryDy=0;fontFamily=Computer Modern;" parent="1" source="5fElV-Dy6RkIU18KxIFr-88" target="5fElV-Dy6RkIU18KxIFr-100" edge="1">
+          <mxGeometry width="50" height="50" relative="1" as="geometry">
+            <mxPoint x="200" y="220" as="sourcePoint" />
+            <mxPoint x="420" y="312.0000000000001" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="5fElV-Dy6RkIU18KxIFr-104" value="" style="endArrow=classic;html=1;fontSize=10;exitX=0.5;exitY=1;exitDx=0;exitDy=0;entryX=1;entryY=0.3;entryDx=0;entryDy=0;fontFamily=Computer Modern;" parent="1" source="5fElV-Dy6RkIU18KxIFr-94" target="5fElV-Dy6RkIU18KxIFr-100" edge="1">
+          <mxGeometry width="50" height="50" relative="1" as="geometry">
+            <mxPoint x="210" y="230" as="sourcePoint" />
+            <mxPoint x="430" y="322.0000000000001" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="5fElV-Dy6RkIU18KxIFr-105" value="" style="endArrow=classic;html=1;fontSize=10;exitX=0.5;exitY=1;exitDx=0;exitDy=0;entryX=0.85;entryY=0.05;entryDx=0;entryDy=0;entryPerimeter=0;fontFamily=Computer Modern;" parent="1" source="5fElV-Dy6RkIU18KxIFr-91" target="5fElV-Dy6RkIU18KxIFr-100" edge="1">
+          <mxGeometry width="50" height="50" relative="1" as="geometry">
+            <mxPoint x="220" y="240" as="sourcePoint" />
+            <mxPoint x="440" y="332.0000000000001" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="5fElV-Dy6RkIU18KxIFr-106" value="Rohdatensatz" style="text;html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontSize=10;fontFamily=Computer Modern;" parent="1" vertex="1">
+          <mxGeometry x="360" y="270" width="120" height="40" as="geometry" />
+        </mxCell>
+        <mxCell id="5fElV-Dy6RkIU18KxIFr-86" value="" style="group;fontSize=10;fontFamily=Computer Modern;" parent="1" vertex="1" connectable="0">
+          <mxGeometry x="240" y="120" width="120" height="80" as="geometry" />
+        </mxCell>
+        <mxCell id="5fElV-Dy6RkIU18KxIFr-84" value="" style="shape=datastore;whiteSpace=wrap;html=1;fontSize=10;fontFamily=Computer Modern;" parent="5fElV-Dy6RkIU18KxIFr-86" vertex="1">
+          <mxGeometry x="40" y="40" width="40" height="40" as="geometry" />
+        </mxCell>
+        <mxCell id="5fElV-Dy6RkIU18KxIFr-85" value="Stationsdaten&lt;br style=&quot;font-size: 10px;&quot;&gt;Günzburg" style="text;html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontSize=10;fontFamily=Computer Modern;" parent="5fElV-Dy6RkIU18KxIFr-86" vertex="1">
+          <mxGeometry width="120" height="40" as="geometry" />
+        </mxCell>
+        <mxCell id="5fElV-Dy6RkIU18KxIFr-87" value="" style="group;fontSize=10;fontFamily=Computer Modern;" parent="1" vertex="1" connectable="0">
+          <mxGeometry x="360" y="120" width="120" height="80" as="geometry" />
+        </mxCell>
+        <mxCell id="5fElV-Dy6RkIU18KxIFr-88" value="" style="shape=datastore;whiteSpace=wrap;html=1;fontSize=10;fontFamily=Computer Modern;" parent="5fElV-Dy6RkIU18KxIFr-87" vertex="1">
+          <mxGeometry x="40" y="40" width="40" height="40" as="geometry" />
+        </mxCell>
+        <mxCell id="5fElV-Dy6RkIU18KxIFr-89" value="Stationsdaten&lt;br style=&quot;font-size: 10px;&quot;&gt;Laupheim" style="text;html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontSize=10;fontFamily=Computer Modern;" parent="5fElV-Dy6RkIU18KxIFr-87" vertex="1">
+          <mxGeometry width="120" height="40" as="geometry" />
+        </mxCell>
+        <mxCell id="5fElV-Dy6RkIU18KxIFr-90" value="" style="group;fontSize=10;fontFamily=Computer Modern;" parent="1" vertex="1" connectable="0">
+          <mxGeometry x="480" y="120" width="120" height="80" as="geometry" />
+        </mxCell>
+        <mxCell id="5fElV-Dy6RkIU18KxIFr-91" value="" style="shape=datastore;whiteSpace=wrap;html=1;fontSize=10;fontFamily=Computer Modern;" parent="5fElV-Dy6RkIU18KxIFr-90" vertex="1">
+          <mxGeometry x="40" y="40" width="40" height="40" as="geometry" />
+        </mxCell>
+        <mxCell id="5fElV-Dy6RkIU18KxIFr-92" value="Stationsdaten&lt;br style=&quot;font-size: 10px;&quot;&gt;Münsingen-Apfelstetten" style="text;html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontSize=10;fontFamily=Computer Modern;" parent="5fElV-Dy6RkIU18KxIFr-90" vertex="1">
+          <mxGeometry width="120" height="40" as="geometry" />
+        </mxCell>
+        <mxCell id="5fElV-Dy6RkIU18KxIFr-93" value="" style="group;fontSize=10;fontFamily=Computer Modern;" parent="1" vertex="1" connectable="0">
+          <mxGeometry x="600" y="120" width="120" height="80" as="geometry" />
+        </mxCell>
+        <mxCell id="5fElV-Dy6RkIU18KxIFr-94" value="" style="shape=datastore;whiteSpace=wrap;html=1;fontSize=10;fontFamily=Computer Modern;" parent="5fElV-Dy6RkIU18KxIFr-93" vertex="1">
+          <mxGeometry x="40" y="40" width="40" height="40" as="geometry" />
+        </mxCell>
+        <mxCell id="5fElV-Dy6RkIU18KxIFr-95" value="Stationsdaten&lt;br style=&quot;font-size: 10px;&quot;&gt;Günzburg" style="text;html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontSize=10;fontFamily=Computer Modern;" parent="5fElV-Dy6RkIU18KxIFr-93" vertex="1">
+          <mxGeometry width="120" height="40" as="geometry" />
+        </mxCell>
+        <mxCell id="5fElV-Dy6RkIU18KxIFr-96" value="" style="group;fontSize=10;fontFamily=Computer Modern;" parent="1" vertex="1" connectable="0">
+          <mxGeometry x="120" y="120" width="120" height="80" as="geometry" />
+        </mxCell>
+        <mxCell id="5fElV-Dy6RkIU18KxIFr-97" value="" style="shape=datastore;whiteSpace=wrap;html=1;fontSize=10;fontFamily=Computer Modern;" parent="5fElV-Dy6RkIU18KxIFr-96" vertex="1">
+          <mxGeometry x="40" y="40" width="40" height="40" as="geometry" />
+        </mxCell>
+        <mxCell id="5fElV-Dy6RkIU18KxIFr-98" value="Kalendarische&lt;br style=&quot;font-size: 10px;&quot;&gt;Daten" style="text;html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontSize=10;fontFamily=Computer Modern;" parent="5fElV-Dy6RkIU18KxIFr-96" vertex="1">
+          <mxGeometry width="120" height="40" as="geometry" />
+        </mxCell>
+        <mxCell id="5fElV-Dy6RkIU18KxIFr-100" value="" style="shape=datastore;whiteSpace=wrap;html=1;fontSize=10;fontFamily=Computer Modern;" parent="1" vertex="1">
+          <mxGeometry x="400" y="230" width="40" height="40" as="geometry" />
+        </mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+</mxfile>
