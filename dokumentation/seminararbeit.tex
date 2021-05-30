@@ -93,6 +93,7 @@ captions=tableheading, %Mehr Platz bei Captionüberschriften (Tabelle)
 
 %%%%% BILDER
 \usepackage{graphicx}
+\usepackage[export]{adjustbox}
 \usepackage[section]{placeins}
 \let\Oldsection\section
 \renewcommand{\section}{\FloatBarrier\Oldsection}
@@ -127,6 +128,50 @@ captions=tableheading, %Mehr Platz bei Captionüberschriften (Tabelle)
 \hypersetup{pdftitle={CSE Projektarbeit, Pirwass und Müller}}
 
 \begin{document}
+\begin{titlepage}
+    \begin{center}
+		%%%%%DOPPELBILD ANFANG
+		\begin{minipage}[b]{\linewidth}
+			\centering
+			\begin{minipage}[b]{.4\linewidth}
+				\includegraphics[width=.8\linewidth, left]{./images/logo_uu.png}
+			\end{minipage}
+			\hspace{.1\linewidth}% Abstand zwischen Bilder
+			\begin{minipage}[b]{.4\linewidth}
+				\includegraphics[width=.6\linewidth, right]{./images/logo_thu.png}
+			\end{minipage}
+		\end{minipage}
+		%%%%%DOPPELBILD ENDE
+        
+		\vspace{3cm}
+
+        \Huge
+        \textbf{\highlight{Titel Windprognose Seminararbeit}}
+            
+        \vspace{1.5cm}
+        \large
+        \textbf{Seminararbeit I im Kooperationsstudiengang Computational Science and Engineering Master}
+    \end{center}        
+	\vfill
+	\large	
+	\textbf{Erstellt von:}
+
+	Daniel Müller (\highlight{matrikelnummer})\\
+	Alicia Pirwass (\highlight{matrikelnummer})
+
+	\vspace{1cm}
+	\textbf{Unter der Leitung von:}
+
+	Professor Dr. Stephan Schlüter
+
+	\vspace{1cm}
+	\textbf{Abgabedatum:}
+
+
+	\today
+            
+    
+\end{titlepage}
 \tableofcontents
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %                                                                     %
@@ -148,7 +193,7 @@ Hier auch schon direkt Bezug auf Wichtigkeit zw Prognose von Wind und Windkraftw
 https://www.wind-energie.de/themen/zahlen-und-fakten/deutschland/}
 
 %%%%%BILD ANFANG
-\begin{figure}[ht]
+\begin{figure}[tph]
 	\begin{center}
 		\includegraphics[width=.8\textwidth]{./images/windanlagen_deutschland.pdf}
 		\caption{Aktueller Stand der Windkraft in Deutschland; Massiver Rückgang im Zubau in den letzten drei Jahren. \highlight{https://www.wind-energie.de/themen/zahlen-und-fakten/deutschland/ am 19.03.2021}}
@@ -213,7 +258,7 @@ Beschreibung versch Architekturen}
 \highlight{Blabla über Daten die für Neuronales Netz bla. Vielleicht auch nur was unterschied reale und generierte Daten ist.}
 
 %%%%%BILD ANFANG
-\begin{figure}[ht]
+\begin{figure}[tph]
 	\begin{center}
 		\includegraphics[]{./images/rohdatensatz.pdf}
 		\caption{\highlight{{TODO}}}
@@ -229,7 +274,7 @@ Tabelle mit Wetterstationen. (plus PLZ oder Kilometer von prognos. Messtation en
 Stichwort Windrose.}
 
 %%%%%BILD ANFANG
-\begin{figure}[ht]
+\begin{figure}[tph]
 	\begin{center}
 		\includegraphics[]{./images/windroses.pdf}
 		\caption{\highlight{{TODO}}}
@@ -239,7 +284,7 @@ Stichwort Windrose.}
 %%%%%BILD ENDE
 
 %%%%%BILD ANFANG
-\begin{figure}[ht]
+\begin{figure}[tph]
 	\begin{center}
 		\includegraphics[]{./images/preprocessing.pdf}
 		\caption{\highlight{{TODO}}}
@@ -249,7 +294,7 @@ Stichwort Windrose.}
 %%%%%BILD ENDE
 
 %%%%%BILD ANFANG
-\begin{figure}[ht]
+\begin{figure}[tph]
 	\begin{center}
 		\includegraphics[]{./images/sampling.pdf}
 		\caption{\highlight{{TODO}}}
@@ -283,7 +328,7 @@ Flowchart über einzelne Schitte der Datenaufbereitung von Roh zu fertige Daten 
 Formulieren wie es geht und formulieren warum (siehe Grafik2) x-y so viel besser sein solte als rad-betrag}
 
 %%%%%BILD ANFANG
-\begin{figure}[ht]
+\begin{figure}[tph]
 	\begin{center}
 		\includegraphics[scale = 1]{./images/pol2cart.pdf}
 		\caption{Interpretation der Windgeschwindigkeit und Windrichtung als Vektorkomponenten}
@@ -293,9 +338,9 @@ Formulieren wie es geht und formulieren warum (siehe Grafik2) x-y so viel besser
 %%%%%BILD ENDE
 
 %%%%%BILD ANFANG
-\begin{figure}[ht]
+\begin{figure}[tph]
 	\begin{center}
-		\includegraphics[scale = 1]{./images/pol2cart2.pdf}
+		\includegraphics[scale = 1]{./images/pol2cart_visualize.pdf}
 		\caption{Verteilung des Windes bei $(v,\phi)$ bzw. $(v_x,v_y)$-Interpretation für die Messtation Ulm-Mähringen im Zeitraum 01.2016 bis 03.2021}
 		\label{fig:pol2cart2}
 	\end{center}
@@ -499,7 +544,7 @@ verwenden, um Modell besser mit anderem bestehendem zu Vergleichen, Satellitenda
 \section{Bild}
 
 %%%%%BILD ANFANG
-\begin{figure}[ht]
+\begin{figure}[tph]
 	\begin{center}
 		\includegraphics[scale = 1]{./images/0_testbild.png}
 		\caption{TEST Hier ist ein wunderschönes Testbild zu erkennen, und das hier ist ein wunderschönes Testbild zu erkennen, und das hier ist ein wunderschönes Testbild zu erkennen, und das hier ist ein wunderschönes Testbild zu erkennen, und das hier ist ein wunderschönes Testbild zu erkennen, und das hier ist ein wunderschönes Testbild zu erkennen, und das hier ist ein}
