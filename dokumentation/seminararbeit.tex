@@ -77,7 +77,7 @@ captions=tableheading, %Mehr Platz bei Captionüberschriften (Tabelle)
 \usepackage[left=2cm,right=2cm,top=3cm,bottom=3cm]{geometry}
 \setlength\parindent{0pt} %Kein Einzug nach Ebenenbeginn
 \usepackage[onehalfspacing]{setspace} %Zeilenabstand 1,5
-\RedeclareSectionCommand[beforeskip=20pt,afterskip=20pt]{chapter} %Wenn neues Chapter startet, gehts auf ne neue Seite. Damit Abstand zur Kopfzeile nicht zu groß, beforeskip = 20
+\RedeclareSectionCommand[beforeskip=20pt,afterskip=20pt]{chapter} %Wenn neues Chapter startet, geht es auf ne neue Seite. Damit Abstand zur Kopfzeile nicht zu groß, beforeskip = 20
 \usepackage[justification=justified,labelfont=bf,format = plain]{caption}
 
 
@@ -106,7 +106,7 @@ captions=tableheading, %Mehr Platz bei Captionüberschriften (Tabelle)
 
 %%%%% TABELLE
 \usepackage{multirow}
-\usepackage{tabularx} % Nachfolgende 3 Befehle, damit Tabellen Spaltengröße definiert werden kann. z.B. nicht mehr {ccc} sondern {C{2cm}C{2cm}C{2cm}}, Folgende befehle zur neudefinierung:
+\usepackage{tabularx} % Nachfolgende 3 Befehle, damit Tabellen Spaltengröße definiert werden kann. z.B. nicht mehr {ccc} sondern {C{2cm}C{2cm}C{2cm}}, Folgende befehle zur neu Definition:
 \newcolumntype{L}[1]{>{\raggedright\arraybackslash}p{#1}}
 \newcolumntype{C}[1]{>{\centering\arraybackslash}p{#1}}
 \newcolumntype{R}[1]{>{\raggedleft\arraybackslash}p{#1}}
@@ -116,12 +116,12 @@ captions=tableheading, %Mehr Platz bei Captionüberschriften (Tabelle)
 
 
 %%%%% QUICK COMMANDS
-\newcommand{\WY}{Weyarn }
 \newcommand{\qm}[1]{\glqq#1\grqq{}} %Anfzeichen
 \newcommand{\gradC}[1]{#1$^\circ C$}
 \newcommand{\abs}[1]{\lvert #1 \rvert}
 \newcommand{\highlight}[1]{\textbf{\textcolor{red}{#1}}}
 \newcommand{\finalize}[1]{\textcolor{red}{#1}}
+\newcommand{\Abb}[1]{\autoref{fig:#1}}
 
 %%%%% VERLINKUNG
 \usepackage[hidelinks,hypertexnames=false]{hyperref}
@@ -351,11 +351,13 @@ Formulieren wie es geht und formulieren warum (siehe Grafik2) x-y so viel besser
 \begin{figure}[tph]
 	\begin{center}
 		\includegraphics[scale = 1]{./images/pol2cart_visualize.pdf}
-		\caption{Verteilung des Windes bei $(v,\phi)$ bzw. $(v_x,v_y)$-Interpretation für die Messtation Ulm-Mähringen im Zeitraum 01.2016 bis 03.2021}
+		\caption{Verteilung des Windes bei $(v,\varphi)$ bzw. $(v_x,v_y)$-Interpretation für die Messtation Ulm-Mähringen im Zeitraum 01.2016 bis 03.2021}
 		\label{fig:pol2cart2}
 	\end{center}
 \end{figure}
 %%%%%BILD ENDE
+
+\highlight{Das strahlenartige Muster in \Abb{pol2cart2} erklärt sich durch die diskrete Angabe der Windrichtung in $10^\circ$ Schritten.}
 
 \subsection{Festlegen der In- und Outputs \highlight{(Arbeitstitel)}}
 \highlight{Daten in Ein- und Ausgangsdaten trennen: Tabelle sind Eingabedaten (in normalisiert) und zwei Spalten (Windx und Windy) sind Ausgabedaten, aber nicht normalisiert; 
@@ -368,12 +370,12 @@ Normalisieren: Mit  Min-Max Normalisierung; Tabelle und nach einzelnen Datenreih
 	\begin{tabular}{|c|c|c|c|c|c|c|c|}
 		\hline
 		\rowcolor{color80}
-		\textbf{$X$}     & \textbf{$w_x$}                 & \textbf{$w_y$}                 & \textbf{$p$}                   & \textbf{$T$}                   & \textbf{$RH$}                  & \textbf{$cal_{day}$} & \textbf{$cal_{seas}$} \\ \hline
-		Einheit X      & $m/s$                          & $m/s$                          & $hPa$                          & $^\circ C$                      & \%                            & 1                    & 1                     \\ \hline
-		$min(X)$       & \highlight{?} & \highlight{?} & \highlight{?} & \highlight{?} & \highlight{?} & 0                    & 0                     \\ \hline
-		$max(X)$       & \highlight{?} & \highlight{?} & \highlight{?} & \highlight{?} & \highlight{?} & 1                    & 1                     \\ \hline
-		$min(norm(X))$ & -1                             & -1                             & 0                              & 0                              & 0                              & -                    & -                     \\ \hline
-		$max(norm(X))$ & 1                              & 1                              & 1                              & 1                              & 1                              & -                    & -                     \\ \hline
+		\textbf{$X$} & \textbf{$w_x$} & \textbf{$w_y$} & \textbf{$p$} & \textbf{$T$} & \textbf{$RH$} & \textbf{$cal_{day}$} & \textbf{$cal_{seas}$} \\ \hline
+		Einheit $X$ & $m/s$ & $m/s$ & $hPa$ & $^\circ C$ & \% & $1$ & $1$ \\ \hline
+		$min(X)$       & $-22.1$ & $-13.7$ & $975.2$ & $-19.1$ & $10$ & $0$ & $0$ \\ \hline
+		$max(X)$       & $13.5$ & $9.7$ & $1047.3$ & $34.4$ & $100$ & $1$ & $1$ \\ \hline
+		$min(norm(X))$ & $-1$ & $-1$ & $0$ & $0$ & $0$ & $-$ & $-$ \\ \hline
+		$max(norm(X))$ & $1$ & $1$ & $1$ & $1$ & $1$ & $-$ & $-$ \\ \hline
 	\end{tabular}
 \label{tab:normalisierung}
 \end{table}
@@ -547,7 +549,7 @@ verwenden, um Modell besser mit anderem bestehendem zu Vergleichen, Satellitenda
 	Z&5&as\\\hline
 	A&1&91\\\hline
 	B&2&97\\\hline
-	Z&5&KEINE hline AMSCHLUSS!!!\\
+	Z&5&KEINE hline AM SCHLUSS!!!\\
 \end{longtable}
 %%%%%LANGTABELLE ENDE
 
