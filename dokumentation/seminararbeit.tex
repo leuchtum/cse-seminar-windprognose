@@ -255,6 +255,9 @@ Beschreibung versch Architekturen}
 \chapter{Implementierung des Modells}
 
 \section{Datenbasis}
+Für das Modell wurde eine kombination aus gemessenen Daten von Stationen des DWD (Deutscher Wetterdienst), sowie künstlich generierten Daten verwendet.
+Während die gemessenen Daten die aktuelle Wetterlage an einigen Standorten Deutschlands beinhaltet, sind die generierten Daten eine weitere Information zu saisonalen und Tagesverlauf-abhängigen Faktoren. 
+Genauer wird hierauf jedoch in den folgenden Kapiteln eingegangen. 
 \highlight{Blabla über Daten die für Neuronales Netz bla. Vielleicht auch nur was unterschied reale und generierte Daten ist.}
 
 %%%%%BILD ANFANG
@@ -268,6 +271,10 @@ Beschreibung versch Architekturen}
 %%%%%BILD ENDE
 
 \subsection{Reale Messdaten}
+Die realen Messdaten, welche von der Webseite des DWD kostenlos downloadbar sind, wurden folgend ausgewählt.
+Von fünf Messtationen (Münsingen-Apfelstetten, Stötten, Günzburg, Laupheim und Ulm-Mähringen), welche sich in einem Radius von 
+\highlight{keine Ahnung wie vielen} Kilometern befinden, wurden stündliche gemittelte Messdaten verwendet. Hierzu gehören Windrichtung, -geschwindigkeit , Sonnenscheindauer, Druck, Temperatur und Luftfeuchtigkeit. 
+Die Daten umfassen die Jahre 2008 bis 2021.
 \highlight{Daten vom DWD, Windrichtung, -geschwindigkeit (Stundenmittel), Sonnenscheindauer, Druck, Temp, Luftfeuchtigkeit. 
 Stündliche Daten im Zeitraum 2008-2021, Wie viele Daten fehlen insgesamt (Maybe Grafik?). 
 Tabelle mit Wetterstationen. (plus PLZ oder Kilometer von prognos. Messtation entfernt) . 
@@ -350,7 +357,7 @@ Formulieren wie es geht und formulieren warum (siehe Grafik2) x-y so viel besser
 %%%%%BILD ANFANG
 \begin{figure}[tph]
 	\begin{center}
-		\includegraphics[scale = 1]{./images/pol2cart_visualize.pdf}
+		\includegraphics[scale = 1]{./images/pol2cart.pdf}  %%%%_visualize.pdf} %%% Das Bild existiert leider nicht !
 		\caption{Verteilung des Windes bei $(v,\varphi)$ bzw. $(v_x,v_y)$-Interpretation für die Messtation Ulm-Mähringen im Zeitraum 01.2016 bis 03.2021}
 		\label{fig:pol2cart2}
 	\end{center}
