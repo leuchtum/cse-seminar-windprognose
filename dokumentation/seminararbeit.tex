@@ -255,8 +255,8 @@ Beschreibung versch Architekturen}
 \chapter{Implementierung des Modells}
 
 \section{Datenbasis}
-Für das Modell wurde eine kombination aus gemessenen Daten von Stationen des DWD (Deutscher Wetterdienst), sowie künstlich generierten Daten verwendet.
-Während die gemessenen Daten die aktuelle Wetterlage an einigen Standorten Deutschlands beinhaltet, sind die generierten Daten eine weitere Information zu saisonalen und Tagesverlauf-abhängigen Faktoren. 
+Für das Modell wurde eine Kombination aus gemessenen Daten von Stationen des DWD (Deutscher Wetterdienst), sowie künstlich generierten Daten verwendet.
+Während die gemessenen Daten die aktuelle Wetterlage an einigen Standorten Deutschlands beinhalten, erhalten die generierten Daten darüber hinaus weitere Informationen zu saisonalen und Tagesverlauf-abhängigen Faktoren. 
 Genauer wird hierauf jedoch in den folgenden Kapiteln eingegangen. 
 \highlight{Blabla über Daten die für Neuronales Netz bla. Vielleicht auch nur was unterschied reale und generierte Daten ist.}
 
@@ -272,9 +272,9 @@ Genauer wird hierauf jedoch in den folgenden Kapiteln eingegangen.
 
 \subsection{Reale Messdaten}
 Die realen Messdaten, welche von der Webseite des DWD kostenlos downloadbar sind, wurden folgend ausgewählt.
-Von fünf Messtationen (Münsingen-Apfelstetten, Stötten, Günzburg, Laupheim und Ulm-Mähringen), welche sich in einem Radius von 
+Von fünf Messtationen (Münsingen-Apfelstetten, Stötten, Günzburg und Laupheim), welche sich in einem Radius von 
 \highlight{keine Ahnung wie vielen} Kilometern befinden, wurden stündliche gemittelte Messdaten verwendet. Hierzu gehören Windrichtung, -geschwindigkeit , Sonnenscheindauer, Druck, Temperatur und Luftfeuchtigkeit. 
-Die Daten umfassen die Jahre 2008 bis 2021.
+Die Daten umfassen die Jahre \highlight{2008} bis 2021.
 \highlight{Daten vom DWD, Windrichtung, -geschwindigkeit (Stundenmittel), Sonnenscheindauer, Druck, Temp, Luftfeuchtigkeit. 
 Stündliche Daten im Zeitraum 2008-2021, Wie viele Daten fehlen insgesamt (Maybe Grafik?). 
 Tabelle mit Wetterstationen. (plus PLZ oder Kilometer von prognos. Messtation entfernt) . 
@@ -311,7 +311,10 @@ Stichwort Windrose.}
 %%%%%BILD ENDE
 
 \subsection{Generierte Messdaten}
-\highlight{Kalendarische Daten: Tagessinus und Saisonalen Sinus (Korrelationskoeffizienten Wind zu Uhrzeit; Histogramm Uhrzeit und Windverteilung); 
+Die Wetterlage in Deutschland weist wiederkehrende Trends innerhalb eines Tages und auch innerhalb eines Jahres auf \highlight{Grafik von Temperatur/Wind an einem Tag und ein Jahr}. Aus diesem Grund wurden zusätzlich zu den 
+gemessenen Daten der Wetterstationen des DWD noch zwei weitere Variablen eingeführt, die Auskunft über die Tageszeit und die Jahreszeit gibt. Hiermit soll es dem Modell später leichter Fallen Beziehungen zwischen der Tageszeit, Jahreszeit und der Temperatur herzustellen. Diese Daten sind jeweils eine Sinusfunktion mit einer Amplitude von \highlight{??} und einer Periodendauer von jeweils 24 Stunden oder 12 Monaten \highlight{richtig? Und hier noch ein Bild vom Sinus mit Beschriftung der Achsen etc! Noch auf Formeln eingehen! Histogramm? Was zu den Korrkoeff sagen??}. \\
+
+\highlight{Kalendarische Daten: Tagessinus und Saisonalen Sinus (Korrelationskoeffizienten Wind zu Uhrzeit (WAS SEHE ICH IN DIESEN ZAHLEN? HELP!); Histogramm Uhrzeit und Windverteilung (WAS IST DAS NOCHMAL?)); 
 Formeln, kurz Zusammenhang zu Uhrzeit}\\
 
 %%%%%BILD ANFANG
@@ -341,6 +344,7 @@ Umwandeln der Daten, etc;
 Flowchart über einzelne Schitte der Datenaufbereitung von Roh zu fertige Daten für NN}
 
 \subsection{Winddaten als Vektoren}
+Der Datensatz des DWD enthält die Windrichtung als einen Winkel, welcher von Norden aus gemessen wird und die Geschwindigkeit des Windes in m/s. Diese polare Darstellung wurde in eine kartesische Darstellung umgewandelt (siehe Abildung 3.6). Mithilfe der Gleichung \highlight{xy (Formel noch einfügen)} ist es möglich Aus Winkel und Betrag des Vektors eine X- und eine Y-Komponente des Vektors zu erhalten. Ziel dieser Umwandlung ist es das Problem zirkulärer Daten, womit Probleme bei der Vorhersage von Neuronalen Netzen entstehen können, zu beseitigen. Mit dieser Umwandlung erhält das Modell den Betrag der X- und der Y-Komponente als Eingabeparameter statt des Betrags und des zirkulären Winkels. Nach der Prädiktion werden die erhaltenen Daten wieder in eine polare Darstellung umgerechnet. In Abbildung 3.7 sind die zwei Parameter zur Beschreibung des Windvektors in polarer und in kartesischer Darstellung zueinander dargestellt \highlight{muss man anders schreiben!!! Wie nennt man das, wenn man x und y zueinander plottet um Verteilung anzusehen???}. Hier wird ersichtlich, dass bei \highlight{kartesischer Darstellung eine breitere Verteilung der Daten möglich ist. Dazu wird der Fall, dass hier ein Winkel von 0 Grad und ein Winkel von 359 Grad, welche derselben Windrichtung entsprechen, jedoch am weitesten entfernt voneinander im Koordinatensystem liegen, bei kartesischer Darstellung vermieden wird. (Das muss man anders formulieren!!)} 
 \highlight{GRAFIK2 (die von Tensorflow für eine ausgewählte Wetterstation); 
 Formulieren wie es geht und formulieren warum (siehe Grafik2) x-y so viel besser sein solte als rad-betrag}
 
@@ -357,16 +361,17 @@ Formulieren wie es geht und formulieren warum (siehe Grafik2) x-y so viel besser
 %%%%%BILD ANFANG
 \begin{figure}[tph]
 	\begin{center}
-		\includegraphics[scale = 1]{./images/pol2cart.pdf}  %%%%_visualize.pdf} %%% Das Bild existiert leider nicht !
+		\includegraphics[scale = 1]{./images/pol2cart_visualize.pdf}
 		\caption{Verteilung des Windes bei $(v,\varphi)$ bzw. $(v_x,v_y)$-Interpretation für die Messtation Ulm-Mähringen im Zeitraum 01.2016 bis 03.2021}
 		\label{fig:pol2cart2}
 	\end{center}
 \end{figure}
 %%%%%BILD ENDE
 
-\highlight{Das strahlenartige Muster in \Abb{pol2cart2} erklärt sich durch die diskrete Angabe der Windrichtung in $10^\circ$ Schritten.}
+\highlight{Das strahlenartige Muster in \Abb{pol2cart2} erklärt sich durch die diskrete Angabe der Windrichtung in $10^\circ$ Schritten. (WO EINFÜGEN? GUTER PUNKT!)}
 
 \subsection{Festlegen der In- und Outputs \highlight{(Arbeitstitel)}}
+Für das Modell werden Ein- und Ausgabedaten festgelegt. \highlight{Wie in Tabelle xy ersichtlich ist, werden blabla als Eingabedaten und blabla als Ausgabedaten festgelegt. (Muss ich noch genau drauf eingehen.)} Die Eingabedaten müssen zunächst normalisiert werden, was mit einer Min-Max Normalisierung erreicht wurde.
 \highlight{Daten in Ein- und Ausgangsdaten trennen: Tabelle sind Eingabedaten (in normalisiert) und zwei Spalten (Windx und Windy) sind Ausgabedaten, aber nicht normalisiert; 
 Normalisieren: Mit  Min-Max Normalisierung; Tabelle und nach einzelnen Datenreihen unterscheiden (kalendarisch ausgeschlossen, Wind x-y sind -1 bis 1, damit 0=0)}
 
