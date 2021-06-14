@@ -292,32 +292,16 @@ Stichwort Windrose.}
 \end{figure}
 %%%%%BILD ENDE
 
-%%%%%BILD ANFANG
-\begin{figure}[tph]
-	\begin{center}
-		\includegraphics[]{./images/preprocessing.pdf}
-		\caption{\highlight{{TODO}}}
-		\label{fig:preprocessing}
-	\end{center}
-\end{figure}
-%%%%%BILD ENDE
-
-%%%%%BILD ANFANG
-\begin{figure}[tph]
-	\begin{center}
-		\includegraphics[]{./images/sampling.pdf}
-		\caption{\highlight{{TODO}}}
-		\label{fig:sampling}
-	\end{center}
-\end{figure}
-%%%%%BILD ENDE
 
 \subsection{Generierte Messdaten}
-Die Wetterlage in Deutschland weist wiederkehrende Trends innerhalb eines Tages und auch innerhalb eines Jahres auf \highlight{Grafik von Temperatur/Wind an einem Tag und ein Jahr}. Aus diesem Grund wurden zusätzlich zu den 
-gemessenen Daten der Wetterstationen des DWD noch zwei weitere Variablen eingeführt, die Auskunft über die Tageszeit und die Jahreszeit gibt. Hiermit soll es dem Modell später leichter Fallen Beziehungen zwischen der Tageszeit, Jahreszeit und der Temperatur herzustellen. Diese Daten sind jeweils eine Sinusfunktion mit einer Amplitude von \highlight{??} und einer Periodendauer von jeweils 24 Stunden oder 12 Monaten \highlight{richtig? Und hier noch ein Bild vom Sinus mit Beschriftung der Achsen etc! Noch auf Formeln eingehen! Histogramm? Was zu den Korrkoeff sagen??}. \\
+Die Wetterlage in Deutschland weist wiederkehrende Trends innerhalb eines Tages und auch innerhalb eines Jahres auf \highlight{Kurze Sätze zu: Tag: Sonneneinstrahlung warm, Nachts Kalt; Jahr: Sommer/Winter}. Aus diesem Grund wurden zusätzlich zu den 
+gemessenen Daten der Wetterstationen des DWD noch zwei weitere Variablen eingeführt, die Auskunft über die Tageszeit und die Jahreszeit gibt. Hiermit soll es dem Modell später leichter Fallen Beziehungen zwischen der Tageszeit, Jahreszeit und den realen Messdaten herzustellen. Diese Daten sind jeweils eine Sinusfunktion mit einer Amplitude von 0.5, wobei der Wert um 0:00 der 0 und um 12:00 der 1 entspricht beziehungsweise die ... \highlight{01.01. 00:00 (erster tag des Jahres) 182 Tag um 12:00 Mittag ist 1; Formeln dazu sind die unten} . Die Periodendauer beträgt jeweils 24 Stunden oder 12 Monate. \\
 
 \highlight{Kalendarische Daten: Tagessinus und Saisonalen Sinus (Korrelationskoeffizienten Wind zu Uhrzeit (WAS SEHE ICH IN DIESEN ZAHLEN? HELP!); Histogramm Uhrzeit und Windverteilung (WAS IST DAS NOCHMAL?)); 
 Formeln, kurz Zusammenhang zu Uhrzeit}\\
+
+\subsection{Analyse der Datenbasis}
+\highlight{Abbildung 3.5: Korrelation calseas-T,... (Vorallem auf einige Parameter aus der Abbildung eingehen)}
 
 %%%%%BILD ANFANG
 \begin{figure}[tph]
@@ -346,9 +330,9 @@ Umwandeln der Daten, etc;
 Flowchart über einzelne Schitte der Datenaufbereitung von Roh zu fertige Daten für NN}
 
 \subsection{Winddaten als Vektoren}
-Der Datensatz des DWD enthält die Windrichtung als einen Winkel, welcher von Norden aus gemessen wird und die Geschwindigkeit des Windes in m/s. Diese polare Darstellung wurde in eine kartesische Darstellung umgewandelt (siehe Abildung 3.6). Mithilfe der Gleichung \highlight{xy (Formel noch einfügen)} ist es möglich Aus Winkel und Betrag des Vektors eine X- und eine Y-Komponente des Vektors zu erhalten. Ziel dieser Umwandlung ist es das Problem zirkulärer Daten, womit Probleme bei der Vorhersage von Neuronalen Netzen entstehen können, zu beseitigen. Mit dieser Umwandlung erhält das Modell den Betrag der X- und der Y-Komponente als Eingabeparameter statt des Betrags und des zirkulären Winkels. Nach der Prädiktion werden die erhaltenen Daten wieder in eine polare Darstellung umgerechnet. In Abbildung 3.7 sind die zwei Parameter zur Beschreibung des Windvektors in polarer und in kartesischer Darstellung zueinander dargestellt \highlight{muss man anders schreiben!!! Wie nennt man das, wenn man x und y zueinander plottet um Verteilung anzusehen???}. Hier wird ersichtlich, dass bei \highlight{kartesischer Darstellung eine breitere Verteilung der Daten möglich ist. Dazu wird der Fall, dass hier ein Winkel von 0 Grad und ein Winkel von 359 Grad, welche derselben Windrichtung entsprechen, jedoch am weitesten entfernt voneinander im Koordinatensystem liegen, bei kartesischer Darstellung vermieden wird. (Das muss man anders formulieren!!)} 
+Der Datensatz des DWD enthält die Windrichtung als einen Winkel, welcher von Norden aus gemessen wird und die Geschwindigkeit des Windes in m/s. Diese polare Darstellung wurde in eine kartesische Darstellung umgewandelt (siehe Abildung \ref{fig:pol2cart}. Mithilfe der Gleichung \highlight{xy (Formel noch einfügen)} ist es möglich Aus Winkel und Betrag des Vektors eine X- und eine Y-Komponente des Vektors zu erhalten. Ziel dieser Umwandlung ist es das Problem zirkulärer Daten, womit Probleme bei der Vorhersage von Neuronalen Netzen entstehen können, zu beseitigen. Mit dieser Umwandlung erhält das Modell den Betrag der X- und der Y-Komponente als Eingabeparameter statt des Betrags und des zirkulären Winkels. Nach der Prädiktion werden die erhaltenen Daten wieder in eine polare Darstellung umgerechnet. In Abbildung \ref{fig:pol2cart2} sind die zwei Parameter zur Beschreibung des Windvektors in polarer und in kartesischer Darstellung zueinander dargestellt \highlight{muss man anders schreiben!!! Wie nennt man das, wenn man x und y zueinander plottet um Verteilung anzusehen???}. Hier wird ersichtlich, dass bei \highlight{kartesischer Darstellung eine breitere Verteilung der Daten möglich ist. Dazu wird der Fall, dass hier ein Winkel von 0 Grad und ein Winkel von 359 Grad, welche derselben Windrichtung entsprechen, jedoch am weitesten entfernt voneinander im Koordinatensystem liegen, bei kartesischer Darstellung vermieden wird. (Das muss man anders formulieren!!)} 
 \highlight{GRAFIK2 (die von Tensorflow für eine ausgewählte Wetterstation); 
-Formulieren wie es geht und formulieren warum (siehe Grafik2) x-y so viel besser sein solte als rad-betrag}
+Formulieren wie es geht und formulieren warum (siehe Grafik2) x-y so viel besser sein solte als rad-betrag. Sagen, dass diese Umwandlung eine Annahme ist und wir es später testen und vergleichen.}
 
 %%%%%BILD ANFANG
 \begin{figure}[tph]
@@ -395,6 +379,15 @@ Normalisieren: Mit  Min-Max Normalisierung; Tabelle und nach einzelnen Datenreih
 \end{table}
 %%%%%TABELLE ENDE
 
+%%%%%BILD ANFANG
+\begin{figure}[tph]
+	\begin{center}
+		\includegraphics[]{./images/preprocessing.pdf}
+		\caption{\highlight{{TODO}}}
+		\label{fig:preprocessing}
+	\end{center}
+\end{figure}
+%%%%%BILD ENDE
 
 \subsection{Datenlücken}
 \highlight{Zeitreihen separat angeschaut (Spaltenweise Lücken interpoliert/korrigiert (Nur eine Art Daten angesehen, wie z.B. Temperatur nur mit umliegenden Temperaturdaten verglichen) 
@@ -405,6 +398,17 @@ Jetzt sind nur noch größere Lücken als 4 Stunden im Datensatz, wir teilen ent
 \highlight{Grafik um das Verschieben zu visualisieren; chunks werden der Reihe nach durchlaufen; 
 innerhalb chink wird über ein moving window gesampelt; Ein- und Ausgabefesnter sind verschoben (zeitlich); 
 Details: wie lange sind die Fenster, wie hoch, Größendefinition, bla}
+
+
+%%%%%BILD ANFANG
+\begin{figure}[tph]
+	\begin{center}
+		\includegraphics[]{./images/sampling.pdf}
+		\caption{\highlight{{TODO}}}
+		\label{fig:sampling}
+	\end{center}
+\end{figure}
+%%%%%BILD ENDE
 
 \subsection{Datenaufteilung \highlight{(Arbeitstitel)}}
 \highlight{Blabla dass man Daten in drei Teile für NN teilt, warum das wichtig ist, bla; 
