@@ -189,6 +189,7 @@ captions=tableheading, %Mehr Platz bei Captionüberschriften (Tabelle)
 \highlight{Windkraft in heutiger Zeit immer wichtiger (Zahlen und Fakten aus Quelle), 
 Windkraft kann effizienter generiert werden, wenn Prognosen über die folgenden Stunden bekannt sind. vgl Paper 
 Hier auch schon direkt Bezug auf Wichtigkeit zw Prognose von Wind und Windkraftwerken herstellen.
+At home Nutzung interessant, Steuerung von daheim, eigene Nutzung, bla
 }
 
 \highlight{Sehr gute einleitende Graphiken zur aktuellen Lage der Windkraft in Deutschland, Bilder lassen sich als PDF runterladen!\\
@@ -204,7 +205,41 @@ https://www.wind-energie.de/themen/zahlen-und-fakten/deutschland/}
 \end{figure}
 %%%%%BILD ENDE
 
-\section{Verwandte Literatur}
+\section{Ziel dieser Arbeit}
+
+\highlight{Aus Einleitung ableiten, dass Vorhersagemodell für Windgeschwindikeit, wie im großen Stil in Windparks benötigt wird auch 
+für at home Anwender mit eigener Wetterstation interessant. Hierbei sollte es aber einfacher sein Zugang zu solchen Mitteln zu 
+erhalten. Kombi aus Wettervorhersage für eigenen Ort/ Einspeisen in Netz aus Messstationen (Mehr gedeckte Info durch kleine Anlagen), 
+Modell für mit kontinentalem Klima. (Noch etwas Wirr. Was ist das genaue und klare Ziel von unserem Modell? :o)}
+
+\section{Einordnung in die Literatur}
+
+Lorenz versus alle anderen Paper (Deterministisches Modell versus Zeitreihenanalyse), Trend mit der Zeit in Richtung Neuronale Netze
+
+In der bestehenden Literatur im Bereich der Windgeschwindigkeits-, beziehungsweise Wettervorhersage, ist eine Entfernung von 
+deterministischen Modellen \highlight{Lorenzreferenz} hin zu Zeitreihenanalyse auf Basis gemessener Daten. \highlight{Einordnung 
+der Zeitreihengeschichten, Kommentar dass das für at home user auch entgegenkommt, Eingehen auf stündlich/Ort/ also Bezug auf 
+unser Ziel, Hierbei South dakota und LSTM genauer anschauen (plus ergebnisbezug), Showed promising results These warum wir auch 
+LSTM nehmen}
+
+\highlight{Dieser Block ist alt und shitty: }\\
+Mit der Prognose von Windgeschwindigkeit, oft auch im Zusammenhang mit Windenergie, wurde sich in der Vergangenheit häufig beschäftigt. 
+Ein bekannter deterministischer Ansatz ist das Lorenz-Modell \highlight{Quelle Lorenz}. 
+Dieser Ansatz ist eher komplex. Innerhalb des letzten Jahrzehnts erlangte das Thema Machine Learning mehr Popularität. \highlight{Der vorige Satz ist schrecklich, aber es fehlt noch etwas.}
+Bei Veröffentlichungen der letzten 15 Jahre zum Thema Windgeschwindigkeitsprognose kann in zwei Bereiche unterschieden werden. 
+Die Verwendung autoregressiver Modelle, wie beispielsweise das bekannte SARIMA-Modell \highlight{Quellen nennen} und die Verwendung Neuronaler Netze. 
+Bei zweitem Ansatz waren wieder Trends erkennbar, nämlich ein RNN mit LSTM \highlight{Quellen wo das verwendet}. 
+\highlight{Sollen die anderen NN Ansätze auch erwähnt werden??}\\
+
+\highlight{ Das kann bei Einordnung aufgegriffen werden. Ist eher Rechtfertigung Wahl Modell.
+	Aus Einleitung (Windpark Windprognose) werden Ziele dieser Seminararbeit ersichtlich. 
+Mit Daten aus Deutschland (Erwähnte Paper in 1. Hatten ausschließlich Wetterdaten verwendet, dessen Klima stark von kontinentalem Klima abweicht) 
+soll mithilfe von Neuronalen Netzen, genauer CNN mit LSTM (erwies sich in Literaturrecherche als guter Ansatz für ähnliche Fragestellungen) ein 
+Modell entwickelt werden, welches Windgeschwindigkeit und -richtung stündlich bis zu 24h in die Zukunft prognostizieren kann. 
+Um die Güte dieses Modells einordnen zu können, soll mit dem bewährten Modell SARIMA und/oder einem anderen, ähnlichen Modell verglichen werden. 
+Der Einfluss von weiteren umliegenden Wetterstationen soll auch berücksichtigt werden.} \\
+
+\highlight{mithilfe mehrerer umliegender Wetterstationen prognostizieren wir für eine Wetterstation}
 
 \highlight{Einige Herangehensweisen Thema Prognose der Windgeschwindigkeit: 
 deterministisch (Lorenz), Autoregressive Modelle (ARIMA,SARIMA), Autoregressive Modelle im Mehrdimensionalen (VAR, VARTA), 
@@ -215,16 +250,7 @@ Uns ist wichtig kurzzeitprognose (stündliche Vorhersage), ähnliche klimatische
 Deswegen etwas genauer: Kreuzer (wegen Deutschlanddaten, NN), USA Paper, Ranganayaki wegen Windrichtung
 }
 
-\section{Ziel dieser Arbeit}
 
-\highlight{Aus Einleitung (Windpark Windprognose) und Verwandte Literatur werden Ziele dieser Seminararbeit ersichtlich. 
-Mit Daten aus Deutschland (Erwähnte Paper in 1. Hatten ausschließlich Wetterdaten verwendet, dessen Klima stark von kontinentalem Klima abweicht) 
-soll mithilfe von Neuronalen Netzen, genauer CNN mit LSTM (erwies sich in Literaturrecherche als guter Ansatz für ähnliche Fragestellungen) ein 
-Modell entwickelt werden, welches Windgeschwindigkeit und -richtung stündlich bis zu 24h in die Zukunft prognostizieren kann. 
-Um die Güte dieses Modells einordnen zu können, soll mit dem bewährten Modell SARIMA und/oder einem anderen, ähnlichen Modell verglichen werden. 
-Der Einfluss von weiteren umliegenden Wetterstationen soll auch berücksichtigt werden.} \\
-
-\highlight{mithilfe mehrerer umliegender Wetterstationen prognostizieren wir für eine Wetterstation}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %                                                                     %
