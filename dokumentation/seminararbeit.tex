@@ -347,14 +347,10 @@ Formeln, kurz Zusammenhang zu Uhrzeit}\\
 
 \highlight{DOY ist DayOfYear und HOD ist HourOfDay; $=$-Zeichen am besten übereinander}
 
-\begin{equation}
-	\label{eq:cal_seas}
-	cal_{seas,i} = \frac{1}{2}(\cos(\pi (\frac{DOY_i -1 + \frac{HOD_i}{24}}{\frac{365}{2}}+ 1)) + 1)
-\end{equation}
-\begin{equation}
-	\label{eq:cal_day}
-	cal_{day,i} = \frac{1}{2}(\cos(\pi (\frac{HOD_i}{12}+ 1)) + 1)
-\end{equation}
+\begin{align}
+	cal_{seas,i} &= \frac{1}{2}(\cos(\pi (\frac{DOY_i -1 + \frac{HOD_i}{24}}{\frac{365}{2}}+ 1)) + 1)\label{eq:cal_seas}\\
+	cal_{day,i} &= \frac{1}{2}(\cos(\pi (\frac{HOD_i}{12}+ 1)) + 1)\label{eq:cal_day}
+\end{align}
 
 \section{Datenaufbereitung}
 \highlight{hier geht es um die ausgewählten Datensätze, umgang mit Fehldaten, 
