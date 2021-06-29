@@ -215,16 +215,25 @@ Modell für mit kontinentalem Klima. (Noch etwas Wirr. Was ist das genaue und kl
 \section{Einordnung in die Literatur}
 
 In der bestehenden Literatur im Bereich der Windgeschwindigkeits-, beziehungsweise Wettervorhersage, ist eine Entfernung von 
-deterministischen Modellen \highlight{Lorenzreferenz} hin zu Zeitreihenanalyse auf Basis historischer Messdaten erkennbar. 
-Innerhalb der letzten zwei Dekaden sind einige Ansätze in der Zeitreihenanalyse zu differenzieren. Klassische Methoden in der Zeitreihenprognose 
-(Lineare, zeitdiskrete Modelle für stochastische Prozesse), wie das ARMA- und ARIMA-Modell \highlight{Quellen mit AR(I)MA} oder auch 
-die Weiterentwicklung dessen, mit Berücksichtigung eines saisonalen Einflusses, das SARIMA-Modell \highlight{Quellen SARIMA} sind 
+deterministischen Modellen \highlight{Lorenz 1963} hin zu Zeitreihenanalyse auf Basis historischer Messdaten erkennbar. 
+Innerhalb der letzten zwei Dekaden sind einige Ansätze in der Zeitreihenanalyse zu differenzieren. Klassische Methoden in der 
+Zeitreihenprognose, wie das ARMA- und ARIMA-Modell \highlight{Cadenas et al. 2016, Torres et al. 2005, Erdem et al. 2011} oder auch 
+die Weiterentwicklung dessen, mit Berücksichtigung eines saisonalen Einflusses, das SARIMA-Modell 
+\highlight{Alencar et al. 2018, García et al. 2019, Haddad et al. 2019, Igboekwe et al. 2002, Sami et al. 2012, Meng 2010} sind 
 nicht nur ein häufig verwendetes Vorhersagemodell, sondern werden gerade deshalb auch häufig als Vergleichsmodell herangezogen 
 \highlight{Cao et al. 2012, Kreuzer et al. 2020}. Darüber hinaus existieren das VAR-, VARTA und auch VARTAX-Modelle 
-\highlight{Quellen VARx}, welche im Gegensatz zu ARMA-Modellen N endogene Variablen besitzen. Eine weitere Richtung sind klassische 
-Machine Learning Methoden, wie SVM oder auch LSSVM \highlight{Quelle SVM/LSSVM}. Zunehmend werden auch Neuronale Netze für Problemstellungen 
-dieser Art verwendet. \highlight{Beispiele Aufzählen und sagen LSTM dominant}
-\highlight{Einordnung der Zeitreihengeschichten, Kommentar dass das für at home user auch entgegenkommt, Eingehen auf stündlich/Ort/ also Bezug auf 
+\highlight{Orpia et al. 2014, Dowell 2015, Ewing et al. 2007, He et al. 2015, Koivisto et al. 2016}, 
+welche im Gegensatz zu ARMA-Modellen mehrere Variablen besitzen. Auch wird es versucht das ARIMA-Modell mit Clustermethoden 
+zu verbessern oder mit klassischen Machine Learning Konzepten zu kombinieren \highlight{Zhang et al. 2017, Guo et al. 2011}. 
+Zunehmend werden auch Neuronale Netze, welche in letzter Zeit stark an Popularität zugenommen haben, für Problemstellungen dieser 
+Art verwendet. Neben Ansätzen basierend auf CNN \highlight{Zhao et al. 2020, Chen et al. 2019}, MLP \highlight{Haidar et al. 2019}, 
+GS-ANN \highlight{Khodayar et al. 2018}, Back propagation \highlight{Wang et al. 2012} und Radial basis function NN \highlight{Chang et al. 2017}, 
+waren Ansätze, die auf RNN basieren \highlight{Xiaoyun 2016, Cao et al. 2012} auffällig oft vertreten. Hierbei waren LSTMs  
+\highlight{Dong et al. 2018, Delgado et al. 2021, Moharm et al. 2020, Prabha et al. 2019} oder auch LSTMs in Kombination mit 
+anderen Technologien \highlight{Chen et al. 2019, Lopez et al. 2016, Liu et al. 2018, Yao et al. 2018} sehr prominent. 
+
+
+\highlight{warum LSTM besser als SRIMA oder so wegen lange sicht/kurze sicht bla, Eingehen auf stündlich/Ort/ also Bezug auf 
 unser Ziel, Hierbei South dakota und LSTM genauer anschauen (plus ergebnisbezug), Showed promising results These warum wir auch 
 LSTM nehmen}
 
