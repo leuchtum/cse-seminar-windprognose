@@ -186,11 +186,28 @@ captions=tableheading, %Mehr Platz bei Captionüberschriften (Tabelle)
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \chapter{Einleitung}
 
-\highlight{Windkraft in heutiger Zeit immer wichtiger (Zahlen und Fakten aus Quelle), 
-Windkraft kann effizienter generiert werden, wenn Prognosen über die folgenden Stunden bekannt sind. vgl Paper 
-Hier auch schon direkt Bezug auf Wichtigkeit zw Prognose von Wind und Windkraftwerken herstellen.
-At home Nutzung interessant, Steuerung von daheim, eigene Nutzung, bla
-}
+Die Windenergie leistete in den vergangen Jahren einen stetig wachsenden Beitrag zur deutschen Stromerzeugung. 
+Seit dem Jahr 2015 "ist die Stromerzeugung aus Wind [...] um mehr als 60 Prozent angestiegen" \highlight{Quelle Umweltbundesamt, hilfe wie kann ich hier Gänsefüßchen machen?}
+Laut dem Statistischen Bundesamt wurden im Jahr 2020 24\% des Gesamtstrommixes in Deutschland aus Windenergie gewonnen. \highlight{vgl. Bild von Strommix} 
+Das macht den größten Anteil der erneuerbaren Energien aus \highlight{vgl. Umweltbundesamt}
+Jedoch ist das Stromnetz zu veraltet um mit diesen Entwicklungen, hauptsächlich den leistungsstarken Windparks auf See, 
+mithalten zu können. Die Netze .. gelangen an die Grenzen ihrer Übertragungskapazität .. \highlight{Quelle windenergie.de}.
+Eine mögliche Lösung für dieses Problem ist die effizientere Nutzung des Netzes. Freileitungsmonitoring kann dieses Ziel 
+durch eine Überwachung der Windgeschwindigkeit und der Umgebungstemperatur erreichen, indem daraus die zulässige Übertragungskapazität ermittelt werden kann. \highlight{vgl Quelle davor}
+Aus diesem Grund ist es von Interesse Vorhersagen über Windgeschwindigkeit und -richtung treffen zu können, um 
+die Nutzung des Stromnetzes zu optimieren. In dieser Seminararbeit soll ein Modell entwickelt werden, das 
+Windgeschwindigkeit und -richtung eine bis 24 Stunden im Voraus vorhersagen kann.
+
+
+%%%%%BILD ANFANG
+\begin{figure}[tph]
+	\begin{center}
+		\includegraphics[width=.8\textwidth]{./images/bruttostromerzeugung-erneuerbare-energien.png}
+		\caption{Bruttostromerzeugung im Jahr 2020 in Deutschland}
+		\label{fig:strommix_deutschland}
+	\end{center}
+\end{figure}
+%%%%%BILD ENDE
 
 \highlight{Sehr gute einleitende Graphiken zur aktuellen Lage der Windkraft in Deutschland, Bilder lassen sich als PDF runterladen!\\
 https://www.wind-energie.de/themen/zahlen-und-fakten/deutschland/}
@@ -206,11 +223,7 @@ https://www.wind-energie.de/themen/zahlen-und-fakten/deutschland/}
 %%%%%BILD ENDE
 
 \section{Ziel dieser Arbeit}
-
-\highlight{Aus Einleitung ableiten, dass Vorhersagemodell für Windgeschwindikeit, wie im großen Stil in Windparks benötigt wird auch 
-für at home Anwender mit eigener Wetterstation interessant. Hierbei sollte es aber einfacher sein Zugang zu solchen Mitteln zu 
-erhalten. Kombi aus Wettervorhersage für eigenen Ort/ Einspeisen in Netz aus Messstationen (Mehr gedeckte Info durch kleine Anlagen), 
-Modell für mit kontinentalem Klima. (Noch etwas Wirr. Was ist das genaue und klare Ziel von unserem Modell? :o)}
+\highlight{soll in Einordnung in Literatur einfließen. Das wäre zu wenig Inhalt für einen Abschnitt.}
 
 \section{Einordnung in die Literatur}
 
@@ -229,22 +242,13 @@ Zunehmend werden auch Neuronale Netze, welche in letzter Zeit stark an Popularit
 Art verwendet. Neben Ansätzen basierend auf CNN \highlight{Zhao et al. 2020, Chen et al. 2019}, MLP \highlight{Haidar et al. 2019}, 
 GS-ANN \highlight{Khodayar et al. 2018}, Back propagation \highlight{Wang et al. 2012} und Radial basis function NN \highlight{Chang et al. 2017}, 
 waren Ansätze, die auf RNN basieren \highlight{Xiaoyun 2016, Cao et al. 2012} auffällig oft vertreten. Hierbei waren LSTMs  
-\highlight{Dong et al. 2018, Delgado et al. 2021, Moharm et al. 2020, Prabha et al. 2019} oder auch LSTMs in Kombination mit 
+\highlight{Dong et al. 2018, Delgado et al. 2021, Moharm et al. 2020, Prabha et al. 2019, Cali et al. 2019} oder auch LSTMs in Kombination mit 
 anderen Technologien \highlight{Chen et al. 2019, Lopez et al. 2016, Liu et al. 2018, Yao et al. 2018} sehr prominent. 
 
 
 \highlight{warum LSTM besser als SRIMA oder so wegen lange sicht/kurze sicht bla, Eingehen auf stündlich/Ort/ also Bezug auf 
 unser Ziel, Hierbei South dakota und LSTM genauer anschauen (plus ergebnisbezug), Showed promising results These warum wir auch 
 LSTM nehmen}
-
-\highlight{Dieser Block ist alt und shitty: }\\
-Mit der Prognose von Windgeschwindigkeit, oft auch im Zusammenhang mit Windenergie, wurde sich in der Vergangenheit häufig beschäftigt. 
-Ein bekannter deterministischer Ansatz ist das Lorenz-Modell \highlight{Quelle Lorenz}. 
-Dieser Ansatz ist eher komplex. Innerhalb des letzten Jahrzehnts erlangte das Thema Machine Learning mehr Popularität. \highlight{Der vorige Satz ist schrecklich, aber es fehlt noch etwas.}
-Bei Veröffentlichungen der letzten 15 Jahre zum Thema Windgeschwindigkeitsprognose kann in zwei Bereiche unterschieden werden. 
-Die Verwendung autoregressiver Modelle, wie beispielsweise das bekannte SARIMA-Modell \highlight{Quellen nennen} und die Verwendung Neuronaler Netze. 
-Bei zweitem Ansatz waren wieder Trends erkennbar, nämlich ein RNN mit LSTM \highlight{Quellen wo das verwendet}. 
-\highlight{Sollen die anderen NN Ansätze auch erwähnt werden??}\\
 
 \highlight{ Das kann bei Einordnung aufgegriffen werden. Ist eher Rechtfertigung Wahl Modell.
 	Aus Einleitung (Windpark Windprognose) werden Ziele dieser Seminararbeit ersichtlich. 
