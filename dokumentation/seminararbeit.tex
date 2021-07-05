@@ -13,7 +13,16 @@ bibliography=numbered
 
 
 %%%%% SCHRIFTSATZ, SPRACHE, SCHRIFTART
-\usepackage[T1]{fontenc}
+%%% USE WITH pdflatex, siehe https://tex.stackexchange.com/a/44701
+%\usepackage[T1]{fontenc}
+%\usepackage[utf8]{inputenc}
+%%% USE WITH xelatex
+\usepackage{fontspec}
+\defaultfontfeatures{Ligatures=TeX}
+%%% USE WITH lualatex
+%\usepackage{luatextra}
+%\defaultfontfeatures{Ligatures=TeX}
+%%%
 \usepackage[ngerman]{babel}
 % Nur mit LuaTex Interpreter nutzbar
 %\usepackage{mathfont} % Dieses Packet läd auch fontspec
@@ -35,6 +44,9 @@ bibliography=numbered
 %%%%% MATHEMATIK
 \usepackage{amssymb, amsmath}
 \usepackage{isomath}
+\usepackage{pifont} % Für \cmark und \xmark
+\newcommand{\cmark}{\ding{51}}%
+\newcommand{\xmark}{\ding{55}}%
 
 
 %%%%% BIBLIOGRAPHIE
@@ -306,41 +318,72 @@ Beschreibung versch Architekturen}
 \chapter{Implementierung des Modells}
 
 \section{Datenbasis}
-Für das Modell wurde eine Kombination aus gemessenen Daten von Stationen des DWD (Deutscher Wetterdienst), sowie künstlich generierten Daten verwendet.
-Während die gemessenen Daten die aktuelle Wetterlage an einigen Standorten Deutschlands beinhalten, erhalten die generierten Daten darüber hinaus weitere Informationen zu saisonalen und Tagesverlauf-abhängigen Faktoren. 
-Genauer wird hierauf jedoch in den folgenden Kapiteln eingegangen. 
-\highlight{Blabla über Daten die für Neuronales Netz bla. Vielleicht auch nur was unterschied reale und generierte Daten ist.}
+Zur Erstellung des Modells wurde eine Kombination aus gemessenen Daten von Stationen des Deutschen Wetterdienstes (DWD) sowie künstlich generierten Daten verwendet.
+Während die gemessenen Daten die aktuelle Wetterlage an einigen Standorten Deutschlands beinhalten, geben die generierten Daten darüber hinaus weitere Informationen zu saisonalen und täglichen Abhängigkeiten. Die Zusammensetzung des Rohdatzensatzes kann der Abbildung \ref{fig:rohdatensatz} entnommen werden. Nach der in Kapitel \ref{section:Datenaufbereitung} beschriebenen Datenaufbereitung kann dieser Datensatz zum Training des neuronalen Netzes genutzt werden.
 
 %%%%%BILD ANFANG
 \begin{figure}[tph]
 	\begin{center}
 		\includegraphics[]{./images/rohdatensatz.pdf}
-		\caption{\highlight{{TODO}}}
+		\caption{Zusammensetzung des Rohdatensatzes}
 		\label{fig:rohdatensatz}
 	\end{center}
 \end{figure}
 %%%%%BILD ENDE
 
 \subsection{Reale Messdaten}
-Die realen Messdaten, welche von der Webseite des DWD kostenlos downloadbar sind, wurden folgend ausgewählt.
-Von fünf Messtationen (Münsingen-Apfelstetten, Stötten, Günzburg und Laupheim), welche sich in einem Radius von 
-\highlight{keine Ahnung wie vielen} Kilometern befinden, wurden stündliche gemittelte Messdaten verwendet. Hierzu gehören Windrichtung, -geschwindigkeit , Sonnenscheindauer, Druck, Temperatur und Luftfeuchtigkeit. 
-Die Daten umfassen die Jahre \highlight{2008} bis 2021.
-\highlight{Daten vom DWD, Windrichtung, -geschwindigkeit (Stundenmittel), Sonnenscheindauer, Druck, Temp, Luftfeuchtigkeit. 
-Stündliche Daten im Zeitraum 2008-2021, Wie viele Daten fehlen insgesamt (Maybe Grafik?). 
-Tabelle mit Wetterstationen. (plus PLZ oder Kilometer von prognos. Messtation entfernt) . 
-Stichwort Windrose.}
+Die realen Messdaten werden vom Deutschen Wetterdienstes über einen Webserver kostenlos zur Verfügung gestellt. In dieser Arbeit sind die Daten in stündlicher Auflösung von vier Messtationen (Münsingen-Apfelstetten, Stötten, Günzburg und Laupheim) im Ulmer Umkreis zum Einsatz gekommen. Die genaue geographische Lage kann der Abbildung \ref{fig:map} entnommen werden. Der Deutsche Wetterdienst betreibt im Ulmer Umkreis zwar noch weitere Wetterstationen, jedoch messen diese die Windgeschwindigkeit und Windrichtung nicht. Insgesamt umfasst der Datensatz die Jahre \highlight{2008?} bis 2021. Davon sind jedoch \highlight{X\%} Datenlücken. Diese Lücken werden in Kapitel \ref{section:Datenlücken} genauer beleuchtet. 
+
+%%%%%BILD ANFANG
+\begin{figure}[tph]
+	\begin{center}
+		\includegraphics[width=\textwidth]{./images/map.png}
+		\caption{Geographische Lage der Messstationen \cite{2021_OpenStreetMap-Contributors_UMap}}
+		\label{fig:map}
+	\end{center}
+\end{figure}
+%%%%%BILD ENDE
+
+Zur Prognose der Windgeschwindigkeit und Windrichtung können neben deren selbst \highlight{(Satzbau?)} auch andere Messgrößen wie Sonnenscheindauer, Luftdruck, Temperatur und Luftfeuchtigkeit genutzt werden. Jedoch wird nicht jede dieser Größen an jeder Messstation bestimmt. Die folgende Tabelle \ref{tab:messgrößen} gibt einen detaillierteren Aufschluss über die tatsächlich gemessenen Größen.
+
+%%%%%TABELLE ANFANG
+\begin{table}[ht]
+	\centering
+	\caption{Gemessene Größen je Messstation}
+	\begin{tabular}{|l|c|c|c|c|}
+		\hline
+        \rowcolor{color80}
+		& \textbf{Münsingen-Apfelstetten} & \textbf{Stötten} & \textbf{Günzburg} & \textbf{Laupheim} \\\hline
+		Windgeschwindigkeit & \cmark & \cmark & \cmark & \cmark \\\hline
+		Windrichtung & \cmark & \cmark & \cmark & \cmark \\\hline
+		Sonnenscheindauer & \cmark & \cmark & \xmark & \xmark \\\hline
+		Luftdruck & \xmark & \cmark & \xmark & \cmark \\\hline
+		Temperatur & \cmark & \cmark & \cmark & \cmark \\\hline
+		Luftfeuchtigkeit & \cmark & \cmark & \cmark & \cmark \\\hline
+	\end{tabular}
+\label{tab:messgrößen}
+\end{table}
+%%%%%TABELLE ENDE
+
+Um einen tieferen Einblick in das Verhalten des Windes an der jeweiligen Messstation zu erhalten, bieten sich Windrosen zur Visualisierung an. Dabei wird die Häufigkeit der Windgeschwindigkeit in Abhängigkeit der Windrichtung radial dargestellt. Der Abbildung \ref{fig:windroses} können die Windrosen für die vier ausgewählten Messstationen entnommen werden. Wie in den südlichen Regionen Deutschlands zu erwarten \highlight{satzbau?}, ist die vorherschende Windrichtung West bis Südwest. 
+
+Bei detaillierter Analyse fällt jedoch auf, dass der Wind an der Messstationen Münsingen-Apfelstetten besonders bei Leichtwind sehr volatil ist. Der Grund hierfür könnte in der Tatsache begründet sein, dass sich die Messstation in einem flachen Tal mit Nord-Südlicher Ausrichtung befindet. Desweiteren lässt sich erkennen, dass unter den vier Messstationen in Stötten die stärksten Winde auftreten. 
 
 %%%%%BILD ANFANG
 \begin{figure}[tph]
 	\begin{center}
 		\includegraphics[]{./images/windroses.pdf}
-		\caption{\highlight{{TODO}}}
+		\caption{Windrosen der vier ausgewählten Messstationen}
 		\label{fig:windroses}
 	\end{center}
 \end{figure}
 %%%%%BILD ENDE
 
+Im Folgenden wird versucht, die Windgeschwindigkeit \highlight{und Windrichtung?} für die Messstation in Günzburg \highlight{und Stötten?} zu prognostizieren. 
+
+\highlight{Warum Günzburg? 1. Liegt östlich der anderen Stationen 2. Relativ klare Windrose}
+
+\highlight{Warum Stötten? 1. Alle Messgrößen werden vorort gemessen 2. Stärkster Wind}
 
 \subsection{Generierte Messdaten}
 Die Wetterlage in Deutschland weist wiederkehrende Trends innerhalb eines Tages und auch innerhalb eines Jahres auf \highlight{Kurze Sätze zu: Tag: Sonneneinstrahlung warm, Nachts Kalt; Jahr: Sommer/Winter}. Aus diesem Grund wurden zusätzlich zu den 
@@ -369,7 +412,7 @@ Formeln, kurz Zusammenhang zu Uhrzeit}\\
 	cal_{day,i} &= \frac{1}{2}(\cos(\pi (\frac{HOD_i}{12}+ 1)) + 1)\label{eq:cal_day}
 \end{align}
 
-\section{Datenaufbereitung}
+\section{Datenaufbereitung}\label{section:Datenaufbereitung}
 \highlight{hier geht es um die ausgewählten Datensätze, umgang mit Fehldaten, 
 Umwandeln der Daten, etc;  
 Flowchart über einzelne Schitte der Datenaufbereitung von Roh zu fertige Daten für NN}
@@ -434,7 +477,9 @@ Normalisieren: Mit  Min-Max Normalisierung; Tabelle und nach einzelnen Datenreih
 \end{figure}
 %%%%%BILD ENDE
 
-\subsection{Datenlücken}
+\subsection{Datenlücken}\label{section:Datenlücken}
+\highlight{Grafik wo und wie lange es im Datensatz Lücken gibt --> Heatmap}
+
 \highlight{Zeitreihen separat angeschaut (Spaltenweise Lücken interpoliert/korrigiert (Nur eine Art Daten angesehen, wie z.B. Temperatur nur mit umliegenden Temperaturdaten verglichen) 
 Maximale Lücke 4 Stunden (wurde noch linear interpoliert); 
 Jetzt sind nur noch größere Lücken als 4 Stunden im Datensatz, wir teilen entlang dieser großen Lücken unsere Tabelle in kleinere Tabellen (chunks), keine Fehldaten mehr :)}
