@@ -8,6 +8,7 @@ toc=listofnumbered, %Tab.- & Abb.verzeichnis ins TOC
 toc=chapterentrydotfill, %TOC: Punkte auch nach Kapitel
 numbers=noenddot, %Kapitelüberschrift: Kein Endpunkt z.B. 2.2. --> 2.2
 captions=tableheading, %Mehr Platz bei Captionüberschriften (Tabelle)
+bibliography=numbered
 ]{scrreprt}
 
 
@@ -232,22 +233,21 @@ https://www.wind-energie.de/themen/zahlen-und-fakten/deutschland/}
 \section{Einordnung in die Literatur}
 
 In der bestehenden Literatur im Bereich der Windgeschwindigkeits-, beziehungsweise Wettervorhersage, ist eine Entfernung von 
-deterministischen Modellen \highlight{Lorenz 1963} hin zu Zeitreihenanalyse auf Basis historischer Messdaten erkennbar. 
+deterministischen Modellen \cite{1963_Lorenz_DeterministicNonperiodicFlow} hin zu Zeitreihenanalyse auf Basis historischer Messdaten erkennbar. 
 Innerhalb der letzten zwei Dekaden sind einige Ansätze in der Zeitreihenanalyse zu differenzieren. Klassische Methoden in der 
-Zeitreihenprognose, wie das ARMA- und ARIMA-Modell \highlight{Cadenas et al. 2016, Torres et al. 2005, Erdem et al. 2011} oder auch 
+Zeitreihenprognose, wie das ARMA- und ARIMA-Modell \cite{2016_Cadenas_WindSpeedPrediction} oder auch 
 die Weiterentwicklung dessen, mit Berücksichtigung eines saisonalen Einflusses, das SARIMA-Modell 
-\highlight{Alencar et al. 2018, García et al. 2019, Haddad et al. 2019, Igboekwe et al. 2002, Sami et al. 2012, Meng 2010} sind 
+\highlight{Es fehlt noch Meng 2010; Nicht in Ecxelliste aufgeführt}\cite{2018_Alencar_HybridApproachCombining,2019_TenaGarcia_ForecastDailyOutput,2019_Haddad_WindSolarForecasting,2002_Igboekwe_StochasticSimulationHourly,2012_MuhammadSami_PredictionRateDust} sind 
 nicht nur ein häufig verwendetes Vorhersagemodell, sondern werden gerade deshalb auch häufig als Vergleichsmodell herangezogen 
-\highlight{Cao et al. 2012, Kreuzer et al. 2020}. Darüber hinaus existieren das VAR-, VARTA und auch VARTAX-Modelle 
-\highlight{Orpia et al. 2014, Dowell 2015, Ewing et al. 2007, He et al. 2015, Koivisto et al. 2016}, 
+\highlight{Es fehlt Kreuzer et al. 2020; Nicht in Ecxelliste aufgeführt}\cite{2012_Cao_ForecastingWindSpeed}. Darüber hinaus existieren das VAR-, VARTA und auch VARTAX-Modelle 
+\highlight{Es fehlt Orpia et al. 2014, Dowell 2015}\cite{2007_Ewing_TimeSeriesAnalysis,2015_He_SparsifiedVectorAutoregressive,2016_Koivisto_WindSpeedModeling}, 
 welche im Gegensatz zu ARMA-Modellen mehrere Variablen besitzen. Auch wird es versucht das ARIMA-Modell mit Clustermethoden 
-zu verbessern oder mit klassischen Machine Learning Konzepten zu kombinieren \highlight{Zhang et al. 2017, Guo et al. 2011}. 
+zu verbessern oder mit klassischen Machine Learning Konzepten zu kombinieren \cite{2017_Zhang_HybridMethodShortTerm,2011_Guo_CorrectedHybridApproach}. 
 Zunehmend werden auch Neuronale Netze, welche in letzter Zeit stark an Popularität zugenommen haben, für Problemstellungen dieser 
-Art verwendet. Neben Ansätzen basierend auf CNN \highlight{Zhao et al. 2020, Chen et al. 2019}, MLP \highlight{Haidar et al. 2019}, 
-GS-ANN \highlight{Khodayar et al. 2018}, Back propagation \highlight{Wang et al. 2012} und Radial basis function NN \highlight{Chang et al. 2017}, 
-waren Ansätze, die auf RNN basieren \highlight{Xiaoyun 2016, Cao et al. 2012} auffällig oft vertreten. Hierbei waren LSTMs  
-\highlight{Dong et al. 2018, Delgado et al. 2021, Moharm et al. 2020, Prabha et al. 2019, Cali et al. 2019} oder auch LSTMs in Kombination mit 
-anderen Technologien \highlight{Chen et al. 2019, Lopez et al. 2016, Liu et al. 2018, Yao et al. 2018} sehr prominent. 
+Art verwendet. Neben Ansätzen basierend auf CNN \cite{2020_Zhao_ShorttermAverageWind,2019_Chen_MultifactorSpatiotemporalCorrelation}, MLP \cite{2019_Samet_EvaluationNeuralNetworkbased}, 
+GS-ANN \cite{2019_Khodayar_IntervalDeepGenerative}, Back propagation \cite{2012_Wang_ShorttermWindSpeed} und Radial basis function NN \cite{2017_Chang_ImprovedNeuralNetworkbased}, 
+waren Ansätze, die auf RNN basieren auffällig oft vertreten. Hierbei waren LSTMs \cite{2018_Dong_WindPowerPrediction,2020_Delgado_WindTurbineData,2020_Moharm_WindSpeedForecast,2019_Prabha_WindSpeedForecasting,2019_Cali_ShorttermWindPower} oder auch LSTMs in Kombination mit 
+anderen Technologien \cite{2019_Chen_MultifactorSpatiotemporalCorrelation,2016_Allende_RecurrentNetworksWind,2018_Liu_WindSpeedForecasting,2018_Yao_MultidimensionalLSTMNetworks} sehr prominent. 
 
 
 \highlight{warum LSTM besser als SRIMA oder so wegen lange sicht/kurze sicht bla, Eingehen auf stündlich/Ort/ also Bezug auf 
@@ -375,7 +375,7 @@ Umwandeln der Daten, etc;
 Flowchart über einzelne Schitte der Datenaufbereitung von Roh zu fertige Daten für NN}
 
 \subsection{Winddaten als Vektoren}
-Der Datensatz des DWD enthält die Windrichtung als einen Winkel, welcher von Norden aus gemessen wird und die Geschwindigkeit des Windes in m/s. Diese polare Darstellung wurde in eine kartesische Darstellung umgewandelt (siehe Abildung \ref{fig:pol2cart}. Mithilfe der Gleichung \highlight{xy (Formel noch einfügen)} ist es möglich Aus Winkel und Betrag des Vektors eine X- und eine Y-Komponente des Vektors zu erhalten. Ziel dieser Umwandlung ist es das Problem zirkulärer Daten, womit Probleme bei der Vorhersage von Neuronalen Netzen entstehen können, zu beseitigen. Mit dieser Umwandlung erhält das Modell den Betrag der X- und der Y-Komponente als Eingabeparameter statt des Betrags und des zirkulären Winkels. Nach der Prädiktion werden die erhaltenen Daten wieder in eine polare Darstellung umgerechnet. In Abbildung \ref{fig:pol2cart2} sind die zwei Parameter zur Beschreibung des Windvektors in polarer und in kartesischer Darstellung zueinander dargestellt \highlight{muss man anders schreiben!!! Wie nennt man das, wenn man x und y zueinander plottet um Verteilung anzusehen???}. Hier wird ersichtlich, dass bei \highlight{kartesischer Darstellung eine breitere Verteilung der Daten möglich ist. Dazu wird der Fall, dass hier ein Winkel von 0 Grad und ein Winkel von 359 Grad, welche derselben Windrichtung entsprechen, jedoch am weitesten entfernt voneinander im Koordinatensystem liegen, bei kartesischer Darstellung vermieden wird. (Das muss man anders formulieren!!)} 
+Der Datensatz des DWD enthält die Windrichtung als einen Winkel, welcher von Norden aus gemessen wird und die Geschwindigkeit des Windes in m/s. Diese polare Darstellung wurde in eine kartesische Darstellung umgewandelt (siehe Abbildung \ref{fig:pol2cart}. Mithilfe der Gleichung \highlight{xy (Formel noch einfügen)} ist es möglich Aus Winkel und Betrag des Vektors eine X- und eine Y-Komponente des Vektors zu erhalten. Ziel dieser Umwandlung ist es das Problem zirkulärer Daten, womit Probleme bei der Vorhersage von Neuronalen Netzen entstehen können, zu beseitigen. Mit dieser Umwandlung erhält das Modell den Betrag der X- und der Y-Komponente als Eingabeparameter statt des Betrags und des zirkulären Winkels. Nach der Prädiktion werden die erhaltenen Daten wieder in eine polare Darstellung umgerechnet. In Abbildung \ref{fig:pol2cart2} sind die zwei Parameter zur Beschreibung des Windvektors in polarer und in kartesischer Darstellung zueinander dargestellt \highlight{muss man anders schreiben!!! Wie nennt man das, wenn man x und y zueinander plottet um Verteilung anzusehen???}. Hier wird ersichtlich, dass bei \highlight{kartesischer Darstellung eine breitere Verteilung der Daten möglich ist. Dazu wird der Fall, dass hier ein Winkel von 0 Grad und ein Winkel von 359 Grad, welche derselben Windrichtung entsprechen, jedoch am weitesten entfernt voneinander im Koordinatensystem liegen, bei kartesischer Darstellung vermieden wird. (Das muss man anders formulieren!!)} 
 \highlight{GRAFIK2 (die von Tensorflow für eine ausgewählte Wetterstation); 
 Formulieren wie es geht und formulieren warum (siehe Grafik2) x-y so viel besser sein solte als rad-betrag. Sagen, dass diese Umwandlung eine Annahme ist und wir es später testen und vergleichen.}
 
@@ -677,5 +677,5 @@ Bild \autoref{fig:testbild} referenzieren.
 %                                                                     %
 %                                                                     %
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\chapter{Quellen}
+\printbibliography[title=Literaturverzeichnis]
 \end{document}
