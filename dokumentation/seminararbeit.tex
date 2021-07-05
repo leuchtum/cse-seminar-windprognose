@@ -386,11 +386,25 @@ Im Folgenden wird versucht, die Windgeschwindigkeit \highlight{und Windrichtung?
 \highlight{Warum Stötten? 1. Alle Messgrößen werden vorort gemessen 2. Stärkster Wind}
 
 \subsection{Generierte Messdaten}
-Die Wetterlage in Deutschland weist wiederkehrende Trends innerhalb eines Tages und auch innerhalb eines Jahres auf \highlight{Kurze Sätze zu: Tag: Sonneneinstrahlung warm, Nachts Kalt; Jahr: Sommer/Winter}. Aus diesem Grund wurden zusätzlich zu den 
-gemessenen Daten der Wetterstationen des DWD noch zwei weitere Variablen eingeführt, die Auskunft über die Tageszeit und die Jahreszeit gibt. Hiermit soll es dem Modell später leichter Fallen Beziehungen zwischen der Tageszeit, Jahreszeit und den realen Messdaten herzustellen. Diese Daten sind jeweils eine Sinusfunktion mit einer Amplitude von 0.5, wobei der Wert um 0:00 der 0 und um 12:00 der 1 entspricht beziehungsweise die ... \highlight{01.01. 00:00 (erster tag des Jahres) 182 Tag um 12:00 Mittag ist 1; Formeln dazu sind die unten} . Die Periodendauer beträgt jeweils 24 Stunden oder 12 Monate. \\
+Die Wetterlage in Deutschland weist wiederkehrende Trends innerhalb eines Tages und auch innerhalb eines Jahres auf. Offensichtlich ist es am Tag wärmer als in der Nacht und im Sommer wärmer als im Winter. Um diese Information für das Modell nutzbar zu machen, werden zusätzlich zu den gemessenen Daten zwei weitere Variablen eingeführt: \highlight{Warum Sinus? Weil zirkuläre Daten! 24h=0h!}
 
-\highlight{Kalendarische Daten: Tagessinus und Saisonalen Sinus (Korrelationskoeffizienten Wind zu Uhrzeit (WAS SEHE ICH IN DIESEN ZAHLEN? HELP!); Histogramm Uhrzeit und Windverteilung (WAS IST DAS NOCHMAL?)); 
-Formeln, kurz Zusammenhang zu Uhrzeit}\\
+\begin{itemize}
+	\item \textit{Tageszeit}\\
+	Über die folgende Funktion wird die Stunde des Tages $HOD \in [0, \dots, 23]$ in einen Sinuswelle umgewandelt. Das Maximum wird um 12 Uhr, das Minimum um 0 Uhr erreicht. Abgebildet wird auf das Intervall $[0,1]$.
+	\begin{equation}\label{eq:cal_day}
+		cal_{day,i} = \frac{1}{2}(\cos(\pi (\frac{HOD_i}{12}+ 1)) + 1)
+	\end{equation}
+	\item \textit{Jahreszeit}\\
+	Die folgende Funktion transformiert den Tag des Jahres $DOY \in [1, \dots, 365]$ in eine Sinuswelle. Schaltjahre werden nicht berücksichtigt. Außerdem wird die Stunde des Tages $HOD \in [0, \dots, 23]$ mit einbezogen. Diese spielt für den Funktionswert jedoch nur eine untergeordnete Rolle. Das Maximum wird am 1.Juli, das Minimum am 1.Januar erreicht. Die Funktion bildet ebenfalls auf das Intervall $[0,1]$ ab.
+	\begin{equation}\label{eq:cal_seas}
+		cal_{seas,i} = \frac{1}{2}(\cos(\pi (\frac{DOY_i -1 + \frac{HOD_i}{24}}{\frac{365}{2}}+ 1)) + 1)
+	\end{equation}
+	
+\end{itemize}
+
+\highlight{Eventuell erwähnen, das diese Formeln nicht optimal sind. Grund: Höchste Tagestemperatur i.A. nicht um 12 Uhr sondern um 13-14 Uhr, Höchste Jahrestemperatur i.A. nicht am 1.Juli sondern Mitte August. Außerdem ist z.B. $dal_{day}(HOD=6Uhr) = dal_{day}(HOD=18Uhr)$}
+
+
 
 \subsection{Analyse der Datenbasis}
 \highlight{Abbildung 3.5: Korrelation calseas-T,... (Vorallem auf einige Parameter aus der Abbildung eingehen)}
@@ -405,12 +419,7 @@ Formeln, kurz Zusammenhang zu Uhrzeit}\\
 \end{figure}
 %%%%%BILD ENDE
 
-\highlight{DOY ist DayOfYear und HOD ist HourOfDay; $=$-Zeichen am besten übereinander}
-
-\begin{align}
-	cal_{seas,i} &= \frac{1}{2}(\cos(\pi (\frac{DOY_i -1 + \frac{HOD_i}{24}}{\frac{365}{2}}+ 1)) + 1)\label{eq:cal_seas}\\
-	cal_{day,i} &= \frac{1}{2}(\cos(\pi (\frac{HOD_i}{12}+ 1)) + 1)\label{eq:cal_day}
-\end{align}
+\highlight{(Korrelationskoeffizienten Wind zu Uhrzeit (WAS SEHE ICH IN DIESEN ZAHLEN? HELP!); Histogramm Uhrzeit und Windverteilung (WAS IST DAS NOCHMAL?))}
 
 \section{Datenaufbereitung}\label{section:Datenaufbereitung}
 \highlight{hier geht es um die ausgewählten Datensätze, umgang mit Fehldaten, 
