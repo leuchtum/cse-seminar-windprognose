@@ -269,6 +269,8 @@ anderen Technologien \cite{2019_Chen_MultifactorSpatiotemporalCorrelation,2016_A
 unser Ziel, Hierbei South dakota und LSTM genauer anschauen (plus ergebnisbezug), Showed promising results These warum wir auch 
 LSTM nehmen}
 
+\highlight{Unterscheiden zwischen Single-Step und Multi-Step Ahead Ansatz}
+
 \highlight{ Das kann bei Einordnung aufgegriffen werden. Ist eher Rechtfertigung Wahl Modell.
 	Aus Einleitung (Windpark Windprognose) werden Ziele dieser Seminararbeit ersichtlich. 
 Mit Daten aus Deutschland (Erwähnte Paper in 1. Hatten ausschließlich Wetterdaten verwendet, dessen Klima stark von kontinentalem Klima abweicht) 
@@ -308,6 +310,8 @@ Beschreibung versch Architekturen}
 \section{Das SARIMA-Modell}
 \highlight{Grob SARIMA-Modell erklären. Wenn wir es als Benchmark verwenden}
 
+\section{Zirkuläre Daten}\label{section:circ_data}
+
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %                                                                     %
 %                                                                     %
@@ -328,7 +332,7 @@ Während die gemessenen Daten die aktuelle Wetterlage an einigen Standorten Deut
 \begin{figure}[tph]
 	\begin{center}
 		\includegraphics[]{./images/rohdatensatz.pdf}
-		\caption{Zusammensetzung des Rohdatensatzes}
+		\caption{Zusammensetzung des Rohdatensatzes \highlight{Spalte einfügen: Auflösung}}
 		\label{fig:rohdatensatz}
 	\end{center}
 \end{figure}
@@ -389,15 +393,15 @@ Im Folgenden wird versucht, die Windgeschwindigkeit \highlight{und Windrichtung?
 \highlight{Warum Stötten? 1. Alle Messgrößen werden vorort gemessen 2. Stärkster Wind}
 
 \subsection{Generierte Messdaten}\label{section:gen_daten}
-Die Wetterlage in Deutschland weist wiederkehrende Trends innerhalb eines Tages und auch innerhalb eines Jahres auf. Offensichtlich ist es am Tag wärmer als in der Nacht und im Sommer wärmer als im Winter. Um diese Information für das Modell nutzbar zu machen, werden zusätzlich zu den gemessenen Daten zwei weitere Variablen eingeführt: \highlight{Warum Sinus? Weil zirkuläre Daten! 24h=0h!}
+Die Wetterlage in Deutschland weist wiederkehrende Trends innerhalb eines Tages und auch innerhalb eines Jahres auf. Offensichtlich ist es am Tag wärmer als in der Nacht und im Sommer wärmer als im Winter. Um diese Information für das Modell nutzbar zu machen, werden zusätzlich zu den gemessenen Daten zwei weitere Variablen eingeführt: \highlight{Warum Sinus? Weil zirkuläre Daten! 24h=0h! Oben gibts das Kapitel \ref{section:circ_data} in dem zirkuläre Daten erklärt werden, d.h. erwähnen!}
 
 \begin{itemize}
-	\item \textit{Tageszeit}\\
+	\item \textit{Kalendarischer Tageswert}\\
 	Über die folgende Funktion wird die Stunde des Tages $HOD \in [0, \dots, 23]$ in einen Sinuswelle umgewandelt. Das Maximum wird um 12 Uhr, das Minimum um 0 Uhr erreicht. Abgebildet wird auf das Intervall $[0,1]$.
 	\begin{equation}\label{eq:cal_day}
 		cal_{day} = \frac{1}{2}\Big(\cos \big(\pi (\frac{HOD}{12}+ 1)\big) + 1 \Big)
 	\end{equation}
-	\item \textit{Jahreszeit}\\
+	\item \textit{Kalendarischer Saisonalwert}\\
 	Die folgende Funktion transformiert den Tag des Jahres $DOY \in [1, \dots, 365]$ in eine Sinuswelle. Schaltjahre werden nicht berücksichtigt. Außerdem wird die Stunde des Tages $HOD \in [0, \dots, 23]$ mit einbezogen. Diese spielt für den Funktionswert jedoch nur eine untergeordnete Rolle. Das Maximum wird am 1.Juli, das Minimum am 1.Januar erreicht. Die Funktion bildet ebenfalls auf das Intervall $[0,1]$ ab.
 	\begin{equation}\label{eq:cal_seas}
 		cal_{seas} = \frac{1}{2}\Big(\cos\big(\pi (\frac{DOY -1 + \frac{HOD}{24}}{\frac{365}{2}}+ 1)\big) + 1\Big)
@@ -435,7 +439,13 @@ Umwandeln der Daten, etc;
 Flowchart über einzelne Schitte der Datenaufbereitung von Roh zu fertige Daten für NN}
 
 \subsection{Winddaten als Vektoren}
-Der Datensatz des DWD enthält die Windrichtung als einen Winkel, welcher von Norden aus gemessen wird und die Geschwindigkeit des Windes in m/s. Diese polare Darstellung wurde in eine kartesische Darstellung umgewandelt (siehe Abbildung \ref{fig:pol2cart}. Mithilfe der Gleichung \highlight{xy (Formel noch einfügen)} ist es möglich Aus Winkel und Betrag des Vektors eine X- und eine Y-Komponente des Vektors zu erhalten. Ziel dieser Umwandlung ist es das Problem zirkulärer Daten, womit Probleme bei der Vorhersage von Neuronalen Netzen entstehen können, zu beseitigen. Mit dieser Umwandlung erhält das Modell den Betrag der X- und der Y-Komponente als Eingabeparameter statt des Betrags und des zirkulären Winkels. Nach der Prädiktion werden die erhaltenen Daten wieder in eine polare Darstellung umgerechnet. In Abbildung \ref{fig:pol2cart2} sind die zwei Parameter zur Beschreibung des Windvektors in polarer und in kartesischer Darstellung zueinander dargestellt \highlight{muss man anders schreiben!!! Wie nennt man das, wenn man x und y zueinander plottet um Verteilung anzusehen???}. Hier wird ersichtlich, dass bei \highlight{kartesischer Darstellung eine breitere Verteilung der Daten möglich ist. Dazu wird der Fall, dass hier ein Winkel von 0 Grad und ein Winkel von 359 Grad, welche derselben Windrichtung entsprechen, jedoch am weitesten entfernt voneinander im Koordinatensystem liegen, bei kartesischer Darstellung vermieden wird. (Das muss man anders formulieren!!)} 
+Die Windmessung erfolgt (von modernen Laser- oder Schallmessungen abgesehen) über einen Schalenanemometer und eine Windfahne. Zu jedem Messzeitpunkt werden also zwei Werte aufgenommen. Die Windgeschwindigkeit $v$ wird in $m/s$ gemessen. Die Windrichtung $\varphi$ wird typischer Weise in Grad angegeben, es gilt also $\varphi \in [0,360)$. Norden wird dabei mit $\varphi_{north} = 0^\circ$ gewählt.  
+
+Der Datensatz des Deutschen Wetterdienstes löst die Windgeschwindigkeit mit $0,1 m/s$ und wie Windrichtung mit $10^\circ$ auf. Bei beiden Werten handelt es sich um das stündliche Mittel. \highlight{Dieser Block evtl weg, weil Auflösung in Tabelle \ref{tab:messgrößen} erwähnt werden. Stattdessen Tabelle referenzieren.}
+
+Bei der Darstellung des Windes in $(v,\varphi)$-Form tritt das in Kapitel \ref{section:circ_data} beschriebene Problem der zirkulären Daten auf, denn es gilt $0^\circ = 360^\circ$ 
+Die Darstellung des Windes über eine Geschwindigkeit und Richtung entspricht 
+Diese polare Darstellung wurde in eine kartesische Darstellung umgewandelt (siehe Abbildung \ref{fig:pol2cart}. Mithilfe der Gleichung \highlight{xy (Formel noch einfügen)} ist es möglich Aus Winkel und Betrag des Vektors eine X- und eine Y-Komponente des Vektors zu erhalten. Ziel dieser Umwandlung ist es das Problem zirkulärer Daten, womit Probleme bei der Vorhersage von Neuronalen Netzen entstehen können, zu beseitigen. Mit dieser Umwandlung erhält das Modell den Betrag der X- und der Y-Komponente als Eingabeparameter statt des Betrags und des zirkulären Winkels. Nach der Prädiktion werden die erhaltenen Daten wieder in eine polare Darstellung umgerechnet. In Abbildung \ref{fig:pol2cart2} sind die zwei Parameter zur Beschreibung des Windvektors in polarer und in kartesischer Darstellung zueinander dargestellt \highlight{muss man anders schreiben!!! Wie nennt man das, wenn man x und y zueinander plottet um Verteilung anzusehen???}. Hier wird ersichtlich, dass bei \highlight{kartesischer Darstellung eine breitere Verteilung der Daten möglich ist. Dazu wird der Fall, dass hier ein Winkel von 0 Grad und ein Winkel von 359 Grad, welche derselben Windrichtung entsprechen, jedoch am weitesten entfernt voneinander im Koordinatensystem liegen, bei kartesischer Darstellung vermieden wird. (Das muss man anders formulieren!!)} 
 \highlight{GRAFIK2 (die von Tensorflow für eine ausgewählte Wetterstation); 
 Formulieren wie es geht und formulieren warum (siehe Grafik2) x-y so viel besser sein solte als rad-betrag. Sagen, dass diese Umwandlung eine Annahme ist und wir es später testen und vergleichen.}
 
