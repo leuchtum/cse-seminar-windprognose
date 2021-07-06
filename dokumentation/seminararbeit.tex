@@ -8,11 +8,21 @@ toc=listofnumbered, %Tab.- & Abb.verzeichnis ins TOC
 toc=chapterentrydotfill, %TOC: Punkte auch nach Kapitel
 numbers=noenddot, %Kapitelüberschrift: Kein Endpunkt z.B. 2.2. --> 2.2
 captions=tableheading, %Mehr Platz bei Captionüberschriften (Tabelle)
+bibliography=numbered
 ]{scrreprt}
 
 
 %%%%% SCHRIFTSATZ, SPRACHE, SCHRIFTART
-\usepackage[T1]{fontenc}
+%%% USE WITH pdflatex, siehe https://tex.stackexchange.com/a/44701
+%\usepackage[T1]{fontenc}
+%\usepackage[utf8]{inputenc}
+%%% USE WITH xelatex
+\usepackage{fontspec}
+\defaultfontfeatures{Ligatures=TeX}
+%%% USE WITH lualatex
+%\usepackage{luatextra}
+%\defaultfontfeatures{Ligatures=TeX}
+%%%
 \usepackage[ngerman]{babel}
 % Nur mit LuaTex Interpreter nutzbar
 %\usepackage{mathfont} % Dieses Packet läd auch fontspec
@@ -34,6 +44,9 @@ captions=tableheading, %Mehr Platz bei Captionüberschriften (Tabelle)
 %%%%% MATHEMATIK
 \usepackage{amssymb, amsmath}
 \usepackage{isomath}
+\usepackage{pifont} % Für \cmark und \xmark
+\newcommand{\cmark}{\ding{51}}%
+\newcommand{\xmark}{\ding{55}}%
 
 
 %%%%% BIBLIOGRAPHIE
@@ -232,22 +245,21 @@ https://www.wind-energie.de/themen/zahlen-und-fakten/deutschland/}
 \section{Einordnung in die Literatur}
 
 In der bestehenden Literatur im Bereich der Windgeschwindigkeits-, beziehungsweise Wettervorhersage, ist eine Entfernung von 
-deterministischen Modellen \highlight{Lorenz 1963} hin zu Zeitreihenanalyse auf Basis historischer Messdaten erkennbar. 
+deterministischen Modellen \cite{1963_Lorenz_DeterministicNonperiodicFlow} hin zu Zeitreihenanalyse auf Basis historischer Messdaten erkennbar. 
 Innerhalb der letzten zwei Dekaden sind einige Ansätze in der Zeitreihenanalyse zu differenzieren. Klassische Methoden in der 
-Zeitreihenprognose, wie das ARMA- und ARIMA-Modell \highlight{Cadenas et al. 2016, Torres et al. 2005, Erdem et al. 2011} oder auch 
+Zeitreihenprognose, wie das ARMA- und ARIMA-Modell \cite{2016_Cadenas_WindSpeedPrediction} oder auch 
 die Weiterentwicklung dessen, mit Berücksichtigung eines saisonalen Einflusses, das SARIMA-Modell 
-\highlight{Alencar et al. 2018, García et al. 2019, Haddad et al. 2019, Igboekwe et al. 2002, Sami et al. 2012, Meng 2010} sind 
+\highlight{Es fehlt noch Meng 2010; Nicht in Ecxelliste aufgeführt}\cite{2018_Alencar_HybridApproachCombining,2019_TenaGarcia_ForecastDailyOutput,2019_Haddad_WindSolarForecasting,2002_Igboekwe_StochasticSimulationHourly,2012_MuhammadSami_PredictionRateDust} sind 
 nicht nur ein häufig verwendetes Vorhersagemodell, sondern werden gerade deshalb auch häufig als Vergleichsmodell herangezogen 
-\highlight{Cao et al. 2012, Kreuzer et al. 2020}. Darüber hinaus existieren das VAR-, VARTA und auch VARTAX-Modelle 
-\highlight{Orpia et al. 2014, Dowell 2015, Ewing et al. 2007, He et al. 2015, Koivisto et al. 2016}, 
+\highlight{Es fehlt Kreuzer et al. 2020; Nicht in Ecxelliste aufgeführt}\cite{2012_Cao_ForecastingWindSpeed}. Darüber hinaus existieren das VAR-, VARTA und auch VARTAX-Modelle 
+\highlight{Es fehlt Orpia et al. 2014, Dowell 2015}\cite{2007_Ewing_TimeSeriesAnalysis,2015_He_SparsifiedVectorAutoregressive,2016_Koivisto_WindSpeedModeling}, 
 welche im Gegensatz zu ARMA-Modellen mehrere Variablen besitzen. Auch wird es versucht das ARIMA-Modell mit Clustermethoden 
-zu verbessern oder mit klassischen Machine Learning Konzepten zu kombinieren \highlight{Zhang et al. 2017, Guo et al. 2011}. 
+zu verbessern oder mit klassischen Machine Learning Konzepten zu kombinieren \cite{2017_Zhang_HybridMethodShortTerm,2011_Guo_CorrectedHybridApproach}. 
 Zunehmend werden auch Neuronale Netze, welche in letzter Zeit stark an Popularität zugenommen haben, für Problemstellungen dieser 
-Art verwendet. Neben Ansätzen basierend auf CNN \highlight{Zhao et al. 2020, Chen et al. 2019}, MLP \highlight{Haidar et al. 2019}, 
-GS-ANN \highlight{Khodayar et al. 2018}, Back propagation \highlight{Wang et al. 2012} und Radial basis function NN \highlight{Chang et al. 2017}, 
-waren Ansätze, die auf RNN basieren \highlight{Xiaoyun 2016, Cao et al. 2012} auffällig oft vertreten. Hierbei waren LSTMs  
-\highlight{Dong et al. 2018, Delgado et al. 2021, Moharm et al. 2020, Prabha et al. 2019, Cali et al. 2019} oder auch LSTMs in Kombination mit 
-anderen Technologien \highlight{Chen et al. 2019, Lopez et al. 2016, Liu et al. 2018, Yao et al. 2018} sehr prominent. 
+Art verwendet. Neben Ansätzen basierend auf CNN \cite{2020_Zhao_ShorttermAverageWind,2019_Chen_MultifactorSpatiotemporalCorrelation}, MLP \cite{2019_Samet_EvaluationNeuralNetworkbased}, 
+GS-ANN \cite{2019_Khodayar_IntervalDeepGenerative}, Back propagation \cite{2012_Wang_ShorttermWindSpeed} und Radial basis function NN \cite{2017_Chang_ImprovedNeuralNetworkbased}, 
+waren Ansätze, die auf RNN basieren auffällig oft vertreten. Hierbei waren LSTMs \cite{2018_Dong_WindPowerPrediction,2020_Delgado_WindTurbineData,2020_Moharm_WindSpeedForecast,2019_Prabha_WindSpeedForecasting,2019_Cali_ShorttermWindPower} oder auch LSTMs in Kombination mit 
+anderen Technologien \cite{2019_Chen_MultifactorSpatiotemporalCorrelation,2016_Allende_RecurrentNetworksWind,2018_Liu_WindSpeedForecasting,2018_Yao_MultidimensionalLSTMNetworks} sehr prominent. 
 
 
 \highlight{warum LSTM besser als SRIMA oder so wegen lange sicht/kurze sicht bla, Eingehen auf stündlich/Ort/ also Bezug auf 
@@ -306,76 +318,121 @@ Beschreibung versch Architekturen}
 \chapter{Implementierung des Modells}
 
 \section{Datenbasis}
-Für das Modell wurde eine Kombination aus gemessenen Daten von Stationen des DWD (Deutscher Wetterdienst), sowie künstlich generierten Daten verwendet.
-Während die gemessenen Daten die aktuelle Wetterlage an einigen Standorten Deutschlands beinhalten, erhalten die generierten Daten darüber hinaus weitere Informationen zu saisonalen und Tagesverlauf-abhängigen Faktoren. 
-Genauer wird hierauf jedoch in den folgenden Kapiteln eingegangen. 
-\highlight{Blabla über Daten die für Neuronales Netz bla. Vielleicht auch nur was unterschied reale und generierte Daten ist.}
+Zur Erstellung des Modells wurde eine Kombination aus gemessenen Daten von Stationen des Deutschen Wetterdienstes (DWD) sowie künstlich generierten Daten verwendet.
+Während die gemessenen Daten die aktuelle Wetterlage an einigen Standorten Deutschlands beinhalten, geben die generierten Daten darüber hinaus weitere Informationen zu saisonalen und täglichen Abhängigkeiten. Die Zusammensetzung des Rohdatzensatzes kann der Abbildung \ref{fig:rohdatensatz} entnommen werden. Nach der in Kapitel \ref{section:Datenaufbereitung} beschriebenen Datenaufbereitung kann dieser Datensatz zum Training des neuronalen Netzes genutzt werden.
 
 %%%%%BILD ANFANG
 \begin{figure}[tph]
 	\begin{center}
 		\includegraphics[]{./images/rohdatensatz.pdf}
-		\caption{\highlight{{TODO}}}
+		\caption{Zusammensetzung des Rohdatensatzes}
 		\label{fig:rohdatensatz}
 	\end{center}
 \end{figure}
 %%%%%BILD ENDE
 
 \subsection{Reale Messdaten}
-Die realen Messdaten, welche von der Webseite des DWD kostenlos downloadbar sind, wurden folgend ausgewählt.
-Von fünf Messtationen (Münsingen-Apfelstetten, Stötten, Günzburg und Laupheim), welche sich in einem Radius von 
-\highlight{keine Ahnung wie vielen} Kilometern befinden, wurden stündliche gemittelte Messdaten verwendet. Hierzu gehören Windrichtung, -geschwindigkeit , Sonnenscheindauer, Druck, Temperatur und Luftfeuchtigkeit. 
-Die Daten umfassen die Jahre \highlight{2008} bis 2021.
-\highlight{Daten vom DWD, Windrichtung, -geschwindigkeit (Stundenmittel), Sonnenscheindauer, Druck, Temp, Luftfeuchtigkeit. 
-Stündliche Daten im Zeitraum 2008-2021, Wie viele Daten fehlen insgesamt (Maybe Grafik?). 
-Tabelle mit Wetterstationen. (plus PLZ oder Kilometer von prognos. Messtation entfernt) . 
-Stichwort Windrose.}
+Die realen Messdaten werden vom Deutschen Wetterdienstes über einen Webserver kostenlos zur Verfügung gestellt. In dieser Arbeit sind die Daten in stündlicher Auflösung von vier Messtationen (Münsingen-Apfelstetten, Stötten, Günzburg und Laupheim) im Ulmer Umkreis zum Einsatz gekommen. Die genaue geographische Lage kann der Abbildung \ref{fig:map} entnommen werden. Der Deutsche Wetterdienst betreibt im Ulmer Umkreis zwar noch weitere Wetterstationen, jedoch messen diese die Windgeschwindigkeit und Windrichtung nicht. Insgesamt umfasst der Datensatz die Jahre \highlight{2008?} bis 2021. Davon sind jedoch \highlight{X\%} Datenlücken. Diese Lücken werden in Kapitel \ref{section:Datenlücken} genauer beleuchtet. 
+
+%%%%%BILD ANFANG
+\begin{figure}[tph]
+	\begin{center}
+		\includegraphics[width=\textwidth]{./images/map.png}
+		\caption{Geographische Lage der Messstationen \cite{2021_OpenStreetMap-Contributors_UMap}}
+		\label{fig:map}
+	\end{center}
+\end{figure}
+%%%%%BILD ENDE
+
+Zur Prognose der Windgeschwindigkeit und Windrichtung können neben deren selbst \highlight{(Satzbau?)} auch andere Messgrößen wie Sonnenscheindauer, Luftdruck, Temperatur und Luftfeuchtigkeit genutzt werden. Jedoch wird nicht jede dieser Größen an jeder Messstation bestimmt. Die folgende Tabelle \ref{tab:messgrößen} gibt einen detaillierteren Aufschluss über die tatsächlich gemessenen Größen.
+
+%%%%%TABELLE ANFANG
+\begin{table}[ht]
+	\centering
+	\caption{Gemessene Größen je Messstation}
+	\begin{tabular}{|l|c|c|c|c|}
+		\hline
+        \rowcolor{color80}
+		& \textbf{Münsingen-Apfelstetten} & \textbf{Stötten} & \textbf{Günzburg} & \textbf{Laupheim} \\\hline
+		Windgeschwindigkeit & \cmark & \cmark & \cmark & \cmark \\\hline
+		Windrichtung & \cmark & \cmark & \cmark & \cmark \\\hline
+		Sonnenscheindauer & \cmark & \cmark & \xmark & \xmark \\\hline
+		Luftdruck & \xmark & \cmark & \xmark & \cmark \\\hline
+		Temperatur & \cmark & \cmark & \cmark & \cmark \\\hline
+		Luftfeuchtigkeit & \cmark & \cmark & \cmark & \cmark \\\hline
+	\end{tabular}
+\label{tab:messgrößen}
+\end{table}
+%%%%%TABELLE ENDE
+
+Um einen tieferen Einblick in das Verhalten des Windes an der jeweiligen Messstation zu erhalten, bieten sich Windrosen zur Visualisierung an. Dabei wird die Häufigkeit der Windgeschwindigkeit in Abhängigkeit der Windrichtung radial dargestellt. Der Abbildung \ref{fig:windroses} können die Windrosen für die vier ausgewählten Messstationen entnommen werden. Wie in den südlichen Regionen Deutschlands zu erwarten \highlight{satzbau?}, ist die vorherschende Windrichtung West bis Südwest. 
+
+Bei detaillierter Analyse fällt jedoch auf, dass der Wind an der Messstationen Münsingen-Apfelstetten besonders bei Leichtwind sehr volatil ist. Der Grund hierfür könnte in der Tatsache begründet sein, dass sich die Messstation in einem flachen Tal mit Nord-Südlicher Ausrichtung befindet. Desweiteren lässt sich erkennen, dass unter den vier Messstationen in Stötten die stärksten Winde auftreten. 
 
 %%%%%BILD ANFANG
 \begin{figure}[tph]
 	\begin{center}
 		\includegraphics[]{./images/windroses.pdf}
-		\caption{\highlight{{TODO}}}
+		\caption{Windrosen der vier ausgewählten Messstationen}
 		\label{fig:windroses}
 	\end{center}
 \end{figure}
 %%%%%BILD ENDE
 
+Im Folgenden wird versucht, die Windgeschwindigkeit \highlight{und Windrichtung?} für die Messstation in Günzburg \highlight{und Stötten?} zu prognostizieren. 
 
-\subsection{Generierte Messdaten}
-Die Wetterlage in Deutschland weist wiederkehrende Trends innerhalb eines Tages und auch innerhalb eines Jahres auf \highlight{Kurze Sätze zu: Tag: Sonneneinstrahlung warm, Nachts Kalt; Jahr: Sommer/Winter}. Aus diesem Grund wurden zusätzlich zu den 
-gemessenen Daten der Wetterstationen des DWD noch zwei weitere Variablen eingeführt, die Auskunft über die Tageszeit und die Jahreszeit gibt. Hiermit soll es dem Modell später leichter Fallen Beziehungen zwischen der Tageszeit, Jahreszeit und den realen Messdaten herzustellen. Diese Daten sind jeweils eine Sinusfunktion mit einer Amplitude von 0.5, wobei der Wert um 0:00 der 0 und um 12:00 der 1 entspricht beziehungsweise die ... \highlight{01.01. 00:00 (erster tag des Jahres) 182 Tag um 12:00 Mittag ist 1; Formeln dazu sind die unten} . Die Periodendauer beträgt jeweils 24 Stunden oder 12 Monate. \\
+\highlight{Warum Günzburg? 1. Liegt östlich der anderen Stationen 2. Relativ klare Windrose}
 
-\highlight{Kalendarische Daten: Tagessinus und Saisonalen Sinus (Korrelationskoeffizienten Wind zu Uhrzeit (WAS SEHE ICH IN DIESEN ZAHLEN? HELP!); Histogramm Uhrzeit und Windverteilung (WAS IST DAS NOCHMAL?)); 
-Formeln, kurz Zusammenhang zu Uhrzeit}\\
+\highlight{Warum Stötten? 1. Alle Messgrößen werden vorort gemessen 2. Stärkster Wind}
+
+\subsection{Generierte Messdaten}\label{section:gen_daten}
+Die Wetterlage in Deutschland weist wiederkehrende Trends innerhalb eines Tages und auch innerhalb eines Jahres auf. Offensichtlich ist es am Tag wärmer als in der Nacht und im Sommer wärmer als im Winter. Um diese Information für das Modell nutzbar zu machen, werden zusätzlich zu den gemessenen Daten zwei weitere Variablen eingeführt: \highlight{Warum Sinus? Weil zirkuläre Daten! 24h=0h!}
+
+\begin{itemize}
+	\item \textit{Tageszeit}\\
+	Über die folgende Funktion wird die Stunde des Tages $HOD \in [0, \dots, 23]$ in einen Sinuswelle umgewandelt. Das Maximum wird um 12 Uhr, das Minimum um 0 Uhr erreicht. Abgebildet wird auf das Intervall $[0,1]$.
+	\begin{equation}\label{eq:cal_day}
+		cal_{day} = \frac{1}{2}\Big(\cos \big(\pi (\frac{HOD}{12}+ 1)\big) + 1 \Big)
+	\end{equation}
+	\item \textit{Jahreszeit}\\
+	Die folgende Funktion transformiert den Tag des Jahres $DOY \in [1, \dots, 365]$ in eine Sinuswelle. Schaltjahre werden nicht berücksichtigt. Außerdem wird die Stunde des Tages $HOD \in [0, \dots, 23]$ mit einbezogen. Diese spielt für den Funktionswert jedoch nur eine untergeordnete Rolle. Das Maximum wird am 1.Juli, das Minimum am 1.Januar erreicht. Die Funktion bildet ebenfalls auf das Intervall $[0,1]$ ab.
+	\begin{equation}\label{eq:cal_seas}
+		cal_{seas} = \frac{1}{2}\Big(\cos\big(\pi (\frac{DOY -1 + \frac{HOD}{24}}{\frac{365}{2}}+ 1)\big) + 1\Big)
+	\end{equation}
+	
+\end{itemize}
+
+\highlight{Eventuell erwähnen, das diese Formeln nicht optimal sind. Grund: Höchste Tagestemperatur i.A. nicht um 12 Uhr sondern um 13-14 Uhr, Höchste Jahrestemperatur i.A. nicht am 1.Juli sondern Mitte August. Außerdem ist z.B. $dal_{day}(HOD=6Uhr) = dal_{day}(HOD=18Uhr)$}
 
 \subsection{Analyse der Datenbasis}
-\highlight{Abbildung 3.5: Korrelation calseas-T,... (Vorallem auf einige Parameter aus der Abbildung eingehen)}
+Der Korrekatinskoeffizient gibt Aufschluss darüber, ob zwischen zwei größen ein linearer Zusammenhang besteht. Er kann als Entscheidungshilfe zur Auswahl der Input-Größen für das neuronale Netz dienen. In Abbildung \ref{fig:corr} wird die Korrelation zwischen den Größen relative Luftfeuchte ($RH$), Sonnenscheindauer ($SD$), Temperatur ($T$), Windgeschwindigkeit ($v$), Windrichtung ($\varphi$) sowie die in Kapitel \ref{section:gen_daten} beschriebenen kalendarischen Daten $cal_{day}$ und $cal_{seas}$ dargestellt. 
+
+
+
+Da die Größen Windstärke und \highlight{Windrichtung?} prognostiziert werden sollen, sind die Korrelationen zwischen dieser und anderer Größen natürlich von besonderem Interesse. Aus Abbildung \ref{fig:corr} lässt sich erkennen, dass der Luftdurck in einem Zusammenhang mit der Windgeschwindigkeit steht (Fällt $RH$ steigt $v$). Ebenso lässt sich aus der Korrelation zwischen Windgeschwindigkeit und der Temperatur bzw. dem kalendarischen Saisonalwert $cal_{seas}$ eine erhöhte Windgeschwindigkeit im Winter ablesen. Der kalendarische Tageswert $cal_{day}$ scheint jedoch nicht in einem linearen Zusammenhang mit der Windgeschwindigkeit zu stehen.
+
+\bigskip
+An dieser Stelle ist es wichtig zu erwähnen, dass der Korrelationskoeffizient nur einen linearen Zusammenhang zwischen zwei größen abbildet. Komplexere Zusammenhänge werden nicht erkannt \cite{2020_Ranjan_EstimatingNonlinearCorrelation}. Es ist also möglich, dass eine Größe für die Prognose wertvolle Information enthält, jedoch nicht mit der Windgeschwindigkeit korreliert.
 
 %%%%%BILD ANFANG
 \begin{figure}[tph]
 	\begin{center}
 		\includegraphics[]{./images/corr.pdf}
-		\caption{Korrelationskoeffizienten für die Messdaten der Station in Stötten sowie kalendarische Daten im Zeitraum 01.01.2016 bis 31.12.2020.}
+		\caption{Korrelationskoeffizienten für die Messdaten der Station in Stötten \highlight{(Ändern zu Günzburg, da diese prognostiziert wird)} sowie kalendarische Daten im Zeitraum 01.01.2016 bis 31.12.2020.}
 		\label{fig:corr}
 	\end{center}
 \end{figure}
 %%%%%BILD ENDE
 
-\highlight{DOY ist DayOfYear und HOD ist HourOfDay; $=$-Zeichen am besten übereinander}
+\highlight{(Korrelationskoeffizienten Wind zu Uhrzeit (WAS SEHE ICH IN DIESEN ZAHLEN? HELP!); Histogramm Uhrzeit und Windverteilung (WAS IST DAS NOCHMAL?))}
 
-\begin{align}
-	cal_{seas,i} &= \frac{1}{2}(\cos(\pi (\frac{DOY_i -1 + \frac{HOD_i}{24}}{\frac{365}{2}}+ 1)) + 1)\label{eq:cal_seas}\\
-	cal_{day,i} &= \frac{1}{2}(\cos(\pi (\frac{HOD_i}{12}+ 1)) + 1)\label{eq:cal_day}
-\end{align}
-
-\section{Datenaufbereitung}
+\section{Datenaufbereitung}\label{section:Datenaufbereitung}
 \highlight{hier geht es um die ausgewählten Datensätze, umgang mit Fehldaten, 
 Umwandeln der Daten, etc;  
 Flowchart über einzelne Schitte der Datenaufbereitung von Roh zu fertige Daten für NN}
 
 \subsection{Winddaten als Vektoren}
-Der Datensatz des DWD enthält die Windrichtung als einen Winkel, welcher von Norden aus gemessen wird und die Geschwindigkeit des Windes in m/s. Diese polare Darstellung wurde in eine kartesische Darstellung umgewandelt (siehe Abildung \ref{fig:pol2cart}. Mithilfe der Gleichung \highlight{xy (Formel noch einfügen)} ist es möglich Aus Winkel und Betrag des Vektors eine X- und eine Y-Komponente des Vektors zu erhalten. Ziel dieser Umwandlung ist es das Problem zirkulärer Daten, womit Probleme bei der Vorhersage von Neuronalen Netzen entstehen können, zu beseitigen. Mit dieser Umwandlung erhält das Modell den Betrag der X- und der Y-Komponente als Eingabeparameter statt des Betrags und des zirkulären Winkels. Nach der Prädiktion werden die erhaltenen Daten wieder in eine polare Darstellung umgerechnet. In Abbildung \ref{fig:pol2cart2} sind die zwei Parameter zur Beschreibung des Windvektors in polarer und in kartesischer Darstellung zueinander dargestellt \highlight{muss man anders schreiben!!! Wie nennt man das, wenn man x und y zueinander plottet um Verteilung anzusehen???}. Hier wird ersichtlich, dass bei \highlight{kartesischer Darstellung eine breitere Verteilung der Daten möglich ist. Dazu wird der Fall, dass hier ein Winkel von 0 Grad und ein Winkel von 359 Grad, welche derselben Windrichtung entsprechen, jedoch am weitesten entfernt voneinander im Koordinatensystem liegen, bei kartesischer Darstellung vermieden wird. (Das muss man anders formulieren!!)} 
+Der Datensatz des DWD enthält die Windrichtung als einen Winkel, welcher von Norden aus gemessen wird und die Geschwindigkeit des Windes in m/s. Diese polare Darstellung wurde in eine kartesische Darstellung umgewandelt (siehe Abbildung \ref{fig:pol2cart}. Mithilfe der Gleichung \highlight{xy (Formel noch einfügen)} ist es möglich Aus Winkel und Betrag des Vektors eine X- und eine Y-Komponente des Vektors zu erhalten. Ziel dieser Umwandlung ist es das Problem zirkulärer Daten, womit Probleme bei der Vorhersage von Neuronalen Netzen entstehen können, zu beseitigen. Mit dieser Umwandlung erhält das Modell den Betrag der X- und der Y-Komponente als Eingabeparameter statt des Betrags und des zirkulären Winkels. Nach der Prädiktion werden die erhaltenen Daten wieder in eine polare Darstellung umgerechnet. In Abbildung \ref{fig:pol2cart2} sind die zwei Parameter zur Beschreibung des Windvektors in polarer und in kartesischer Darstellung zueinander dargestellt \highlight{muss man anders schreiben!!! Wie nennt man das, wenn man x und y zueinander plottet um Verteilung anzusehen???}. Hier wird ersichtlich, dass bei \highlight{kartesischer Darstellung eine breitere Verteilung der Daten möglich ist. Dazu wird der Fall, dass hier ein Winkel von 0 Grad und ein Winkel von 359 Grad, welche derselben Windrichtung entsprechen, jedoch am weitesten entfernt voneinander im Koordinatensystem liegen, bei kartesischer Darstellung vermieden wird. (Das muss man anders formulieren!!)} 
 \highlight{GRAFIK2 (die von Tensorflow für eine ausgewählte Wetterstation); 
 Formulieren wie es geht und formulieren warum (siehe Grafik2) x-y so viel besser sein solte als rad-betrag. Sagen, dass diese Umwandlung eine Annahme ist und wir es später testen und vergleichen.}
 
@@ -393,7 +450,7 @@ Formulieren wie es geht und formulieren warum (siehe Grafik2) x-y so viel besser
 \begin{figure}[tph]
 	\begin{center}
 		\includegraphics[scale = 1]{./images/pol2cart_visualize.pdf}
-		\caption{Verteilung des Windes bei $(v,\varphi)$ bzw. $(v_x,v_y)$-Interpretation für die Messtation Ulm-Mähringen im Zeitraum 01.2016 bis 03.2021}
+		\caption{Verteilung des Windes bei $(v,\varphi)$ bzw. $(v_x,v_y)$-Interpretation für die Messtation Ulm-Mähringen \highlight{(Ändern zu Günzburg, da diese prognostiziert wird)} im Zeitraum 01.2016 bis 03.2021}
 		\label{fig:pol2cart2}
 	\end{center}
 \end{figure}
@@ -434,7 +491,9 @@ Normalisieren: Mit  Min-Max Normalisierung; Tabelle und nach einzelnen Datenreih
 \end{figure}
 %%%%%BILD ENDE
 
-\subsection{Datenlücken}
+\subsection{Datenlücken}\label{section:Datenlücken}
+\highlight{Grafik wo und wie lange es im Datensatz Lücken gibt --> Heatmap}
+
 \highlight{Zeitreihen separat angeschaut (Spaltenweise Lücken interpoliert/korrigiert (Nur eine Art Daten angesehen, wie z.B. Temperatur nur mit umliegenden Temperaturdaten verglichen) 
 Maximale Lücke 4 Stunden (wurde noch linear interpoliert); 
 Jetzt sind nur noch größere Lücken als 4 Stunden im Datensatz, wir teilen entlang dieser großen Lücken unsere Tabelle in kleinere Tabellen (chunks), keine Fehldaten mehr :)}
@@ -677,5 +736,5 @@ Bild \autoref{fig:testbild} referenzieren.
 %                                                                     %
 %                                                                     %
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\chapter{Quellen}
+\printbibliography[title=Literaturverzeichnis]
 \end{document}
