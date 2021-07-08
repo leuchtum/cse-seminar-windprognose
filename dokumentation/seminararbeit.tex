@@ -311,7 +311,7 @@ Beschreibung versch Architekturen}
 \highlight{Grob SARIMA-Modell erklären. Wenn wir es als Benchmark verwenden}
 
 \section{Zirkuläre Daten}\label{section:circ_data}
-
+\highlight{Kapitel muss geschrieben werden, da auf dieses referenziert wird!}
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %                                                                     %
 %                                                                     %
@@ -332,7 +332,7 @@ Während die gemessenen Daten die aktuelle Wetterlage an einigen Standorten Deut
 \begin{figure}[tph]
 	\begin{center}
 		\includegraphics[]{./images/rohdatensatz.pdf}
-		\caption{Zusammensetzung des Rohdatensatzes \highlight{Spalte einfügen: Auflösung}}
+		\caption{Zusammensetzung des Rohdatensatzes}
 		\label{fig:rohdatensatz}
 	\end{center}
 \end{figure}
@@ -356,7 +356,7 @@ Zur Prognose der Windgeschwindigkeit und Windrichtung können neben deren selbst
 %%%%%TABELLE ANFANG
 \begin{table}[ht]
 	\centering
-	\caption{Gemessene Größen je Messstation}
+	\caption{Gemessene Größen je Messstation \highlight{Auflösung der einzelnen Größen ergänzen. Wird referenziert!}}
 	\begin{tabular}{|l|c|c|c|c|}
 		\hline
         \rowcolor{color80}
@@ -431,23 +431,44 @@ An dieser Stelle ist es wichtig zu erwähnen, dass der Korrelationskoeffizient n
 \end{figure}
 %%%%%BILD ENDE
 
-\highlight{(Korrelationskoeffizienten Wind zu Uhrzeit (WAS SEHE ICH IN DIESEN ZAHLEN? HELP!); Histogramm Uhrzeit und Windverteilung (WAS IST DAS NOCHMAL?))}
+\highlight{Grafikidee: Windgeschwindigkeit über Uhrzeit}
 
 \section{Datenaufbereitung}\label{section:Datenaufbereitung}
-\highlight{hier geht es um die ausgewählten Datensätze, umgang mit Fehldaten, 
-Umwandeln der Daten, etc;  
-Flowchart über einzelne Schitte der Datenaufbereitung von Roh zu fertige Daten für NN}
+Die Datenaufbereitung ist häufig eines der aufwendigeren Teile eines Machine-Learning Projektes. Daher wird in dieser Arbeit auf diesen Teil vertieft eingegangen. Abbildung \ref{fig:preprocessing} skizziert den Ablauf der Datenaufbereitung. Dabei werden die folgenden fünf Schritte durchlaufen, die in den nachfolgenden Kapiteln detaillierter beschrieben werden:
 
+%%%%%BILD ANFANG
+\begin{figure}[tph]
+	\begin{center}
+		\includegraphics[]{./images/preprocessing.pdf}
+		\caption{Ablauf der Datenaufbereitung. \highlight{Beschreiben, dass die grünroten Box der Datensatz ist}}
+		\label{fig:preprocessing}
+	\end{center}
+\end{figure}
+%%%%%BILD ENDE
+
+\begin{enumerate}
+	\item Im Rohdatensatz gibt es einige kürzere und längere Datenlücken (In Abb. \ref{fig:preprocessing} dargestellt als rote Segmente). Über kurze Datenlücken wird linear interpoliert. Außerdem werden die Winddaten von der polaren in eine kartesische Darstellung umgewandelt.
+	\item Aus dem durch Schritt 1. generierten Datensatz werden die Spalten gewählt, die es zu prognostizieren gilt (In Abb. \ref{fig:preprocessing} dargestellt durch verdunkelte Spalten). In dieser Arbeit wird die Windgeschwindigkeit \highlight{(und Windgeschwindigkeit?)} einer Station gewählt.
+	\item Der Datensatz wird nun in einen Inputdatensatz und einen Labeldatensatz (In Abb. \ref{fig:preprocessing} verdunkelt) aufgeteilt.
+	\item Die verbleibenden längeren Datenlücken im Input- und Labeldatensatz werden \qm{herausgeschnitten}. Übrig bleiben Fragmente, die keine Fehlstellen enthalten.
+	\item Der Inputdatensatz (hellgrün) wird normiert. Dieser Schritt erleichtert das Training des neuronalen Netzes.
+\end{enumerate}
+
+\subsection{Interpolation über Datenlücken}\label{section:Datenlücken}
+\highlight{Grafik wo und wie lange es im Datensatz Lücken gibt --> Heatmap}
+
+\highlight{
+	\begin{enumerate}
+		\item Datenlücken für jede Messgröße seperat angeschaut
+		\item Max Länge der Lücke über die noch interpoliert wird sind 4h
+	\end{enumerate}
+}
 \subsection{Winddaten als Vektoren}
-Die Windmessung erfolgt (von modernen Laser- oder Schallmessungen abgesehen) über einen Schalenanemometer und eine Windfahne. Zu jedem Messzeitpunkt werden also zwei Werte aufgenommen. Die Windgeschwindigkeit $v$ wird in $m/s$ gemessen. Die Windrichtung $\varphi$ wird typischer Weise in Grad angegeben, es gilt also $\varphi \in [0,360)$. Norden wird dabei mit $\varphi_{north} = 0^\circ$ gewählt.  
+Die Windmessung erfolgt (von modernen Laser- oder Schallmessungen abgesehen) üblicher Weise mithilfe einens Schalenanemometers und einer Windfahne. Zu jedem Messzeitpunkt werden also zwei Werte aufgenommen. Die Windgeschwindigkeit $v$ wird in $m/s$ gemessen. Die Windrichtung $\varphi$ wird typischer Weise in Grad angegeben, es gilt also $\varphi \in [0,360)$. Norden wird dabei mit $\varphi_{north} = 0^\circ$ gewählt. Dieses $(v,\varphi)$-Tupel lässt sich als Polarkoordinate interpretieren. Jedoch tritt hier das in Kapitel \ref{section:circ_data} beschriebene Problem der zirkulären Daten auf, da $\varphi_{north} = 0^\circ = 360^\circ$ gilt.
 
-Der Datensatz des Deutschen Wetterdienstes löst die Windgeschwindigkeit mit $0,1 m/s$ und wie Windrichtung mit $10^\circ$ auf. Bei beiden Werten handelt es sich um das stündliche Mittel. \highlight{Dieser Block evtl weg, weil Auflösung in Tabelle \ref{tab:messgrößen} erwähnt werden. Stattdessen Tabelle referenzieren.}
+Es gilt zu belegen, dass sich dieses Problem umgehen lässt, indem der Wind nicht in polaren sondern kartesischen Koordinaten dargestellt wird. Der Windvektor, der durch das $(v,\varphi)$-Tupel beschrieben ist, wird so in eine $v_x$ und eine $v_y$ Komponente zerlegt. Dieses Vorgehen ist in Abbildung \ref{fig:pol2cart} skizziert.
 
-Bei der Darstellung des Windes in $(v,\varphi)$-Form tritt das in Kapitel \ref{section:circ_data} beschriebene Problem der zirkulären Daten auf, denn es gilt $0^\circ = 360^\circ$ 
-Die Darstellung des Windes über eine Geschwindigkeit und Richtung entspricht 
-Diese polare Darstellung wurde in eine kartesische Darstellung umgewandelt (siehe Abbildung \ref{fig:pol2cart}. Mithilfe der Gleichung \highlight{xy (Formel noch einfügen)} ist es möglich Aus Winkel und Betrag des Vektors eine X- und eine Y-Komponente des Vektors zu erhalten. Ziel dieser Umwandlung ist es das Problem zirkulärer Daten, womit Probleme bei der Vorhersage von Neuronalen Netzen entstehen können, zu beseitigen. Mit dieser Umwandlung erhält das Modell den Betrag der X- und der Y-Komponente als Eingabeparameter statt des Betrags und des zirkulären Winkels. Nach der Prädiktion werden die erhaltenen Daten wieder in eine polare Darstellung umgerechnet. In Abbildung \ref{fig:pol2cart2} sind die zwei Parameter zur Beschreibung des Windvektors in polarer und in kartesischer Darstellung zueinander dargestellt \highlight{muss man anders schreiben!!! Wie nennt man das, wenn man x und y zueinander plottet um Verteilung anzusehen???}. Hier wird ersichtlich, dass bei \highlight{kartesischer Darstellung eine breitere Verteilung der Daten möglich ist. Dazu wird der Fall, dass hier ein Winkel von 0 Grad und ein Winkel von 359 Grad, welche derselben Windrichtung entsprechen, jedoch am weitesten entfernt voneinander im Koordinatensystem liegen, bei kartesischer Darstellung vermieden wird. (Das muss man anders formulieren!!)} 
-\highlight{GRAFIK2 (die von Tensorflow für eine ausgewählte Wetterstation); 
-Formulieren wie es geht und formulieren warum (siehe Grafik2) x-y so viel besser sein solte als rad-betrag. Sagen, dass diese Umwandlung eine Annahme ist und wir es später testen und vergleichen.}
+\highlight{Gleichung pol2cart?}
 
 %%%%%BILD ANFANG
 \begin{figure}[tph]
@@ -459,22 +480,26 @@ Formulieren wie es geht und formulieren warum (siehe Grafik2) x-y so viel besser
 \end{figure}
 %%%%%BILD ENDE
 
+\highlight{Evtl erwähnen dass wenn diese Umwandlung genutzt wird, nach dem NN wieder zurück umgewandelt wird. d.h. $(v_x,v_y) \rightarrow (v,\varphi) \rightarrow(v_x,v_y)$}
+
+Die hier beschriebene Umwandlung kann der Abbildung \ref{fig:pol2cart2} anhand realer Messdaten entnommen werden. Im oberen Teil ist die Häufigkeitsverteilung in $(v,\varphi)$-Form dargestellt. Die zirkuläre Eigenschaft $\varphi_{north} = 0^\circ = 360^\circ$ ist hier nicht sichtbar. Die Häufigkeitsverteilung für die umgewandelten Koordinaten in $(v_x,v_y)$-Form hingegen ist klar um den Ursprung verteilt. Hier lässt sich die zirkuläre Eigenschaft gut erkennen. Das strahlenartige Muster erklärt sich durch die diskrete Angabe der Windrichtung in $10^\circ$ Schritten. Bei einer feineren Auflösung wäre die Verteilung weniger verzerrt.
+
 %%%%%BILD ANFANG
 \begin{figure}[tph]
 	\begin{center}
 		\includegraphics[scale = 1]{./images/pol2cart_visualize.pdf}
-		\caption{Verteilung des Windes bei $(v,\varphi)$ bzw. $(v_x,v_y)$-Interpretation für die Messtation Ulm-Mähringen \highlight{(Ändern zu Günzburg, da diese prognostiziert wird)} im Zeitraum 01.2016 bis 03.2021}
+		\caption{Verteilung des Windes bei $(v,\varphi)$ bzw. $(v_x,v_y)$-Interpretation für die Messtation Ulm-Mähringen \highlight{(Ändern zu Günzburg, da diese prognostiziert wird)} im Zeitraum 01.2016 bis 03.2021 \highlight{FEHLER IN GRAFIK: x-Label Oben wird überdeckt}}
 		\label{fig:pol2cart2}
 	\end{center}
 \end{figure}
 %%%%%BILD ENDE
 
-\highlight{Das strahlenartige Muster in \Abb{pol2cart2} erklärt sich durch die diskrete Angabe der Windrichtung in $10^\circ$ Schritten. (WO EINFÜGEN? GUTER PUNKT!)}
-
-\subsection{Festlegen der In- und Outputs \highlight{(Arbeitstitel)}}
+\subsection{Aufteilung in Input- und Labeldatensatz}
 Für das Modell werden Ein- und Ausgabedaten festgelegt. \highlight{Wie in Tabelle xy ersichtlich ist, werden blabla als Eingabedaten und blabla als Ausgabedaten festgelegt. (Muss ich noch genau drauf eingehen.)} Die Eingabedaten müssen zunächst normalisiert werden, was mit einer Min-Max Normalisierung erreicht wurde.
 \highlight{Daten in Ein- und Ausgangsdaten trennen: Tabelle sind Eingabedaten (in normalisiert) und zwei Spalten (Windx und Windy) sind Ausgabedaten, aber nicht normalisiert; 
 Normalisieren: Mit  Min-Max Normalisierung; Tabelle und nach einzelnen Datenreihen unterscheiden (kalendarisch ausgeschlossen, Wind x-y sind -1 bis 1, damit 0=0)}
+
+\subsection{Normierung}
 
 %%%%%TABELLE ANFANG
 \begin{table}[ht]
@@ -494,24 +519,11 @@ Normalisieren: Mit  Min-Max Normalisierung; Tabelle und nach einzelnen Datenreih
 \end{table}
 %%%%%TABELLE ENDE
 
-%%%%%BILD ANFANG
-\begin{figure}[tph]
-	\begin{center}
-		\includegraphics[]{./images/preprocessing.pdf}
-		\caption{\highlight{{TODO}}}
-		\label{fig:preprocessing}
-	\end{center}
-\end{figure}
-%%%%%BILD ENDE
+\section{Generierung der Trainingsbeispiele}
+Die Rohdaten (Umwandlung von $(v,\varphi) \rightarrow (v_x,v_y)$ bereits einbegriffen) können nicht direkt für das Training eines neuronalen Netzes genutzt werden. Zunächst muss der Datensatz von Datenlücken befreit, die Zielgrößen muss definiert und die Inputdaten normalisiert werden. Die Schritte sind in Abbildung \ref{fig:preprocessing} visualisiert. Im Detail läuft die Aufarbeitung der Rohdaten wiefolgt ab: \highlight{passt nicht mehr}
 
-\subsection{Datenlücken}\label{section:Datenlücken}
-\highlight{Grafik wo und wie lange es im Datensatz Lücken gibt --> Heatmap}
+\highlight{Trainingsbeispiele = Samples}
 
-\highlight{Zeitreihen separat angeschaut (Spaltenweise Lücken interpoliert/korrigiert (Nur eine Art Daten angesehen, wie z.B. Temperatur nur mit umliegenden Temperaturdaten verglichen) 
-Maximale Lücke 4 Stunden (wurde noch linear interpoliert); 
-Jetzt sind nur noch größere Lücken als 4 Stunden im Datensatz, wir teilen entlang dieser großen Lücken unsere Tabelle in kleinere Tabellen (chunks), keine Fehldaten mehr :)}
-
-\subsection{Sampling \highlight{(Arbeitstitel)}}
 \highlight{Grafik um das Verschieben zu visualisieren; chunks werden der Reihe nach durchlaufen; 
 innerhalb chink wird über ein moving window gesampelt; Ein- und Ausgabefesnter sind verschoben (zeitlich); 
 Details: wie lange sind die Fenster, wie hoch, Größendefinition, bla}
@@ -527,7 +539,7 @@ Details: wie lange sind die Fenster, wie hoch, Größendefinition, bla}
 \end{figure}
 %%%%%BILD ENDE
 
-\subsection{Datenaufteilung \highlight{(Arbeitstitel)}}
+Hier noch Datenaufteilung
 \highlight{Blabla dass man Daten in drei Teile für NN teilt, warum das wichtig ist, bla; 
 Wie viele Samples haben wir? Aufteilung in Trainings (65\%), Validierungs(30\%) und Testdaten (5\%)}
 
@@ -586,6 +598,11 @@ Fehler pro Windgeschwindigkeit; Fehler über Prognosehorizont}
 \highlight{Das ist der Ausblick. Was könnte man noch tolles anstellen wo wir aber keine Zeit mehr für hatten? Idee Ensemble-Modell, andere Daten 
 verwenden, um Modell besser mit anderem bestehendem zu Vergleichen, Satellitendaten einbinden, weitere Modelle untereinander vergleichen mit Ulmer Klimadaten}
 
+Ideen, mit dem man das Modell / die Ergebnisse verbassern kann:
+
+\begin{enumerate}
+	\item Andere Stationsdaten mit weniger volatier Windgeschwindigkeit (d.h. Daten am Mehr)
+\end{enumerate}
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %                                                                     %
 %                                                                     %
