@@ -200,11 +200,11 @@ bibliography=numbered
 \chapter{Einleitung}
 
 Die Windenergie leistete in den vergangen Jahren einen stetig wachsenden Beitrag zur deutschen Stromerzeugung. 
-Seit dem Jahr 2015 "ist die Stromerzeugung aus Wind [...] um mehr als 60 Prozent angestiegen" \highlight{Quelle Umweltbundesamt, hilfe wie kann ich hier Gänsefüßchen machen?}
+Seit dem Jahr 2015 \qm{ist die Stromerzeugung aus Wind [...] um mehr als 60 Prozent angestiegen} \highlight{Quelle Umweltbundesamt, hilfe wie kann ich hier Gänsefüßchen machen?}
 Laut dem Statistischen Bundesamt wurden im Jahr 2020 24\% des Gesamtstrommixes in Deutschland aus Windenergie gewonnen. \highlight{vgl. Bild von Strommix} 
 Das macht den größten Anteil der erneuerbaren Energien aus \highlight{vgl. Umweltbundesamt}
 Jedoch ist das Stromnetz zu veraltet um mit diesen Entwicklungen, hauptsächlich den leistungsstarken Windparks auf See, 
-mithalten zu können. Die Netze .. gelangen an die Grenzen ihrer Übertragungskapazität .. \highlight{Quelle windenergie.de}. 
+mithalten zu können. Die Netze \qm{gelangen an die Grenzen ihrer Übertragungskapazität} \highlight{Quelle windenergie.de}. 
 Um diesen Netzengpässen entgegenzuwirken können neben der Erneuerung des Netzes und der Regelung erneuerbarer Erzeugungsanlagen 
 des Betreibers Netzoptimierungsmaßnahmen durchgeführt werden. Hierbei wird versucht das bestehende Netz effizient zu nutzen. 
 Eine möglicher Ansatz der Netzoptimierung ist das Freileitungsmonitoring. 
@@ -213,7 +213,8 @@ Leiterseile halten bei hoher Windgeschwindigkeit und gleichzeitig niedrigen Temp
 Es kann also mehr Strom übertragen, wen mehr Windstrom erzeugt wird.\highlight{vgl Quelle windenergie.de}
 Aus diesem Grund ist es von großem Interesse Vorhersagen über die Windgeschwindigkeit treffen zu können, um 
 die Nutzung des Stromnetzes zu optimieren. In dieser Seminararbeit soll ein Modell entwickelt werden, das 
-Windgeschwindigkeit und -richtung eine bis 24 Stunden im Voraus vorhersagen kann.
+Windgeschwindigkeit und -richtung eine bis 24 Stunden im Voraus vorhersagen kann. Es sollen in dieses Modell neben zeitlich diskretisierten 
+meteorologischen Daten auch eine örtliche Diskretisierung einfließen, welche in dieser Arbeit validiert werden soll.
 
 
 %%%%%BILD ANFANG
@@ -226,21 +227,6 @@ Windgeschwindigkeit und -richtung eine bis 24 Stunden im Voraus vorhersagen kann
 \end{figure}
 %%%%%BILD ENDE
 
-\highlight{Sehr gute einleitende Graphiken zur aktuellen Lage der Windkraft in Deutschland, Bilder lassen sich als PDF runterladen!\\
-https://www.wind-energie.de/themen/zahlen-und-fakten/deutschland/}
-
-\highlight{Erklären was das besondere an dieser Arbeit ist: 1 Standort wird mit 3 weiteren Standorten prognostiziert}
-
-
-%%%%%BILD ANFANG
-\begin{figure}[tph]
-	\begin{center}
-		\includegraphics[width=.8\textwidth]{./images/windanlagen_deutschland.pdf}
-		\caption{Aktueller Stand der Windkraft in Deutschland; Massiver Rückgang im Zubau in den letzten drei Jahren. \highlight{https://www.wind-energie.de/themen/zahlen-und-fakten/deutschland/ am 19.03.2021}}
-		\label{fig:windkraft_deutschland}
-	\end{center}
-\end{figure}
-%%%%%BILD ENDE
 
 \section{Ziel dieser Arbeit}
 \highlight{soll in Einordnung in Literatur einfließen. Das wäre zu wenig Inhalt für einen Abschnitt.}
@@ -255,22 +241,29 @@ Zeitreihenprognose, wie das ARMA- und ARIMA-Modell \cite{2016_Cadenas_WindSpeedP
 die Weiterentwicklung dessen, mit Berücksichtigung eines saisonalen Einflusses, das SARIMA-Modell 
 \highlight{Es fehlt noch Meng 2010; Im Ordner Literatur}\cite{2018_Alencar_HybridApproachCombining,2019_TenaGarcia_ForecastDailyOutput,2019_Haddad_WindSolarForecasting,2002_Igboekwe_StochasticSimulationHourly,2012_MuhammadSami_PredictionRateDust} sind 
 nicht nur ein häufig verwendetes Vorhersagemodell, sondern werden gerade deshalb auch häufig als Vergleichsmodell herangezogen 
-\highlight{Es fehlt Kreuzer et al. 2020; Im Ordner Literatur}\cite{2012_Cao_ForecastingWindSpeed}. Darüber hinaus existieren das VAR-, VARTA und auch VARTAX-Modelle 
+\highlight{Es fehlt Kreuzer et al. 2020; Im Ordner Literatur}\cite{2012_Cao_ForecastingWindSpeed,2019_Chen_MultifactorSpatiotemporalCorrelation}. Darüber hinaus existieren das VAR-, VARTA und auch VARTAX-Modelle 
 \highlight{Es fehlt Orpia et al. 2014, Dowell 2015}\cite{2007_Ewing_TimeSeriesAnalysis,2015_He_SparsifiedVectorAutoregressive,2016_Koivisto_WindSpeedModeling}, 
 welche im Gegensatz zu ARMA-Modellen mehrere Variablen besitzen. Auch wird es versucht das ARIMA-Modell mit Clustermethoden 
 zu verbessern oder mit klassischen Machine Learning Konzepten zu kombinieren \cite{2017_Zhang_HybridMethodShortTerm,2011_Guo_CorrectedHybridApproach}. 
 Zunehmend werden auch Neuronale Netze, welche in letzter Zeit stark an Popularität zugenommen haben, für Problemstellungen dieser 
-Art verwendet. Neben Ansätzen basierend auf CNN \cite{2020_Zhao_ShorttermAverageWind,2019_Chen_MultifactorSpatiotemporalCorrelation}, MLP \cite{2019_Samet_EvaluationNeuralNetworkbased}, 
-GS-ANN \cite{2019_Khodayar_IntervalDeepGenerative}, Back propagation \cite{2012_Wang_ShorttermWindSpeed} und Radial basis function NN \cite{2017_Chang_ImprovedNeuralNetworkbased}, 
-waren Ansätze, die auf RNN basieren auffällig oft vertreten. Hierbei waren LSTMs \cite{2018_Dong_WindPowerPrediction,2020_Delgado_WindTurbineData,2020_Moharm_WindSpeedForecast,2019_Prabha_WindSpeedForecasting,2019_Cali_ShorttermWindPower} oder auch LSTMs in Kombination mit 
+Art verwendet. Neben Ansätzen basierend auf einfachen vorwärtsgerichteten Neuronalen Netzen \cite{2019_Samet_EvaluationNeuralNetworkbased,2017_Chang_ImprovedNeuralNetworkbased}, Convolutional Neural Networks (CNN) \cite{2020_Zhao_ShorttermAverageWind,2019_Chen_MultifactorSpatiotemporalCorrelation},  
+Generative Modelle \cite{2019_Khodayar_IntervalDeepGenerative} und Evolutionäre Modelle \cite{2012_Wang_ShorttermWindSpeed} 
+waren Ansätze, die auf Recurrenten Neural Networks (RNN) basieren auffällig oft vertreten. Hierbei waren RNNs mit Long- Shortterm Memory Units (LSTM) \cite{2018_Dong_WindPowerPrediction,2020_Delgado_WindTurbineData,2020_Moharm_WindSpeedForecast,2019_Prabha_WindSpeedForecasting,2019_Cali_ShorttermWindPower} oder auch LSTM Zellen in Kombination mit 
 anderen Technologien \cite{2019_Chen_MultifactorSpatiotemporalCorrelation,2016_Allende_RecurrentNetworksWind,2018_Liu_WindSpeedForecasting,2018_Yao_MultidimensionalLSTMNetworks} sehr prominent. 
-
+Drei dieser Ansätze werden hinsichtlich der Datenbasis, des Prognosemodells und der Performance näher betrachtet. \citeauthor{2020_Delgado_WindTurbineData} \cite{2020_Delgado_WindTurbineData} und 
+\citeauthor{2018_Yao_MultidimensionalLSTMNetworks} \cite{2018_Yao_MultidimensionalLSTMNetworks} verwendeten Daten eines Standorts in je der Nordtürkei und Westchina in Intervallen von 
+zehn Minuten von je einem Jahr und drei Jahren. \citeauthor{2020_Delgado_WindTurbineData} versuchte mithilfe der Kenngrößen gemessene generierte Leistung einer Windturbine, 
+Windgeschwindigkeit, Windrichtung und theoretischer Leistung die Windgeschwindigkeit drei Monate in die Zukunft zu prognostizieren. Dagegen floss in 
+das von \citeauthor{2018_Yao_MultidimensionalLSTMNetworks} entwickelte Modell statt der Leistung der Windturbine die Temperatur ein. \citeauthor{2019_Chen_MultifactorSpatiotemporalCorrelation} 
+\cite{2019_Chen_MultifactorSpatiotemporalCorrelation} verwendete Messdaten eines halben Jahres in fünfminütigen Intervallen aus der Region Texas in den USA. 
+Es wurden hierbei jedoch nicht nur deutlich mehr unterschiedliche Kenngrößen (Windgeschwindigkeit, Windrichtung, Temperatur, Taupunkt, Temperatur, Windböen, Messhöhe und relative Luftfeuchtigkeit) 
+als in den anderen beiden Ansätzen verwendet, sondern auch eine Mehrzahl an Standorten.
 
 \highlight{warum LSTM besser als SRIMA oder so wegen lange sicht/kurze sicht bla, Eingehen auf stündlich/Ort/ also Bezug auf 
 unser Ziel, Hierbei South dakota und LSTM genauer anschauen (plus ergebnisbezug), Showed promising results These warum wir auch 
 LSTM nehmen}
 
-\highlight{Unterscheiden zwischen Single-Step und Multi-Step Ahead Ansatz}
+\highlight{Unterscheiden zwischen Single-Step und Multi-Step Ahead Ansatz; Bei uns ist anders mehrere Orte wie bei chen et al. UND Windrichtung wird auch prognostiziert.}
 
 \highlight{ Das kann bei Einordnung aufgegriffen werden. Ist eher Rechtfertigung Wahl Modell.
 	Aus Einleitung (Windpark Windprognose) werden Ziele dieser Seminararbeit ersichtlich. 
