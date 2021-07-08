@@ -451,7 +451,7 @@ Die Datenaufbereitung ist häufig eines der aufwendigeren Teile eines Machine-Le
 	\item Im Rohdatensatz gibt es einige kürzere und längere Datenlücken (In Abb. \ref{fig:preprocessing} dargestellt als rote Segmente). Über kurze Datenlücken wird linear interpoliert. Außerdem werden die Winddaten von der polaren in eine kartesische Darstellung umgewandelt.
 	\item Aus dem durch Schritt 1. generierten Datensatz werden die Spalten gewählt, die es zu prognostizieren gilt (In Abb. \ref{fig:preprocessing} dargestellt durch verdunkelte Spalten). In dieser Arbeit wird die Windgeschwindigkeit \highlight{(und Windgeschwindigkeit?)} einer Station gewählt.
 	\item Der Datensatz wird nun in einen Inputdatensatz und einen Labeldatensatz (In Abb. \ref{fig:preprocessing} verdunkelt) aufgeteilt.
-	\item Die verbleibenden längeren Datenlücken im Input- und Labeldatensatz werden \qm{herausgeschnitten}. Übrig bleiben Fragmente, die keine Fehlstellen enthalten.
+	\item Die verbleibenden längeren Datenlücken im Input- und Labeldatensatz werden \qm{herausgeschnitten}. Übrig bleiben Fragmentpaare, die keine Fehlstellen enthalten.
 	\item Der Inputdatensatz (hellgrün) wird normiert. Dieser Schritt erleichtert das Training des neuronalen Netzes.
 \end{enumerate}
 
@@ -496,11 +496,17 @@ Die hier beschriebene Umwandlung kann der Abbildung \ref{fig:pol2cart2} anhand r
 %%%%%BILD ENDE
 
 \subsection{Aufteilung in Input- und Labeldatensatz}
-Für das Modell werden Ein- und Ausgabedaten festgelegt. \highlight{Wie in Tabelle xy ersichtlich ist, werden blabla als Eingabedaten und blabla als Ausgabedaten festgelegt. (Muss ich noch genau drauf eingehen.)} Die Eingabedaten müssen zunächst normalisiert werden, was mit einer Min-Max Normalisierung erreicht wurde.
-\highlight{Daten in Ein- und Ausgangsdaten trennen: Tabelle sind Eingabedaten (in normalisiert) und zwei Spalten (Windx und Windy) sind Ausgabedaten, aber nicht normalisiert; 
-Normalisieren: Mit  Min-Max Normalisierung; Tabelle und nach einzelnen Datenreihen unterscheiden (kalendarisch ausgeschlossen, Wind x-y sind -1 bis 1, damit 0=0)}
+\highlight{
+	\begin{itemize}
+		\item Warum teilen?
+		\item Größen konkret nennen
+		\item Mit Grafik erklären
+	\end{itemize}
+}
 
 \subsection{Normierung}
+
+\highlight{Erklärung, warum Normierung nötig ist. Tabelle überdenken.}
 
 %%%%%TABELLE ANFANG
 \begin{table}[ht]
@@ -521,14 +527,11 @@ Normalisieren: Mit  Min-Max Normalisierung; Tabelle und nach einzelnen Datenreih
 %%%%%TABELLE ENDE
 
 \section{Generierung der Trainingsbeispiele}
-Die Rohdaten (Umwandlung von $(v,\varphi) \rightarrow (v_x,v_y)$ bereits einbegriffen) können nicht direkt für das Training eines neuronalen Netzes genutzt werden. Zunächst muss der Datensatz von Datenlücken befreit, die Zielgrößen muss definiert und die Inputdaten normalisiert werden. Die Schritte sind in Abbildung \ref{fig:preprocessing} visualisiert. Im Detail läuft die Aufarbeitung der Rohdaten wiefolgt ab: \highlight{passt nicht mehr}
+Nachdem die Rohdaten aufgearbeitet worden sind, gilt es nun tatsächliche Trainingsbeispiele (Samples) zu generieren. Dieser Prozess wird in Abbildung \ref{fig:sampling} dargestellt, wobei die Grafik als Fortsetzung von Abbildung \ref{fig:preprocessing} verstanden werden kann. Das Ziel des Samplings ist die Generierung eins Pools aus Trainingsbeispielen, womit das neuronale Netz angelernt werden kann.
 
-\highlight{Trainingsbeispiele = Samples}
+Zunächst müssen die Größen der Moving-Windows (siehe Abb. \ref{fig:sampling})festgelegt werden. Bei den Inputdaten gibt die Größe $n$ des Moving-Windows an, wieviele historische Zeitschritte für die Prognose genutzt werden. Das heißt, bei einer Prognose zum Zeitpunkt $t_0$ werden die Daten zu den Zeitpunkten $t_{n-1}, \dots, t_0$ als Inputdaten verwendet. Die Größe $m$ des Moving-Window auf den Labeldaten gibt den Prognosehorizont an. Das Ziel ist es also bei einer Prognose zum Zeitpunkt $t_0$ die Windgeschwindigkeiten \highlight{(und Windrichtungen?)} zu den Zeitpunkten $t_1, \dots, t_m$ vorherzusagen.
 
-\highlight{Grafik um das Verschieben zu visualisieren; chunks werden der Reihe nach durchlaufen; 
-innerhalb chink wird über ein moving window gesampelt; Ein- und Ausgabefesnter sind verschoben (zeitlich); 
-Details: wie lange sind die Fenster, wie hoch, Größendefinition, bla}
-
+Das Ergebnis der Datenaufbereitung, beschrieben im Kapitel \ref{section:Datenaufbereitung}, sind datenlückenfreie Fragmentpaare. Ein solches Fragmentpaar besteht aus einem Input- und einem Labeldatensatz. Darüber werden nun die im vorherigen Schritt definierten Moving-Windows \qm{geschoben}. Die Schrittweite wird dabei kleinstmöglich gewählt, so entstehen am meisten Samples. Das Sampling wird auf jedem Fragmentpaar angewandt.
 
 %%%%%BILD ANFANG
 \begin{figure}[tph]
@@ -540,11 +543,16 @@ Details: wie lange sind die Fenster, wie hoch, Größendefinition, bla}
 \end{figure}
 %%%%%BILD ENDE
 
-Hier noch Datenaufteilung
-\highlight{Blabla dass man Daten in drei Teile für NN teilt, warum das wichtig ist, bla; 
-Wie viele Samples haben wir? Aufteilung in Trainings (65\%), Validierungs(30\%) und Testdaten (5\%)}
+\highlight{
+	An dieser Stelle feht noch, dass die Samples in drei Teile getrennt werden:
+	\begin{itemize}
+		\item Warum trennen?
+		\item Aufteilung in Trainings (65\%), Validierungs(30\%) und Testdaten (5\%)
+		\item Wieviele Samples haben wir?
+	\end{itemize}
+}
 
-\section{Implementierung SARIMA und/oder anderes Vergleichsmodell}
+\section{Benchmarkmodell}
 \highlight{Hier ist Platz für alles, was mit der implementierung des Vergleichsmodells zu tun hat. 
 alles bis auf Ergebnisse}
 
