@@ -305,7 +305,7 @@ Deswegen etwas genauer: Kreuzer (wegen Deutschlanddaten, NN), USA Paper, Rangana
 \chapter{Grundlagen}
 
 \section{Neuronale Netze zur Zeitreihenprognose}
-\highlight{ein paar Grundlagen zu neuronalen Netzen (nicht zu tief gehend): 
+\highlight{ein paar Grundlagen zu neuronalen Netzen; 
 Beschreibung versch Architekturen}
 
 \section{Das SARIMA-Modell}
@@ -313,9 +313,13 @@ Beschreibung versch Architekturen}
 
 \section{Zirkuläre Daten}\label{section:circ_data}
 
-Problematisch wird es nun, wenn eine zirkuläre Größe linear dargestellt wird. Beispiele dafür sind Zeit- und Winkelangeben. 
+Winkel werden häufig auf einer Skala von $0^\circ$ bis $360^\circ$ angegeben. Für den Menschen mag das sehr intuitiv sein, ein neuronales Netz muss jedoch erlernen, dass die Intervallgrenzen den selben Winkel beschreiben.
 
-\highlight{Kapitel muss geschrieben werden, da auf dieses referenziert wird!}
+Die Zeitmessung ist ebenso zirkulär. Sowohl Sekunden, Minuten und Stunden als auch Wochentage und Monate werden beim Überschreiten der oberen Intervallgrenze auf die untere zurückgesetzt. 
+
+
+\highlight{Hier muss noch mehr als nur beispiele hin!}
+
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %                                                                     %
 %                                                                     %
@@ -328,7 +332,7 @@ Problematisch wird es nun, wenn eine zirkuläre Größe linear dargestellt wird.
 
 \chapter{Daten}
 
-\section{Datenbasis}
+\section{Datenbasis}\label{section:datenbasis}
 Zur Erstellung des Modells wurde eine Kombination aus gemessenen Daten von Stationen des Deutschen Wetterdienstes (DWD) sowie künstlich generierten Daten verwendet.
 Während die gemessenen Daten die aktuelle Wetterlage an einigen Standorten Deutschlands beinhalten, geben die generierten Daten darüber hinaus weitere Informationen zu saisonalen und täglichen Abhängigkeiten. Die Zusammensetzung des Rohdatzensatzes kann der Abbildung \ref{fig:rohdatensatz} entnommen werden. Nach der in Kapitel \ref{section:Datenaufbereitung} beschriebenen Datenaufbereitung kann dieser Datensatz zum Training des neuronalen Netzes genutzt werden.
 
@@ -416,11 +420,11 @@ Die Wetterlage in Deutschland weist wiederkehrende Trends innerhalb eines Tages 
 \highlight{Eventuell erwähnen, das diese Formeln nicht optimal sind. Grund: Höchste Tagestemperatur i.A. nicht um 12 Uhr sondern um 13-14 Uhr, Höchste Jahrestemperatur i.A. nicht am 1.Juli sondern Mitte August. Außerdem ist z.B. $dal_{day}(HOD=6Uhr) = dal_{day}(HOD=18Uhr)$}
 
 \subsection{Analyse der Datenbasis}
-Der Korrekatinskoeffizient gibt Aufschluss darüber, ob zwischen zwei größen ein linearer Zusammenhang besteht. Er kann als Entscheidungshilfe zur Auswahl der Input-Größen für das neuronale Netz dienen. In Abbildung \ref{fig:corr} wird die Korrelation zwischen den Größen relative Luftfeuchte ($RH$), Sonnenscheindauer ($SD$), Temperatur ($T$), Windgeschwindigkeit ($v$), Windrichtung ($\varphi$) sowie die in Kapitel \ref{section:gen_daten} beschriebenen kalendarischen Daten $cal_{day}$ und $cal_{seas}$ dargestellt. 
+Der Korrelationskoeffizient gibt Aufschluss darüber, ob zwischen zwei größen ein linearer Zusammenhang besteht. Er kann als Entscheidungshilfe zur Auswahl der Input-Größen für das neuronale Netz dienen. In Abbildung \ref{fig:corr} wird die Korrelation zwischen den Größen relative Luftfeuchte ($RH$), Sonnenscheindauer ($SD$), Temperatur ($T$), Windgeschwindigkeit ($v$), Windrichtung ($\varphi$) sowie die in Kapitel \ref{section:gen_daten} beschriebenen kalendarischen Daten $cal_{day}$ und $cal_{seas}$ dargestellt. 
 
 
 
-Da die Größen Windstärke und \highlight{Windrichtung?} prognostiziert werden sollen, sind die Korrelationen zwischen dieser und anderer Größen natürlich von besonderem Interesse. Aus Abbildung \ref{fig:corr} lässt sich erkennen, dass der Luftdurck in einem Zusammenhang mit der Windgeschwindigkeit steht (Fällt $RH$ steigt $v$). Ebenso lässt sich aus der Korrelation zwischen Windgeschwindigkeit und der Temperatur bzw. dem kalendarischen Saisonalwert $cal_{seas}$ eine erhöhte Windgeschwindigkeit im Winter ablesen. Der kalendarische Tageswert $cal_{day}$ scheint jedoch nicht in einem linearen Zusammenhang mit der Windgeschwindigkeit zu stehen.
+Da die Größen Windstärke und \highlight{Windrichtung?} prognostiziert werden sollen, sind die Korrelationen zwischen dieser und anderer Größen natürlich von besonderem Interesse. Aus Abbildung \ref{fig:corr} lässt sich erkennen, dass der Luftdruck in einem Zusammenhang mit der Windgeschwindigkeit steht (Fällt $RH$ steigt $v$). Ebenso lässt sich aus der Korrelation zwischen Windgeschwindigkeit und der Temperatur bzw. dem kalendarischen Saisonalwert $cal_{seas}$ eine erhöhte Windgeschwindigkeit im Winter ablesen. Der kalendarische Tageswert $cal_{day}$ scheint jedoch nicht in einem linearen Zusammenhang mit der Windgeschwindigkeit zu stehen.
 
 \bigskip
 An dieser Stelle ist es wichtig zu erwähnen, dass der Korrelationskoeffizient nur einen linearen Zusammenhang zwischen zwei größen abbildet. Komplexere Zusammenhänge werden nicht erkannt \cite{2020_Ranjan_EstimatingNonlinearCorrelation}. Es ist also möglich, dass eine Größe für die Prognose wertvolle Information enthält, jedoch nicht mit der Windgeschwindigkeit korreliert.
@@ -459,14 +463,24 @@ Die Datenaufbereitung ist häufig eines der aufwendigeren Teile eines Machine-Le
 \end{enumerate}
 
 \subsection{Interpolation über Datenlücken}\label{section:Datenlücken}
+
+In realen Messsystemen kann es immer wieder zu Ausfällen kommen (z.B. vereistes Anemometer oder verschmutzte Sensoren). Auch kann es bei der Übertragung oder Speicherung der Daten zu Fehlern kommen. Der Deutsche Wetterdienst hat daher ein mehrstüfiges Validationssystem und kennzeichnet Fehler entsprechend. In den Rohdaten (siehe Kap. \ref{section:datenbasis}) ist dies meist als Wert $-999$ gekennzeichnet. Es kann sich also darauf verlassen werden, dass die verbleibenden \qm{wahren} Daten glaubhaft sind. 
+
+Datenlücken müssen vor dem Training mit dem neuronalen Netz entfernt werden. In Abhängigkeit der Länge des Zeitraums $\Delta t$, über den sich eine Datenlücke erstreckt, wird die Datenlücke entfernt:
+
+\begin{itemize}
+	\item $\Delta t \leq 4h$
+	
+	Tritt eine kurze Datenlücke auf, so werden die fehlenden Werte durch eine lineare Interpolation anhand der direkt umschließenden wahren Werte ergänzt.
+
+	\item $\Delta t > 4h$
+
+	Eine Interpolation längerer Daten ist nicht mehr sinnhaft. Daher wird der Datensatz, wie in Abbildung \ref{fig:preprocessing} im vierten Schritt verdeutlicht, entlang großer Datenlücken aufgeteilt.
+
+\end{itemize}
+
 \highlight{Grafik wo und wie lange es im Datensatz Lücken gibt --> Heatmap}
 
-\highlight{
-	\begin{enumerate}
-		\item Datenlücken für jede Messgröße seperat angeschaut
-		\item Max Länge der Lücke über die noch interpoliert wird sind 4h
-	\end{enumerate}
-}
 \subsection{Winddaten als Vektoren}
 Die Windmessung erfolgt (von modernen Laser- oder Schallmessungen abgesehen) üblicher Weise mithilfe einens Schalenanemometers und einer Windfahne. Zu jedem Messzeitpunkt werden also zwei Werte aufgenommen. Die Windgeschwindigkeit $v$ wird in $m/s$ gemessen. Die Windrichtung $\varphi$ wird typischer Weise in Grad angegeben, es gilt also $\varphi \in [0,360)$. Norden wird dabei mit $\varphi_{north} = 0^\circ$ gewählt. Dieses $(v,\varphi)$-Tupel lässt sich als Polarkoordinate interpretieren. Jedoch tritt hier das in Kapitel \ref{section:circ_data} beschriebene Problem der zirkulären Daten auf, da $\varphi_{north} = 0^\circ = 360^\circ$ gilt.
 
@@ -550,7 +564,7 @@ Das Ergebnis der Datenaufbereitung, beschrieben im Kapitel \ref{section:Datenauf
 	An dieser Stelle feht noch, dass die Samples in drei Teile getrennt werden:
 	\begin{itemize}
 		\item Warum trennen?
-		\item Aufteilung in Trainings (65\%), Validierungs(30\%) und Testdaten (5\%)
+		\item Aufteilung in Trainings (65\%), Validierung(30\%) und Testdaten (5\%)
 		\item Wieviele Samples haben wir?
 	\end{itemize}
 }
@@ -569,24 +583,14 @@ Das Ergebnis der Datenaufbereitung, beschrieben im Kapitel \ref{section:Datenauf
 \highlight{Begründen aus welchen Gründen wir uns für diese drei Methoden entschieden haben 
 (RNNseq2seq, RNNseq2vec, DNN) z.B. Datengrundlage, Zeitaspekt, bla; 
 Tabelele: Welche Lossfunktion, Metric, Prognosehorizont, Historie, tatsächliche Architektur (Schichten, Neuronen), 
-welche Regularisierung + dazu immer etwas schreiben }
+welche Regularisierung}
 
-\section{Trainingsphase}
-\highlight{Random search über Konfigurationen aus Tabelele und daraus optimales NN, hierüber schreiben; 
-optionale Grafik über Fehler, Loss, und so}
+\section{Trainingsphase und Optimierung}
+\highlight{Random search über Konfigurationen aus Tabelle und daraus optimales NN; optional Grafik über Fehler, Loss, und so}
 
 \section{Ergebnisse}
-\highlight{Hier nur die Ergebnisse zeigen und nüchtern darauf eingehen. Diskussion kommt ein Kapitel später. Einige Grafiken.}
 
-%%%%%BILD ANFANG
-\begin{figure}[tph]
-	\begin{center}
-		\includegraphics[width=0.9\linewidth]{./images/güte_über_zeit.png}
-		\caption{\highlight{Grafik nicht final!}}
-		\label{fig:güte_über_zeit}
-	\end{center}
-\end{figure}
-%%%%%BILD ENDE
+\highlight{Hier nur Performance der verschiedenen Netze. Analyse der Ergebnisse kommt im nächsten Kapitel}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %                                                                     %
@@ -599,33 +603,50 @@ optionale Grafik über Fehler, Loss, und so}
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 \chapter{Diskussion und Ausblick}
-\highlight{Oben gezeigten Ergebnisse werden verglichen und die Ergebnisse anhand von Fehlermaß und Vergleich mit anderem Ansatz diskutiert ;
-Später noch Ausblick bla}
 
 \section{Diskussion der Ergebnisse}
-\highlight{Was auch immer wir herausbekommen. In Kontext setzen. War unser Modell vergleichsweise gut? Hier vll auch 
-Diskussion über Unterschied zwischen eine und mehrere Wetterstationsdaten.}
+\highlight{Ergebnisse in Kontext setzen. War unser Modell vergleichsweise gut?}
 
-\subsection{Vergleich der entwickelten Modelle}
-\highlight{Fehler (RMSE, MAE) anschauen und interpretieren der unterschiedlichen Netze; 
-Fehler pro Windgeschwindigkeit; Fehler über Prognosehorizont}
+\subsection{Detaillierte Prognosegüte}
 
-\subsection{Einfluss kartesischer Winddaten}
-\highlight{Vergleich kartesisch und polar am besten Modell}, wieder auf Grafik oben eingehen
+%%%%%BILD ANFANG
+\begin{figure}[tph]
+	\begin{center}
+		\includegraphics[width=0.9\linewidth]{./images/güte_über_zeit.png}
+		\caption{\highlight{Grafik nicht final!}}
+		\label{fig:güte_über_zeit}
+	\end{center}
+\end{figure}
+%%%%%BILD ENDE
 
-\subsection{Einordnung in existierenden Prognosemodellen \highlight{(Arbeitstitel)}}
-\highlight{entweder SARIMA oder ein anderes Netz aus Paper (zB Amerika oder so) verwenden und grob vergleichen der Fehler und erklären, dass
- Klima ähnlich und deswegen eher vergleichbar, aber nicht absolute Sicherheit!!! (Geht über Umfang der arbeit hinaus)}
+\subsection{Unterschied bei kartesischer Darstellung des Windes}
+\highlight{Vergleich kartesisch und polar am besten Modell}
 
-\section{Weiterentwicklung des Modells}
-\highlight{Das ist der Ausblick. Was könnte man noch tolles anstellen wo wir aber keine Zeit mehr für hatten? Idee Ensemble-Modell, andere Daten 
-verwenden, um Modell besser mit anderem bestehendem zu Vergleichen, Satellitendaten einbinden, weitere Modelle untereinander vergleichen mit Ulmer Klimadaten}
+\subsection{Unterschied bei Einbeziehung weiterer Messstationen}
 
+\highlight{Was passiert, wenn die umliegenden Stationen mit einbezogen werden und was wenn nicht? Sind Unterschiede zu sehen?}
+
+\subsection{Vergleich mit Benchmarkmodell}
+
+\highlight{
+	\begin{itemize}
+		\item Vergleich von MAE, RMSE, MAPE, etc.
+		\item Vergleich schwer, da Datenbasis nicht gleich
+	\end{itemize}
+}
+
+\section{Weiterentwicklung des Modells \highlight{Ausblick}}
+
+\highlight{
 Ideen, mit dem man das Modell / die Ergebnisse verbassern kann:
-
 \begin{enumerate}
-	\item Andere Stationsdaten mit weniger volatier Windgeschwindigkeit (d.h. Daten am Mehr)
+	\item Andere Stationsdaten mit weniger volatier Windgeschwindigkeit (d.h. Daten am Meer)
+	\item Ensemble-Modell
+	\item Convolution hinzufügen, wie z.B. \cite{2019_Chen_MultifactorSpatiotemporalCorrelation}
+	\item Satellitendaten nutzen
+	\item Zeitlich geringere Auflösung nehmen, weil wir in Ulm relativ instationäre und leichte Winde haben
 \end{enumerate}
+}
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %                                                                     %
 %                                                                     %
