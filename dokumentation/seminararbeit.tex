@@ -312,6 +312,9 @@ Beschreibung versch Architekturen}
 \highlight{Grob SARIMA-Modell erklären. Wenn wir es als Benchmark verwenden}
 
 \section{Zirkuläre Daten}\label{section:circ_data}
+
+Problematisch wird es nun, wenn eine zirkuläre Größe linear dargestellt wird. Beispiele dafür sind Zeit- und Winkelangeben. 
+
 \highlight{Kapitel muss geschrieben werden, da auf dieses referenziert wird!}
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %                                                                     %
@@ -323,7 +326,7 @@ Beschreibung versch Architekturen}
 %                                                                     %
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-\chapter{Implementierung des Modells}
+\chapter{Daten}
 
 \section{Datenbasis}
 Zur Erstellung des Modells wurde eine Kombination aus gemessenen Daten von Stationen des Deutschen Wetterdienstes (DWD) sowie künstlich generierten Daten verwendet.
@@ -481,7 +484,7 @@ Es gilt zu belegen, dass sich dieses Problem umgehen lässt, indem der Wind nich
 \end{figure}
 %%%%%BILD ENDE
 
-\highlight{Evtl erwähnen dass wenn diese Umwandlung genutzt wird, nach dem NN wieder zurück umgewandelt wird. d.h. $(v_x,v_y) \rightarrow (v,\varphi) \rightarrow(v_x,v_y)$}
+\highlight{Evtl erwähnen, dass wenn diese Umwandlung genutzt wird, nach dem NN wieder zurück umgewandelt wird. d.h. $(v,\varphi) \rightarrow (v_x,v_y) \rightarrow(v,\varphi)$}
 
 Die hier beschriebene Umwandlung kann der Abbildung \ref{fig:pol2cart2} anhand realer Messdaten entnommen werden. Im oberen Teil ist die Häufigkeitsverteilung in $(v,\varphi)$-Form dargestellt. Die zirkuläre Eigenschaft $\varphi_{north} = 0^\circ = 360^\circ$ ist hier nicht sichtbar. Die Häufigkeitsverteilung für die umgewandelten Koordinaten in $(v_x,v_y)$-Form hingegen ist klar um den Ursprung verteilt. Hier lässt sich die zirkuläre Eigenschaft gut erkennen. Das strahlenartige Muster erklärt sich durch die diskrete Angabe der Windrichtung in $10^\circ$ Schritten. Bei einer feineren Auflösung wäre die Verteilung weniger verzerrt.
 
@@ -552,27 +555,38 @@ Das Ergebnis der Datenaufbereitung, beschrieben im Kapitel \ref{section:Datenauf
 	\end{itemize}
 }
 
+\chapter{Implementation}
 \section{Benchmarkmodell}
-\highlight{Hier ist Platz für alles, was mit der implementierung des Vergleichsmodells zu tun hat. 
-alles bis auf Ergebnisse}
+\highlight{
+	\begin{itemize}
+		\item Welche gibt es?
+		\item Warum Benchmark?
+		\item Warum sind so Modelle schwierig zu vergleichen? Überall unterschiedliche Daten!
+	\end{itemize}
+}
 
-\section{Entwicklung und Trainieren des Neuronalen Netzes}
-\highlight{Hier ist Platz für alles, was mit der implementierung des eigentlichen Modells zu tun hat. 
-Infos zu den Layers, zum Trainingsvorgang, Das mit den Decision Trees zur Auswahl der besten Paramter, 
-alles bis auf Ergebnisse}
-
-\subsection{Festlegung der Modellarchitektur \highlight{(Arbeitstitel)}}
+\section{Festlegung der Modellarchitektur \highlight{(Arbeitstitel)}}
 \highlight{Begründen aus welchen Gründen wir uns für diese drei Methoden entschieden haben 
 (RNNseq2seq, RNNseq2vec, DNN) z.B. Datengrundlage, Zeitaspekt, bla; 
 Tabelele: Welche Lossfunktion, Metric, Prognosehorizont, Historie, tatsächliche Architektur (Schichten, Neuronen), 
 welche Regularisierung + dazu immer etwas schreiben }
 
-\subsection{Trainingsphase}
+\section{Trainingsphase}
 \highlight{Random search über Konfigurationen aus Tabelele und daraus optimales NN, hierüber schreiben; 
 optionale Grafik über Fehler, Loss, und so}
 
 \section{Ergebnisse}
 \highlight{Hier nur die Ergebnisse zeigen und nüchtern darauf eingehen. Diskussion kommt ein Kapitel später. Einige Grafiken.}
+
+%%%%%BILD ANFANG
+\begin{figure}[tph]
+	\begin{center}
+		\includegraphics[width=0.9\linewidth]{./images/güte_über_zeit.png}
+		\caption{\highlight{Grafik nicht final!}}
+		\label{fig:güte_über_zeit}
+	\end{center}
+\end{figure}
+%%%%%BILD ENDE
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %                                                                     %
@@ -621,150 +635,150 @@ Ideen, mit dem man das Modell / die Ergebnisse verbassern kann:
 %                                                                     %
 %                                                                     %
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\chapter{Test und Wissen}
+% \chapter{Test und Wissen}
 
-\section{Tabelle}
-%%%%%TABELLE ANFANG
-\begin{table}[ht]
-	\centering
-	\caption{Das hier ist eine Testtabelle, man beachte die gezwungene Breite in der rechten Spalte. Lässt sich einfach durch den Befehl C\{5cm\} erzeugen.}
-	\begin{tabular}{|l|C{5cm}|}
-		\hline
-        \rowcolor{color80}
-		\textbf{Erste Zelle}&\textbf{Ein Header}\\
-		\hline
-		Moin: & Zusammen\\\hline
-		leer:&\\\hline
-		Moin: & Zusammen\\\hline
-		leer:&\\\hline
-	\end{tabular}
-\label{tab:testtabelle}
-\end{table}
-%%%%%TABELLE ENDE
+% \section{Tabelle}
+% %%%%%TABELLE ANFANG
+% \begin{table}[ht]
+% 	\centering
+% 	\caption{Das hier ist eine Testtabelle, man beachte die gezwungene Breite in der rechten Spalte. Lässt sich einfach durch den Befehl C\{5cm\} erzeugen.}
+% 	\begin{tabular}{|l|C{5cm}|}
+% 		\hline
+%         \rowcolor{color80}
+% 		\textbf{Erste Zelle}&\textbf{Ein Header}\\
+% 		\hline
+% 		Moin: & Zusammen\\\hline
+% 		leer:&\\\hline
+% 		Moin: & Zusammen\\\hline
+% 		leer:&\\\hline
+% 	\end{tabular}
+% \label{tab:testtabelle}
+% \end{table}
+% %%%%%TABELLE ENDE
 
-%%%%%LANGTABELLE ANFANG
-\begin{longtable}{|L{3.6cm}|L{6cm}|L{6cm}|}
-	\caption{Finale Merkmale}\label{tab:longtable}\\
-    % Definition des Tabellenkopfes auf der ersten Seite
-	\hline
-    \rowcolor{color80}
-	\textbf{Abkürzung}&\textbf{Englisch}&\textbf{Deutsch}\\
-	\hline
-	\endfirsthead % Erster Kopf zu Ende
-	% Definition des Tabellenkopfes auf den folgenden Seiten
-	\hline
-	\rowcolor{color80}
-	\textbf{Abkürzung}&\textbf{Englisch}&\textbf{Deutsch}\\
-	\hline
-	\endhead % Zweiter Kopf ist zu Ende
-    \hline
-    \endfoot
-    \hline
-    \endlastfoot
-	% Ab hier kommt der Inhalt der Tabelle
-	$test_{\mathrm{abk}}$&ein sehr sehr sehr langertextmit langen wörternein sehr sehr sehr langertextmit langen wörternein sehr sehr sehr langertextmit langen wörternein sehr sehr sehr langertextmit langen wörternein sehr sehr sehr langertextmit langen wörtern&Einzeilig\\
-	Z&5&as\\\hline
-	A&1&91\\\hline
-	B&2&97\\\hline
-	Z&5&as\\\hline
-	A&1&91\\\hline
-	B&2&97\\\hline
-	A&1&91\\\hline
-	B&2&97\\\hline
-	Z&5&as\\\hline
-	A&1&91\\\hline
-	B&2&97\\\hline
-    Z&5&as\\\hline
-	A&1&91\\\hline
-	B&2&97\\\hline
-	Z&5&as\\\hline
-	A&1&91\\\hline
-	B&2&97\\\hline
-    Z&5&as\\\hline
-	A&1&91\\\hline
-	B&2&97\\\hline
-	Z&5&as\\\hline
-	A&1&91\\\hline
-	B&2&97\\\hline
-    Z&5&as\\\hline
-	A&1&91\\\hline
-	B&2&97\\\hline
-	Z&5&as\\\hline
-	A&1&91\\\hline
-	B&2&97\\\hline
-    Z&5&as\\\hline
-	A&1&91\\\hline
-	B&2&97\\\hline
-	Z&5&as\\\hline
-	A&1&91\\\hline
-	B&2&97\\\hline
-    Z&5&as\\\hline
-	A&1&91\\\hline
-	B&2&97\\\hline
-	Z&5&as\\\hline
-	A&1&91\\\hline
-	B&2&97\\\hline
-	Z&5&as\\\hline
-	A&1&91\\\hline
-	B&2&97\\\hline
-	Z&5&as\\\hline
-	A&1&91\\\hline
-	B&2&97\\\hline
-	Z&5&KEINE hline AM SCHLUSS!!!\\
-\end{longtable}
-%%%%%LANGTABELLE ENDE
+% %%%%%LANGTABELLE ANFANG
+% \begin{longtable}{|L{3.6cm}|L{6cm}|L{6cm}|}
+% 	\caption{Finale Merkmale}\label{tab:longtable}\\
+%     % Definition des Tabellenkopfes auf der ersten Seite
+% 	\hline
+%     \rowcolor{color80}
+% 	\textbf{Abkürzung}&\textbf{Englisch}&\textbf{Deutsch}\\
+% 	\hline
+% 	\endfirsthead % Erster Kopf zu Ende
+% 	% Definition des Tabellenkopfes auf den folgenden Seiten
+% 	\hline
+% 	\rowcolor{color80}
+% 	\textbf{Abkürzung}&\textbf{Englisch}&\textbf{Deutsch}\\
+% 	\hline
+% 	\endhead % Zweiter Kopf ist zu Ende
+%     \hline
+%     \endfoot
+%     \hline
+%     \endlastfoot
+% 	% Ab hier kommt der Inhalt der Tabelle
+% 	$test_{\mathrm{abk}}$&ein sehr sehr sehr langertextmit langen wörternein sehr sehr sehr langertextmit langen wörternein sehr sehr sehr langertextmit langen wörternein sehr sehr sehr langertextmit langen wörternein sehr sehr sehr langertextmit langen wörtern&Einzeilig\\
+% 	Z&5&as\\\hline
+% 	A&1&91\\\hline
+% 	B&2&97\\\hline
+% 	Z&5&as\\\hline
+% 	A&1&91\\\hline
+% 	B&2&97\\\hline
+% 	A&1&91\\\hline
+% 	B&2&97\\\hline
+% 	Z&5&as\\\hline
+% 	A&1&91\\\hline
+% 	B&2&97\\\hline
+%     Z&5&as\\\hline
+% 	A&1&91\\\hline
+% 	B&2&97\\\hline
+% 	Z&5&as\\\hline
+% 	A&1&91\\\hline
+% 	B&2&97\\\hline
+%     Z&5&as\\\hline
+% 	A&1&91\\\hline
+% 	B&2&97\\\hline
+% 	Z&5&as\\\hline
+% 	A&1&91\\\hline
+% 	B&2&97\\\hline
+%     Z&5&as\\\hline
+% 	A&1&91\\\hline
+% 	B&2&97\\\hline
+% 	Z&5&as\\\hline
+% 	A&1&91\\\hline
+% 	B&2&97\\\hline
+%     Z&5&as\\\hline
+% 	A&1&91\\\hline
+% 	B&2&97\\\hline
+% 	Z&5&as\\\hline
+% 	A&1&91\\\hline
+% 	B&2&97\\\hline
+%     Z&5&as\\\hline
+% 	A&1&91\\\hline
+% 	B&2&97\\\hline
+% 	Z&5&as\\\hline
+% 	A&1&91\\\hline
+% 	B&2&97\\\hline
+% 	Z&5&as\\\hline
+% 	A&1&91\\\hline
+% 	B&2&97\\\hline
+% 	Z&5&as\\\hline
+% 	A&1&91\\\hline
+% 	B&2&97\\\hline
+% 	Z&5&KEINE hline AM SCHLUSS!!!\\
+% \end{longtable}
+% %%%%%LANGTABELLE ENDE
 
-\section{Bild}
+% \section{Bild}
 
-%%%%%BILD ANFANG
-\begin{figure}[tph]
-	\begin{center}
-		\includegraphics[scale = 1]{./images/0_testbild.png}
-		\caption{TEST Hier ist ein wunderschönes Testbild zu erkennen, und das hier ist ein wunderschönes Testbild zu erkennen, und das hier ist ein wunderschönes Testbild zu erkennen, und das hier ist ein wunderschönes Testbild zu erkennen, und das hier ist ein wunderschönes Testbild zu erkennen, und das hier ist ein wunderschönes Testbild zu erkennen, und das hier ist ein}
-		\label{fig:testbild}
-	\end{center}
-\end{figure}
-%%%%%BILD ENDE
+% %%%%%BILD ANFANG
+% \begin{figure}[tph]
+% 	\begin{center}
+% 		\includegraphics[scale = 1]{./images/0_testbild.png}
+% 		\caption{TEST Hier ist ein wunderschönes Testbild zu erkennen, und das hier ist ein wunderschönes Testbild zu erkennen, und das hier ist ein wunderschönes Testbild zu erkennen, und das hier ist ein wunderschönes Testbild zu erkennen, und das hier ist ein wunderschönes Testbild zu erkennen, und das hier ist ein wunderschönes Testbild zu erkennen, und das hier ist ein}
+% 		\label{fig:testbild}
+% 	\end{center}
+% \end{figure}
+% %%%%%BILD ENDE
 
-%%%%%DOPPELBILD ANFANG
-\begin{figure}
-	\centering
-	\begin{minipage}[b]{.4\linewidth} % [b] => Ausrichtung an \caption
-		\includegraphics[width=\linewidth]{./images/0_testbild.png}
-		\caption{Beschreibung und so}
-		\label{fig:testbild_klein_links}
-	\end{minipage}
-	\hspace{.1\linewidth}% Abstand zwischen Bilder
-	\begin{minipage}[b]{.4\linewidth} % [b] => Ausrichtung an \caption
-		\includegraphics[width=\linewidth]{./images/0_testbild.png}
-		\caption{Zweite Beschreibung}
-		\label{fig:testbild_klein_rechts}
-	\end{minipage}
-\caption*{Hier steht eine etwas längere Bildunterschrift, die dieses Doppelbild beschreibt. Zu sehen sind weder Land noch Wasser, das macht bei Testbildern aber nix.}
-\end{figure}
-%%%%%DOPPELBILD ENDE
+% %%%%%DOPPELBILD ANFANG
+% \begin{figure}
+% 	\centering
+% 	\begin{minipage}[b]{.4\linewidth} % [b] => Ausrichtung an \caption
+% 		\includegraphics[width=\linewidth]{./images/0_testbild.png}
+% 		\caption{Beschreibung und so}
+% 		\label{fig:testbild_klein_links}
+% 	\end{minipage}
+% 	\hspace{.1\linewidth}% Abstand zwischen Bilder
+% 	\begin{minipage}[b]{.4\linewidth} % [b] => Ausrichtung an \caption
+% 		\includegraphics[width=\linewidth]{./images/0_testbild.png}
+% 		\caption{Zweite Beschreibung}
+% 		\label{fig:testbild_klein_rechts}
+% 	\end{minipage}
+% \caption*{Hier steht eine etwas längere Bildunterschrift, die dieses Doppelbild beschreibt. Zu sehen sind weder Land noch Wasser, das macht bei Testbildern aber nix.}
+% \end{figure}
+% %%%%%DOPPELBILD ENDE
 
-\section{Formeln}
+% \section{Formeln}
 
-Aufpassen, hier kommt jetzt eine einfache Testformel hin:
+% Aufpassen, hier kommt jetzt eine einfache Testformel hin:
 
-\begin{equation}
-\label{eq:1}
-x=10
-\end{equation}
+% \begin{equation}
+% \label{eq:1}
+% x=10
+% \end{equation}
 
-Diese Formel \autoref{eq:1} kann auch referenziert werden.
+% Diese Formel \autoref{eq:1} kann auch referenziert werden.
 
-\begin{equation}
-x=Ma_{\mathrm{blabla}} \cdot y
-\end{equation}
+% \begin{equation}
+% x=Ma_{\mathrm{blabla}} \cdot y
+% \end{equation}
 
-\section{Zitate}
+% \section{Zitate}
 
-Um Bib zu kompilieren, einmal F8 drücken.
+% Um Bib zu kompilieren, einmal F8 drücken.
 
-Bild \autoref{fig:testbild} referenzieren.
-%Auch ein Autorname \citeauthor{ernstGrundkursInformatikGrundlagen2015} oder ein Jahr geht \citeyear{ernstGrundkursInformatikGrundlagen2015}
+% Bild \autoref{fig:testbild} referenzieren.
+% %Auch ein Autorname \citeauthor{ernstGrundkursInformatikGrundlagen2015} oder ein Jahr geht \citeyear{ernstGrundkursInformatikGrundlagen2015}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %                                                                     %
