@@ -309,31 +309,28 @@ Beschreibung versch Architekturen}
 \highlight{Das SARIMA-Modell erklären, falls wir es zukünftig noch als Benchmark verwenden}
 
 \section{Zirkuläre Daten}\label{section:circ_data}
-\highlight{\cite{2016_London_EncodingCyclicalContinuous} Encoding cyclical continuous features - 24-hour time}
 
-\highlight{
-	Beispiele was alles zyklisch sein kann
-	Darstellung Winkel in Grad, oder Tageszeit in Stunden lässt den zyklischen Aspekt der Daten verloren gehen 
-	Gerade im Kontext von Machine learning ist es sinnvoll, wenn das Modell den zyklischen Zusammenhang der Daten versteht
-	Versuch mithilfe einer Transformation zyklischen Aspekt darstellen zu können
-	Üblich bei Zeitangaben diese in eine sinus und cosinus fkt zu zerlegen.
-	}
-
-
-
-Winkel werden häufig auf einer Skala von $0^\circ$ bis $360^\circ$ angegeben. Für den Menschen mag das sehr intuitiv sein, ein neuronales Netz muss jedoch erlernen, dass die Intervallgrenzen den selben Winkel beschreiben.
-
-Die Zeitmessung ist ebenso zirkulär. Sowohl Sekunden, Minuten und Stunden als auch Wochentage und Monate werden beim Überschreiten der oberen Intervallgrenze auf die untere zurückgesetzt. 
+Wird in dieser Seminararbeit von zirkulären Daten gesprochen, sind Datensätze gemeint, welche sich für den Menschen intuitiv in einem Kreis anordnen lassen. 
+Hierzu gehören beispielsweise die Himmelsrichtungen auf einem Kompass, der Farbton dargestellt als Winkel (siehe Abbildung \ref{fig:colorcircle}), der Längengrad entlang des Äquators, die Rotation eines Objekts im Raum oder auch zyklische Daten, wie die Sekunden, Minuten und Stunden auf der Uhr \cite{2016_London_EncodingCyclicalContinuous}. 
+All diese Daten haben gemein, dass bei einer quantitativen Beschreibung in einem Punkt des Kreises der geringste Wert aufgetragen wird, die Werte entlang dessen Linie aufsteigen und schließlich einen Punkt vor dem Anfangspunkt mit dem höchsten Wert enden. 
+Hierbei passiert nun das Phänomen, dass der objektiv betrachtet höchste und niedrigste Wert dieser Skala, also die Werte, welche mathematisch am weitesten voneinander entfernt liegen, in Wahrheit inhaltlich viel stärker miteinander verknüpft sind als diese mit 
+einem mathematisch näher liegenden Wert aus der Mitte. 
 
 %%%%%BILD ANFANG
 \begin{figure}[tph]
 	\begin{center}
 		\includegraphics[width=0.5\linewidth]{./images/colorcircle.png}
-		\caption{\highlight{{TODO}} \cite{__Farbraum}}
+		\caption{Darstellung der Farbtöne als Winkel \cite{__Farbraum}}
 		\label{fig:colorcircle}
 	\end{center}
 \end{figure}
 %%%%%BILD ENDE
+
+Beispielhaft ist eine Farbe im Farbkreis (siehe Abbildung \ref{fig:colorcircle}), die mit einem Winkel von $0^\circ$ beschrieben wird für den Betrachter rot und eine mit $90^\circ$ beschriebene Farbe als grün erkennbar. Die mit $359^\circ$ beschriebene Farbe, die einen 
+vier Mal größeren Abstand zur roten Farbe hat wie die rote Farbe zur grünen Farbe, ist jedoch auch rot und kaum von der ersten Farbe zu unterscheiden. 
+Dieser für den Menschen intuitive Zusammenhang geht in der herkömmlichen Darstellung, das sind Gradangaben oder übliche Zeitangaben, verloren \cite{2016_London_EncodingCyclicalContinuous}. 
+Gerade im Zusammenhang mit Neuronalen Netzen ist es jedoch sehr wichtig diesen zirkulären Gedanken in den Eingabedaten zu erhalten, damit Korrelationen zwischen Größen besser verstanden werden. 
+Ein Ansatz dieses Problem zu umgehen ist es die Daten so zu transformieren, dass die zirkuläre Information erhalten bleibt. Im Laufe dieser Arbeit werden zwei Transformationen vorgestellt, die zeitliche (vgl. Kapitel \ref{section:gen_daten}) und räumliche (vgl. Kapitel \ref{section:Winddaten_vec}) Daten so verändern wollen, dass sie für ein Neuronales Netz besser zu vestehen sind.
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %                                                                     %
@@ -415,7 +412,8 @@ Im Folgenden wird versucht, die Windgeschwindigkeit \highlight{und Windrichtung?
 \highlight{Warum Günzburg? 1. Liegt östlich der anderen Stationen 2. Relativ klare Windrose}
 
 \subsection{Generierte Messdaten}\label{section:gen_daten}
-Die Wetterlage in Deutschland weist wiederkehrende Trends innerhalb eines Tages und auch innerhalb eines Jahres auf. Offensichtlich ist es am Tag wärmer als in der Nacht und im Sommer wärmer als im Winter. Um diese Information für das Modell nutzbar zu machen, werden zusätzlich zu den gemessenen Daten zwei weitere Variablen eingeführt: \highlight{Warum Sinus? Weil zirkuläre Daten! 24h=0h! Oben gibts das Kapitel \ref{section:circ_data} in dem zirkuläre Daten erklärt werden, d.h. erwähnen!}
+Die Wetterlage in Deutschland weist wiederkehrende Trends innerhalb eines Tages und auch innerhalb eines Jahres auf. Offensichtlich ist es am Tag wärmer als in der Nacht und im Sommer wärmer als im Winter. Um diese Information für das Modell nutzbar zu machen, werden zusätzlich zu den gemessenen Daten zwei weitere Variablen eingeführt, nämlich die Tageszeit und die Jahreszeit. 
+Die Darstellung von zeitlichen Daten ist jedoch zyklisch. Sowohl Sekunden, Minuten und Stunden, als auch Wochentage und Monate werden beim Überschreiten der oberen Intervallgrenze auf die untere zurückgesetzt. Wie bereits in Kapitel \ref{section:circ_data} betont, müssen diese Daten so transformiert werden, das das Neuronale Netz die Informationen richtig verarbeiten kann.
 
 \begin{itemize}
 	\item \textit{Kalendarischer Tageswert}\\
@@ -495,7 +493,7 @@ Datenlücken müssen vor dem Training mit dem neuronalen Netz entfernt werden. I
 
 \highlight{Grafik wo und wie lange es im Datensatz Lücken gibt --> Heatmap}
 
-\subsection{Winddaten als Vektoren}
+\subsection{Winddaten als Vektoren}\label{section:Winddaten_vec}
 Die Windmessung erfolgt (von modernen Laser- oder Schallmessungen abgesehen) üblicher Weise mithilfe einens Schalenanemometers und einer Windfahne. Zu jedem Messzeitpunkt werden also zwei Werte aufgenommen. Die Windgeschwindigkeit $v$ wird in $m/s$ gemessen. Die Windrichtung $\varphi$ wird typischer Weise in Grad angegeben, es gilt also $\varphi \in [0,360)$. Norden wird dabei mit $\varphi_{north} = 0^\circ$ gewählt. Dieses $(v,\varphi)$-Tupel lässt sich als Polarkoordinate interpretieren. Jedoch tritt hier das in Kapitel \ref{section:circ_data} beschriebene Problem der zirkulären Daten auf, da $\varphi_{north} = 0^\circ = 360^\circ$ gilt.
 
 Es gilt zu belegen, dass sich dieses Problem umgehen lässt, indem der Wind nicht in polaren sondern kartesischen Koordinaten dargestellt wird. Der Windvektor, der durch das $(v,\varphi)$-Tupel beschrieben ist, wird so in eine $v_x$ und eine $v_y$ Komponente zerlegt. Dieses Vorgehen ist in Abbildung \ref{fig:pol2cart} skizziert.
@@ -652,7 +650,7 @@ welche Regularisierung}
 	\end{itemize}
 }
 
-\section{Weiterentwicklung des Modells \highlight{Ausblick}}
+\section{Weiterentwicklung des Modells}
 \highlight{
 	Einteilen in Punkte für Modellerweiterung und grundsätzlicher Modelländerung.
 	Ideen, mit dem man das Modell / die Ergebnisse verbessern kann:
@@ -663,7 +661,7 @@ welche Regularisierung}
 		\item Satellitendaten nutzen
 		\item Zeitlich geringere Auflösung nehmen, weil wir in Ulm relativ instationäre und leichte Winde haben
 		\item MFSTC Modell für mehrere Standorte
-		\item SARIMA Modell kann unsere Ergebnisse besser in Kontext setzen: Es kann sein, dass Datenlage in Süddeutschland auch für herkömmliches Modell schwer vorherzusagen ist.
+		\item SARIMA Modell kann unsere Ergebnisse besser in Kontext setzen: Es kann sein, dass Datenlage in Süddeutschland auch für herkömmliches Modell schwer vorherzusagen ist. Es kann aber auch sein, dass unser Modell nicht genau genug ist.
 	\end{enumerate}
 }
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
