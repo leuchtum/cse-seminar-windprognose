@@ -126,7 +126,7 @@ bibliography=numbered
 \usepackage{longtable} %Mehrseitige Tabellen (Abkürzungsverz.)
 \setlength{\tabcolsep}{0.5em} % for the horizontal padding
 \renewcommand{\arraystretch}{1.2}% for the vertical padding
-
+\usepackage{makecell}
 
 %%%%% QUICK COMMANDS
 \newcommand{\qm}[1]{\glqq#1\grqq{}} %Anfzeichen
@@ -309,6 +309,7 @@ Beschreibung versch Architekturen}
 \highlight{Das SARIMA-Modell erklären, falls wir es zukünftig noch als Benchmark verwenden}
 
 \section{Zirkuläre Daten}\label{section:circ_data}
+\highlight{\cite{2016_London_EncodingCyclicalContinuous} Encoding cyclical continuous features - 24-hour time}
 
 \highlight{
 	Beispiele was alles zyklisch sein kann
@@ -324,6 +325,16 @@ Winkel werden häufig auf einer Skala von $0^\circ$ bis $360^\circ$ angegeben. F
 
 Die Zeitmessung ist ebenso zirkulär. Sowohl Sekunden, Minuten und Stunden als auch Wochentage und Monate werden beim Überschreiten der oberen Intervallgrenze auf die untere zurückgesetzt. 
 
+%%%%%BILD ANFANG
+\begin{figure}[tph]
+	\begin{center}
+		\includegraphics[width=0.5\linewidth]{./images/colorcircle.png}
+		\caption{\highlight{{TODO}} \cite{__Farbraum}}
+		\label{fig:colorcircle}
+	\end{center}
+\end{figure}
+%%%%%BILD ENDE
+
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %                                                                     %
 %                                                                     %
@@ -337,6 +348,7 @@ Die Zeitmessung ist ebenso zirkulär. Sowohl Sekunden, Minuten und Stunden als a
 \chapter{Daten}
 
 \section{Datenbasis}\label{section:datenbasis}
+\highlight{Warum stündlich und nicht 5-minütlich?}
 Zur Erstellung des Modells wurde eine Kombination aus gemessenen Daten von Stationen des Deutschen Wetterdienstes (DWD) sowie künstlich generierten Daten verwendet.
 Während die gemessenen Daten die aktuelle Wetterlage an einigen Standorten Deutschlands beinhalten, geben die generierten Daten darüber hinaus weitere Informationen zu saisonalen und täglichen Abhängigkeiten. Die Zusammensetzung des Rohdatzensatzes kann der Abbildung \ref{fig:rohdatensatz} entnommen werden. Nach der in Kapitel \ref{section:Datenaufbereitung} beschriebenen Datenaufbereitung kann dieser Datensatz zum Training des neuronalen Netzes genutzt werden.
 
@@ -369,16 +381,16 @@ Zur Prognose der Windgeschwindigkeit und Windrichtung können neben deren selbst
 \begin{table}[ht]
 	\centering
 	\caption{Gemessene Größen je Messstation \highlight{Auflösung der einzelnen Größen ergänzen. Wird referenziert!}}
-	\begin{tabular}{|l|c|c|c|c|}
+	\begin{tabular}{|l|c|c|c|c|c|}
 		\hline
         \rowcolor{color80}
-		& \textbf{Münsingen-Apfelstetten} & \textbf{Stötten} & \textbf{Günzburg} & \textbf{Laupheim} \\\hline
-		Windgeschwindigkeit & \cmark & \cmark & \cmark & \cmark \\\hline
-		Windrichtung & \cmark & \cmark & \cmark & \cmark \\\hline
-		Sonnenscheindauer & \cmark & \cmark & \xmark & \xmark \\\hline
-		Luftdruck & \xmark & \cmark & \xmark & \cmark \\\hline
-		Temperatur & \cmark & \cmark & \cmark & \cmark \\\hline
-		Luftfeuchtigkeit & \cmark & \cmark & \cmark & \cmark \\\hline
+		& \textbf{Auflösung} & \textbf{\makecell{Münsingen-\\ Apfelstetten}} & \textbf{Stötten} & \textbf{Günzburg} & \textbf{Laupheim} \\\hline
+		Windgeschwindigkeit & $0.1m/s$ & \cmark & \cmark & \cmark & \cmark \\\hline
+		Windrichtung & $10^\circ$ & \cmark & \cmark & \cmark & \cmark \\\hline
+		Sonnenscheindauer & $1min$ & \cmark & \cmark & \xmark & \xmark \\\hline
+		Luftdruck & $0.1hPa$ & \xmark & \cmark & \xmark & \cmark \\\hline
+		Temperatur & $0.1^\circ C$ & \cmark & \cmark & \cmark & \cmark \\\hline
+		Luftfeuchtigkeit & $1\%$ & \cmark & \cmark & \cmark & \cmark \\\hline
 	\end{tabular}
 \label{tab:messgrößen}
 \end{table}
@@ -398,11 +410,9 @@ Bei detaillierter Analyse fällt jedoch auf, dass der Wind an der Messstationen 
 \end{figure}
 %%%%%BILD ENDE
 
-Im Folgenden wird versucht, die Windgeschwindigkeit \highlight{und Windrichtung?} für die Messstation in Günzburg \highlight{und Stötten?} zu prognostizieren. 
+Im Folgenden wird versucht, die Windgeschwindigkeit \highlight{und Windrichtung?} für die Messstation in Günzburg zu prognostizieren. 
 
 \highlight{Warum Günzburg? 1. Liegt östlich der anderen Stationen 2. Relativ klare Windrose}
-
-\highlight{Warum Stötten? 1. Alle Messgrößen werden vorort gemessen 2. Stärkster Wind}
 
 \subsection{Generierte Messdaten}\label{section:gen_daten}
 Die Wetterlage in Deutschland weist wiederkehrende Trends innerhalb eines Tages und auch innerhalb eines Jahres auf. Offensichtlich ist es am Tag wärmer als in der Nacht und im Sommer wärmer als im Winter. Um diese Information für das Modell nutzbar zu machen, werden zusätzlich zu den gemessenen Daten zwei weitere Variablen eingeführt: \highlight{Warum Sinus? Weil zirkuläre Daten! 24h=0h! Oben gibts das Kapitel \ref{section:circ_data} in dem zirkuläre Daten erklärt werden, d.h. erwähnen!}
@@ -588,7 +598,7 @@ welche Regularisierung}
 
 \highlight{Hier nur Performance der verschiedenen Netze. Analyse der Ergebnisse kommt im nächsten Kapitel}
 
-\section{Benchmarkmodell\highlight{?}}
+\section{Benchmarkmodell}
 \highlight{
 	\begin{itemize}
 		\item Welche gibt es?
@@ -631,6 +641,8 @@ welche Regularisierung}
 
 \highlight{Was passiert, wenn die umliegenden Stationen mit einbezogen werden und was wenn nicht? Sind Unterschiede zu sehen?}
 
+\highlight{Wir nehmen Günzburg her und binden westliche Stationen her. Was passiert, wenn man stattdessen östliche hernimmt?}
+
 \subsection{Vergleich mit Benchmarkmodell}
 
 \highlight{
@@ -641,18 +653,18 @@ welche Regularisierung}
 }
 
 \section{Weiterentwicklung des Modells \highlight{Ausblick}}
-
 \highlight{
-Ideen, mit dem man das Modell / die Ergebnisse verbassern kann:
-\begin{enumerate}
-	\item Andere Stationsdaten mit weniger volatier Windgeschwindigkeit (d.h. Daten am Meer)
-	\item Ensemble-Modell
-	\item Convolution hinzufügen, wie z.B. \cite{2019_Chen_MultifactorSpatiotemporalCorrelation}
-	\item Satellitendaten nutzen
-	\item Zeitlich geringere Auflösung nehmen, weil wir in Ulm relativ instationäre und leichte Winde haben
-	\item MFSTC Modell für mehrere Standorte
-	\item SARIMA Modell kann unsere Ergebnisse besser in Kontext setzen: Es kann sein, dass Datenlage in Süddeutschland auch für herkömmliches Modell schwer vorherzusagen ist.
-\end{enumerate}
+	Einteilen in Punkte für Modellerweiterung und grundsätzlicher Modelländerung.
+	Ideen, mit dem man das Modell / die Ergebnisse verbessern kann:
+	\begin{enumerate}
+		\item Andere Stationsdaten mit weniger volatier Windgeschwindigkeit (d.h. Daten am Meer)
+		\item Ensemble-Modell
+		\item Convolution hinzufügen, wie z.B. \cite{2019_Chen_MultifactorSpatiotemporalCorrelation}
+		\item Satellitendaten nutzen
+		\item Zeitlich geringere Auflösung nehmen, weil wir in Ulm relativ instationäre und leichte Winde haben
+		\item MFSTC Modell für mehrere Standorte
+		\item SARIMA Modell kann unsere Ergebnisse besser in Kontext setzen: Es kann sein, dass Datenlage in Süddeutschland auch für herkömmliches Modell schwer vorherzusagen ist.
+	\end{enumerate}
 }
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %                                                                     %
