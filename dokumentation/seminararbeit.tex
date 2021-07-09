@@ -310,11 +310,19 @@ zu Nutze machen, trotzdem stark voneinander abweichen. Aufgrund dieser großen V
 Beschreibung versch Architekturen}
 
 \section{Das Benchmarkmodell}
-\highlight{Grob SARIMA-Modell erklären. Wenn wir es als Benchmark verwenden}
+\highlight{Das SARIMA-Modell erklären, falls wir es zukünftig noch als Benchmark verwenden}
 
 \section{Zirkuläre Daten}\label{section:circ_data}
 
-\highlight{Hier muss noch mehr als nur Beispiele hin!}
+\highlight{
+	Beispiele was alles zyklisch sein kann
+	Darstellung Winkel in Grad, oder Tageszeit in Stunden lässt den zyklischen Aspekt der Daten verloren gehen 
+	Gerade im Kontext von Machine learning ist es sinnvoll, wenn das Modell den zyklischen Zusammenhang der Daten versteht
+	Versuch mithilfe einer Transformation zyklischen Aspekt darstellen zu können
+	Üblich bei Zeitangaben diese in eine sinus und cosinus fkt zu zerlegen.
+	}
+
+
 
 Winkel werden häufig auf einer Skala von $0^\circ$ bis $360^\circ$ angegeben. Für den Menschen mag das sehr intuitiv sein, ein neuronales Netz muss jedoch erlernen, dass die Intervallgrenzen den selben Winkel beschreiben.
 
@@ -645,6 +653,8 @@ Ideen, mit dem man das Modell / die Ergebnisse verbassern kann:
 	\item Convolution hinzufügen, wie z.B. \cite{2019_Chen_MultifactorSpatiotemporalCorrelation}
 	\item Satellitendaten nutzen
 	\item Zeitlich geringere Auflösung nehmen, weil wir in Ulm relativ instationäre und leichte Winde haben
+	\item MFSTC Modell für mehrere Standorte
+	\item SARIMA Modell kann unsere Ergebnisse besser in Kontext setzen: Es kann sein, dass Datenlage in Süddeutschland auch für herkömmliches Modell schwer vorherzusagen ist.
 \end{enumerate}
 }
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
