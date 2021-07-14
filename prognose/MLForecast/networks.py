@@ -14,7 +14,15 @@ def decode_layer(layer_type, config):
 
             # L1 Reg
             if instruction[0] == "L1":
-                val = tf.keras.regularizers.L1(l1=float(instruction[1]))
+                l1 = float(instruction[1])
+                if l1 > 0:
+                    val = tf.keras.regularizers.L1(l1=l1)
+                
+            # L2 Reg
+            if instruction[0] == "L2":
+                l2 = float(instruction[1])
+                if l2 > 0:
+                    val = tf.keras.regularizers.L2(l2=l2)
 
             # Update config
             config[layer_type[0]][key] = val
@@ -112,7 +120,7 @@ class ModelNN(ModelBase):
             loss=self.loss,
             optimizer=self.optimizer,
             metrics=self.metrics,
-            loss_weights=self.loss_weights
+            #loss_weights=self.loss_weights
         )
 
 
@@ -125,7 +133,7 @@ class LSTMseq2seq(ModelNN):
     def build(self):
         assert self.input_shape[0] == self.output_shape[0]
 
-        self.model.add(tf.keras.layers.Input(shape=self.input_shape))
+        self.model.add(tf.keras.layers.InputLayer(input_shape=self.input_shape))
 
         for layer in self.structure:
             if layer != "OUT":
@@ -146,7 +154,7 @@ class LSTMseq2vec(ModelNN):
         self.config = config
 
     def build(self):
-        self.model.add(tf.keras.layers.Input(shape=self.input_shape))
+        self.model.add(tf.keras.layers.InputLayer(input_shape=self.input_shape))
 
         for i in range(len(self.structure)):
             if "LSTM" in self.structure[i]:

@@ -13,7 +13,10 @@ data/*.pkl
 data/*.zip
 
 */wandb/*
+wandb/*
 
 *pyc
+
+*.pkl
 
 .DS_Store
