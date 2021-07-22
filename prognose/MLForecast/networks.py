@@ -71,11 +71,9 @@ class ModelNN(ModelBase):
 
     def add_loss_and_metrics(self, metric, y_width=None, shift=None, factor=0):
         if metric == "mae":
-            self.loss = tf.metrics.MeanAbsoluteError()
+            self.loss = tf.keras.losses.MeanAbsoluteError()
         elif metric == "mse":
-            self.loss = tf.metrics.MeanSquaredError()
-        elif metric == "rmse":
-            self.loss = tf.metrics.RootMeanSquaredError()
+            self.loss = tf.keras.losses.MeanSquaredError()
 
         self.loss_weights = None
         if bool(shift) ^ bool(y_width):  # XOR
@@ -88,7 +86,7 @@ class ModelNN(ModelBase):
         self.metrics = [tf.metrics.RootMeanSquaredError(),
                         tf.metrics.MeanAbsoluteError()]
 
-    def fit(self, train, val, epochs=10, batch_size=32, early_stop=None, save=False, track_wandb=False):
+    def fit(self, train, val, epochs=10, batch_size=32, early_stop=None, track_wandb=False):
         callbacks = []
 
         if early_stop:
@@ -103,8 +101,6 @@ class ModelNN(ModelBase):
             if hasattr(wandb.config, "as_dict"):
                 callbacks.append(wandb.keras.WandbCallback())
 
-        if save:
-            pass
 
         self.history = self.model.fit(
             x=train[0],
