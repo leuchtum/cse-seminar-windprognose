@@ -59,6 +59,12 @@ class ModelBase:
 
     def set_output_shape(self, shape):
         self.output_shape = shape
+        
+    def load(self, filename=None):
+        if not filename:
+            filename = './checkpoint.hdf5'
+        self.model = tf.keras.models.load_model(filename)
+
 
 
 class ModelNN(ModelBase):
@@ -86,7 +92,7 @@ class ModelNN(ModelBase):
         self.metrics = [tf.metrics.RootMeanSquaredError(),
                         tf.metrics.MeanAbsoluteError()]
 
-    def fit(self, train, val, epochs=10, batch_size=32, early_stop=None, track_wandb=False):
+    def fit(self, train, val, epochs=10, batch_size=32, early_stop=None, track_wandb=False, save=False):
         callbacks = []
 
         if early_stop:
@@ -101,6 +107,11 @@ class ModelNN(ModelBase):
             if hasattr(wandb.config, "as_dict"):
                 callbacks.append(wandb.keras.WandbCallback())
 
+        if save:
+            checkpoint_filepath = './checkpoint.hdf5'
+            callbacks.append(tf.keras.callbacks.ModelCheckpoint(
+                filepath=checkpoint_filepath,
+                save_best_only=True))
 
         self.history = self.model.fit(
             x=train[0],
