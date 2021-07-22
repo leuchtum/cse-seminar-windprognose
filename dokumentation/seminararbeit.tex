@@ -218,7 +218,7 @@ Eine möglicher Ansatz der Netzoptimierung ist das Freileitungsmonitoring.
 
 Durch eine Überwachung der Windgeschwindigkeit und der Umgebungstemperatur kann daraus die zulässige Übertragungskapazität ermittelt werden. 
 Leiterseile halten bei hoher Windgeschwindigkeit und gleichzeitig niedrigen Temperaturen höhere Belastungen aus. 
-Es kann also mehr Strom übertragen, wen mehr Windstrom erzeugt wird \cite{2015_Axthelm_BisFaktenZur}. Aus diesem Grund ist es von großem Interesse Vorhersagen über die Windgeschwindigkeit treffen zu können, um 
+Es kann also mehr Strom übertragen, wenn mehr Windstrom erzeugt wird \cite{2015_Axthelm_BisFaktenZur}. Aus diesem Grund ist es von großem Interesse Vorhersagen über die Windgeschwindigkeit treffen zu können, um 
 die Nutzung des Stromnetzes zu optimieren. In dieser Seminararbeit soll ein Modell entwickelt werden, das 
 Windgeschwindigkeit und -richtung eine bis 24 Stunden im Voraus vorhersagen kann. Es sollen in dieses Modell neben zeitlich diskretisierten 
 meteorologischen Daten auch eine örtliche Diskretisierung einfließen, welche in dieser Arbeit validiert werden soll.
@@ -230,11 +230,11 @@ meteorologischen Daten auch eine örtliche Diskretisierung einfließen, welche i
 In der bestehenden Literatur im Bereich der Windgeschwindigkeits-, beziehungsweise Wettervorhersage, ist eine Entfernung von 
 deterministischen Modellen \cite{1963_Lorenz_DeterministicNonperiodicFlow} hin zu Zeitreihenanalyse auf Basis historischer Messdaten erkennbar. 
 Innerhalb der letzten zwei Dekaden sind einige Ansätze in der Zeitreihenanalyse zu differenzieren. Klassische Methoden in der 
-Zeitreihenprognose, wie das ARMA- und ARIMA-Modell \cite{2016_Cadenas_WindSpeedPrediction} oder auch 
-die Weiterentwicklung dessen, mit Berücksichtigung eines saisonalen Einflusses, das SARIMA-Modell \cite{2018_Alencar_HybridApproachCombining,2019_TenaGarcia_ForecastDailyOutput,2019_Haddad_WindSolarForecasting,2002_Igboekwe_StochasticSimulationHourly,2012_MuhammadSami_PredictionRateDust,
+Zeitreihenprognose, wie das autoregressive moving average (ARMA) und autoregressive integrated moving average (ARIMA) Modell \cite{2016_Cadenas_WindSpeedPrediction} oder auch 
+die Weiterentwicklung dessen, mit Berücksichtigung eines saisonalen Einflusses, das saisonale ARIMA (SARIMA) Modell \cite{2018_Alencar_HybridApproachCombining,2019_TenaGarcia_ForecastDailyOutput,2019_Haddad_WindSolarForecasting,2002_Igboekwe_StochasticSimulationHourly,2012_MuhammadSami_PredictionRateDust,
 2010_Meng_ModelingForecastingHourly,
 2020_Kreuzer_ShorttermTemperatureForecasts} sind 
-nicht nur ein häufig verwendetes Vorhersagemodell, sondern werden gerade deshalb auch häufig als Vergleichsmodell herangezogen \cite{2012_Cao_ForecastingWindSpeed,2019_Chen_MultifactorSpatiotemporalCorrelation,2020_Kreuzer_ShorttermTemperatureForecasts}. Darüber hinaus existieren das VAR-, VARTA und auch VARTAX-Modelle \cite{2014_Orpia_TimeSeriesAnalysis, 2007_Ewing_TimeSeriesAnalysis,2015_He_SparsifiedVectorAutoregressive,2016_Koivisto_WindSpeedModeling, 2015_Dowell_SpatiotemporalPredictionWind}, 
+nicht nur ein häufig verwendetes Vorhersagemodell, sondern werden gerade deshalb auch häufig als Vergleichsmodell herangezogen \cite{2012_Cao_ForecastingWindSpeed,2019_Chen_MultifactorSpatiotemporalCorrelation,2020_Kreuzer_ShorttermTemperatureForecasts}. Darüber hinaus existieren Vektorautoregressive Modelle (VAR)\cite{2014_Orpia_TimeSeriesAnalysis, 2007_Ewing_TimeSeriesAnalysis,2015_He_SparsifiedVectorAutoregressive,2016_Koivisto_WindSpeedModeling, 2015_Dowell_SpatiotemporalPredictionWind}, 
 welche im Gegensatz zu ARMA-Modellen mehrere Variablen besitzen. Auch wird es versucht das ARIMA-Modell mit Clustermethoden 
 zu verbessern oder mit klassischen Machine Learning Konzepten zu kombinieren \cite{2017_Zhang_HybridMethodShortTerm,2011_Guo_CorrectedHybridApproach}. 
 Zunehmend werden auch Neuronale Netze, welche in letzter Zeit stark an Popularität zugenommen haben, für Problemstellungen dieser 
