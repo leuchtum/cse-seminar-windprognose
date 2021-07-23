@@ -1,6 +1,6 @@
 import tensorflow as tf
 import wandb
-
+import random
 
 def decode_layer(layer_type, config):
     layer_type = layer_type.split("_")
@@ -52,7 +52,10 @@ def decode_layer(layer_type, config):
 
 class ModelBase:
     def __init__(self):
-        self.name = None
+        digits = [str(i) for i in range(10)]
+        strings = ["a", "b", "c", "d", "e", "f"]
+        choises = digits + strings
+        self.name = "".join(random.choices(choises, k=8))
 
     def set_input_shape(self, shape):
         self.input_shape = shape
@@ -62,7 +65,7 @@ class ModelBase:
         
     def load(self, filename=None):
         if not filename:
-            filename = './checkpoint.hdf5'
+            filename = f'./model_{self.name}.hdf5'
         self.model = tf.keras.models.load_model(filename)
 
 
@@ -108,7 +111,7 @@ class ModelNN(ModelBase):
                 callbacks.append(wandb.keras.WandbCallback())
 
         if save:
-            checkpoint_filepath = './checkpoint.hdf5'
+            checkpoint_filepath = f'./model_{self.name}.hdf5'
             callbacks.append(tf.keras.callbacks.ModelCheckpoint(
                 filepath=checkpoint_filepath,
                 save_best_only=True))
