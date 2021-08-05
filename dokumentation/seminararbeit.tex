@@ -197,7 +197,7 @@ tba
 %                                                                     %
 %                                                                     %
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\chapter{Einleitung}
+\chapter{Einleitung}\label{section:einleitung}
 
 Die Windenergie leistete in den vergangen Jahren einen stetig wachsenden Beitrag zur deutschen Stromerzeugung. 
 Seit dem Jahr 2015 \qm{ist die Stromerzeugung aus Wind [...] um mehr als 60 Prozent angestiegen} \cite{2021_Lewicki_ErneuerbareEnergienZahlen} Laut dem Statistischen Bundesamt wurden im Jahr 2020 24\% des Gesamtstrommixes in Deutschland aus Windenergie gewonnen (siehe Abbildung \ref{fig:strommix_deutschland}). Das macht den größten Anteil der erneuerbaren Energien aus \cite{2020__Bruttostromerzeugung2020}. Jedoch ist das Stromnetz zu veraltet um mit diesen Entwicklungen, hauptsächlich den leistungsstarken Windparks auf See, 
@@ -223,7 +223,7 @@ die Nutzung des Stromnetzes zu optimieren. In dieser Seminararbeit soll ein Mode
 Windgeschwindigkeit und -richtung eine bis 24 Stunden im Voraus vorhersagen kann. Es sollen in dieses Modell neben zeitlich diskretisierten 
 meteorologischen Daten auch eine örtliche Diskretisierung einfließen, welche in dieser Arbeit validiert werden soll.
 
-\section{Einordnung in die Literatur}
+\section{Einordnung in die Literatur}\label{section:literatur}
 
 \highlight{MFSTC in Ausblick, Erklären warum Daten der Standorte einfach übergeben (wenige Standorte?);(Ausblick kleinere Intervalle der Daten?), Ausblick statt RNN CNN??\bigskip}
 
@@ -283,11 +283,19 @@ Zuletzt wurde mit all den erhaltenen Ergebnissen der Diebold-Mariano Test durchg
 Anhand dieser drei vorgestellten Paper ist erkenntlich, dass Windprognosemodelle, die dem Stand der Technik entsprechen, nicht nur eine stark voneinander abweichende Datenbasis besitzen, sondern auch die Modelle, die sich alle der Technologie von LSTM Zellen 
 zu Nutze machen, trotzdem stark voneinander abweichen. Aufgrund dieser großen Vielfalt an Freiheitsgraden ist die Validierung und Einordnung von Windprognosemodellen sehr komplex und in der vorhandenen Literatur keinesfalls einheitlich.
 
-\highlight{
-	Soll hier noch das eigene geplante Modell erwähnt werden? Möglicherweise auch, dass das Modell von Chen et al. den neuen Ansatz von mehreren Standorten verfolgt, was ja auch das Ziel in dieser Arbeit ist.
-}
+\section{Ziele dieser Arbeit}
 
-
+Wie bereits in Kapitel \ref{section:einleitung} angemerkt, wird in dieser Seminararbeit das Ziel verfolgt ein Windgeschwindigkeits- und Windrichtungsprognosemodell mit ausreichender Vorhersagequalität nach dem jetzigen Stand der Technik zu entwickeln. 
+In Kapitel \ref{section:literatur} stellt sich heraus, dass sich die Methodik der Windprognose im Laufe der Zeit zur Verwendung von Deep Neural Networks entwickelt hat. Der Großteil dieser Ansätze, welcher elf von 16 entspricht, basierte auf Recurrent neural networks (RNN) mit Long short-term memory units (LSTM). 
+Aufgrunddessen und da diese Veröffentlichungen auch die vielversprechendsten Ergebnisse liefern, soll das in dieser Arbeit vorgestellte Prognosemodell auf Basis dieser Technologie entwickelt werden. 
+Im Laufe der Literaturrecherche haben sich zudem noch zwei weitere Fragen aufgetan, welche anhand des entwickelten Modells beantwortet werden sollen. 
+Inspiriert durch das von \citeauthor{2019_Chen_MultifactorSpatiotemporalCorrelation}\cite{2019_Chen_MultifactorSpatiotemporalCorrelation} Modell, welcher nicht nur einen, sondern Messdaten mehrerer Standorte berücksichtigte, stellte sich folgende Frage. 
+Hat die Berücksichtigung mehrerer unmittelbar umliegender Standorte einen positiven Einfluss auf die Ergebnisse des Vorhersagemodells? 
+Des weiteren stellte sich heraus, dass in den meisten in Kapitel \ref{section:literatur} beschriebenen Papern ausschließlich die Windgeschwindigkeit vorhergesagt wird und die Windrichtung nicht in die Vorhersage einfließt, beziehungsweise nicht vorhergesagt wird. 
+In dieser Arbeit sollen Windgeschwindigkeit und Windrichtung prognostiziert werden, wobei Windrichtung und -geschwindigkeit als Vektor unterschiedlich dargestellt werden können. 
+Hierbei stellt sich die Frage, ob in den Ergebnissen der Windprognose eine Verbesserung erkennbar ist, wenn die Windvektor nicht mit Polarkoordinaten, sondern stattdessen mit kartesischen Koordinaten beschrieben wird? 
+Im Laufe dieser Arbeit werden der Aufbau des Prognosemodells mitsamt seiner Besonderheiten beschrieben und dessen Ergebnisse diskutiert und eingeordnet. 
+Die Fragen, welche innerhalb dieses Abschnittes beschrieben wurden, sollen daraufhin im Rahmen von Versuchen mithilfe des entwickelten Modells beantwortet werden.
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %                                                                     %
@@ -299,13 +307,12 @@ zu Nutze machen, trotzdem stark voneinander abweichen. Aufgrund dieser großen V
 %                                                                     %
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \chapter{Grundlagen}
+Dieses Kapitel soll die Grundlagen von Neuronalen Netzen, insbesondere die Funktionsweise von RNNs und von LSTM Zellen, vermitteln, da auf diesen Technologien das vorgestellte Windprognosemodell basiert. 
+Darüber hinaus wird beschrieben um was es sich bei zirkulären Daten handelt und was diese im Rahmen von Neuronalen Netzen für Herausforderungen darstellen können.
 
 \section{Neuronale Netze zur Zeitreihenprognose}
 \highlight{ein paar Grundlagen zu neuronalen Netzen; 
-Beschreibung versch Architekturen}
-
-\section{Das Benchmarkmodell}
-\highlight{Das SARIMA-Modell erklären, falls wir es zukünftig noch als Benchmark verwenden}
+Beschreibung NN allgemein, RNN, LSTM Zellen und warum gut für Prognose}
 
 \newpage
 
