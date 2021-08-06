@@ -285,8 +285,8 @@ zu Nutze machen, trotzdem stark voneinander abweichen. Aufgrund dieser großen V
 
 \section{Ziele dieser Arbeit}
 
-Wie bereits in Kapitel \ref{section:einleitung} angemerkt, wird in dieser Seminararbeit das Ziel verfolgt ein Windgeschwindigkeits- und Windrichtungsprognosemodell mit ausreichender Vorhersagequalität nach dem jetzigen Stand der Technik zu entwickeln. 
-In Kapitel \ref{section:literatur} stellt sich heraus, dass sich die Methodik der Windprognose im Laufe der Zeit zur Verwendung von Deep Neural Networks entwickelt hat. Der Großteil dieser Ansätze, welcher elf von 16 entspricht, basierte auf Recurrent neural networks (RNN) mit Long short-term memory units (LSTM). 
+Wie bereits in Kapitel \ref{section:einleitung} angemerkt, wird in dieser Seminararbeit das Ziel verfolgt ein Prognosemodell, welches Windgeschwindigkeit und Windrichtung mit ausreichender Qualität vorhersagen kann, nach dem jetzigen Stand der Technik zu entwickeln. 
+In Kapitel \ref{section:literatur} stellt sich heraus, dass sich die Methodik der Windprognose im Laufe der Zeit zur Verwendung von Deep Neural Networks entwickelt hat. Der Großteil dieser Ansätze, welcher elf von 16 entspricht, basiert auf Recurrent neural networks (RNN) mit Long short-term memory units (LSTM). 
 Aufgrunddessen und da diese Veröffentlichungen auch die vielversprechendsten Ergebnisse liefern, soll das in dieser Arbeit vorgestellte Prognosemodell auf Basis dieser Technologie entwickelt werden. 
 Im Laufe der Literaturrecherche haben sich zudem noch zwei weitere Fragen aufgetan, welche anhand des entwickelten Modells beantwortet werden sollen. 
 Inspiriert durch das von \citeauthor{2019_Chen_MultifactorSpatiotemporalCorrelation}\cite{2019_Chen_MultifactorSpatiotemporalCorrelation} Modell, welcher nicht nur einen, sondern Messdaten mehrerer Standorte berücksichtigte, stellte sich folgende Frage. 
@@ -314,6 +314,17 @@ Darüber hinaus wird beschrieben um was es sich bei zirkulären Daten handelt un
 \highlight{ein paar Grundlagen zu neuronalen Netzen; 
 Beschreibung NN allgemein, RNN, LSTM Zellen und warum gut für Prognose}
 
+
+%%%%%BILD ANFANG
+\begin{figure}[tph]
+	\begin{center}
+		\includegraphics[width=0.5\linewidth]{./images/LSTM_Zelle.png}
+		\caption{Schematische Darstellung einer LSTM Zelle}
+		\label{fig:lstm}
+	\end{center}
+\end{figure}
+%%%%%BILD ENDE
+
 \newpage
 
 \section{Zirkuläre Daten}\label{section:circ_data}
@@ -328,13 +339,13 @@ einem mathematisch näher liegenden Wert aus der Mitte.
 \begin{figure}[tph]
 	\begin{center}
 		\includegraphics[width=0.5\linewidth]{./images/colorcircle.png}
-		\caption{Darstellung der Farbtöne als Winkel \cite{__Farbraum}}
+		\caption{Darstellung des Farbtons mit Winkelangaben, sowie zwei Rottöne mit ihrer Winkelbezeichnung \cite{__Farbraum}}
 		\label{fig:colorcircle}
 	\end{center}
 \end{figure}
 %%%%%BILD ENDE
 
-Beispielhaft ist eine Farbe im Farbkreis (siehe Abbildung \ref{fig:colorcircle}), die mit einem Winkel von $0^\circ$ beschrieben wird für den Betrachter rot und eine mit $90^\circ$ beschriebene Farbe als grün erkennbar. Die mit $359^\circ$ beschriebene Farbe, die einen 
+Beispielhaft ist eine Farbe im Farbkreis (siehe Abbildung \ref{fig:colorcircle}), die mit einem Winkel von $2^\circ$ beschrieben wird für den Betrachter rot und eine mit $90^\circ$ beschriebene Farbe als grün erkennbar. Die mit $355^\circ$ beschriebene Farbe, die einen 
 vier Mal größeren Abstand zur roten Farbe hat wie die rote Farbe zur grünen Farbe, ist jedoch auch rot und kaum von der ersten Farbe zu unterscheiden. 
 Dieser für den Menschen intuitive Zusammenhang geht in der herkömmlichen Darstellung, das sind Gradangaben oder übliche Zeitangaben, verloren \cite{2016_London_EncodingCyclicalContinuous}. 
 Gerade im Zusammenhang mit Neuronalen Netzen ist es jedoch sehr wichtig diesen zirkulären Gedanken in den Eingabedaten zu erhalten, damit Korrelationen zwischen Größen besser verstanden werden. 
@@ -523,8 +534,9 @@ Die hier beschriebene Umwandlung kann der Abbildung \ref{fig:pol2cart2} anhand r
 %%%%%BILD ANFANG
 \begin{figure}[tph]
 	\begin{center}
-		\includegraphics[scale = 1]{./images/pol2cart_visualize.pdf}
-		\caption{Verteilung des Windes bei $(v,\varphi)$ bzw. $(v_x,v_y)$-Interpretation für die Messtation Ulm-Mähringen \highlight{(Ändern zu Günzburg, da diese prognostiziert wird)} im Zeitraum 01.2016 bis 03.2021 \highlight{FEHLER IN GRAFIK: x-Label Oben wird überdeckt}}
+		%\includegraphics[scale = 1]{./images/pol2cart_visualize.pdf}
+		\includegraphics[scale = 1]{./images/pol2cart.png}
+		\caption{Verteilung des Windes bei $(v,\varphi)$ bzw. $(v_x,v_y)$-Interpretation für die Messtation Günzburg im Zeitraum 01.2016 bis 03.2021}
 		\label{fig:pol2cart2}
 	\end{center}
 \end{figure}
