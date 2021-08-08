@@ -363,8 +363,10 @@ Ein Ansatz dieses Problem zu umgehen ist es die Daten so zu transformieren, dass
 
 \chapter{Daten}
 
+Für eine Prognose von Winddaten mithilfe von Technologien des Deep learning werden Messdaten aus der Vergangenheit benötigt. 
+In den folgenden Unterkapiteln wird beschrieben woher die letztlich verwendeten Daten stammen und wie diese Daten verarbeiten werden müssen, um für Prognosen verwendet werden zu können.
+
 \section{Datenbasis}\label{section:datenbasis}
-\highlight{Warum stündlich und nicht 5-minütlich?}
 Zur Erstellung des Modells wurde eine Kombination aus gemessenen Daten von Stationen des Deutschen Wetterdienstes (DWD) sowie künstlich generierten Daten verwendet.
 Während die gemessenen Daten die aktuelle Wetterlage an einigen Standorten Deutschlands beinhalten, geben die generierten Daten darüber hinaus weitere Informationen zu saisonalen und täglichen Abhängigkeiten. Die Zusammensetzung des Rohdatzensatzes kann der Abbildung \ref{fig:rohdatensatz} entnommen werden. Nach der in Kapitel \ref{section:Datenaufbereitung} beschriebenen Datenaufbereitung kann dieser Datensatz zum Training des neuronalen Netzes genutzt werden.
 
@@ -379,7 +381,7 @@ Während die gemessenen Daten die aktuelle Wetterlage an einigen Standorten Deut
 %%%%%BILD ENDE
 
 \subsection{Reale Messdaten}
-Die realen Messdaten werden vom Deutschen Wetterdienstes über einen Webserver kostenlos zur Verfügung gestellt. In dieser Arbeit sind die Daten in stündlicher Auflösung von vier Messtationen (Münsingen-Apfelstetten, Stötten, Günzburg und Laupheim) im Ulmer Umkreis zum Einsatz gekommen. Die genaue geographische Lage kann der Abbildung \ref{fig:map} entnommen werden. Der Deutsche Wetterdienst betreibt im Ulmer Umkreis zwar noch weitere Wetterstationen, jedoch messen diese die Windgeschwindigkeit und Windrichtung nicht. Insgesamt umfasst der Datensatz den Zeitraum Anfang 2016 bis Ende 2021. Davon sind jedoch rund $20\%$ Datenlücken. Diese Lücken werden in Kapitel \ref{section:Datenlücken} genauer beleuchtet. 
+Die realen Messdaten werden vom Deutschen Wetterdienst über einen Webserver kostenlos zur Verfügung gestellt. In dieser Arbeit sind die Daten in stündlicher Auflösung von vier Messtationen (Münsingen-Apfelstetten, Stötten, Günzburg und Laupheim) im Ulmer Umkreis zum Einsatz gekommen. Die genaue geographische Lage kann der Abbildung \ref{fig:map} entnommen werden. Der Deutsche Wetterdienst betreibt im Ulmer Umkreis zwar noch weitere Wetterstationen, jedoch messen diese die Windgeschwindigkeit und Windrichtung nicht. Insgesamt umfasst der Datensatz den Zeitraum Anfang 2016 bis Ende 2021. Davon sind jedoch rund $20\%$ Datenlücken. Diese werden in Kapitel \ref{section:Datenlücken} genauer beleuchtet. 
 
 %%%%%BILD ANFANG
 \begin{figure}[tph]
@@ -414,7 +416,7 @@ Zur Prognose der Windgeschwindigkeit und Windrichtung können neben deren selbst
 
 Um einen tieferen Einblick in das Verhalten des Windes an der jeweiligen Messstation zu erhalten, bieten sich Windrosen zur Visualisierung an. Dabei wird die Häufigkeit der Windgeschwindigkeit in Abhängigkeit der Windrichtung radial dargestellt. Der Abbildung \ref{fig:windroses} können die Windrosen für die vier ausgewählten Messstationen entnommen werden. Wie in den südlichen Regionen Deutschlands zu erwarten, ist die vorherschende Windrichtung West bis Südwest. 
 
-Bei detaillierter Analyse fällt jedoch auf, dass der Wind an der Messstationen Münsingen-Apfelstetten besonders bei Leichtwind sehr volatil ist. Der Grund hierfür könnte in der Tatsache begründet sein, dass sich die Messstation in einem flachen Tal mit Nord-Südlicher Ausrichtung befindet. Desweiteren lässt sich erkennen, dass unter den vier Messstationen in Stötten die stärksten Winde auftreten. 
+Bei detaillierter Analyse fällt jedoch auf, dass der Wind an der Messstationen Münsingen-Apfelstetten besonders bei Leichtwind sehr volatil ist. Der Grund hierfür könnte in der Tatsache begründet sein, dass sich die Messstation in einem flachen Tal mit Nord-Südlicher Ausrichtung befindet. Des Weiteren ist zu erkennen, dass unter den vier Messstationen in Stötten die stärksten Winde auftreten. 
 
 %%%%%BILD ANFANG
 \begin{figure}[tph]
@@ -435,20 +437,46 @@ Die Darstellung von zeitlichen Daten ist jedoch zyklisch. Sowohl Sekunden, Minut
 \begin{itemize}
 	\item \textit{Kalendarischer Tageswert}\\
 	Über die folgende Funktion wird die Stunde des Tages $HOD \in [0, \dots, 23]$ in einen Sinuswelle umgewandelt. Das Maximum wird um 12 Uhr, das Minimum um 0 Uhr erreicht. Abgebildet wird auf das Intervall $[0,1]$.
+	
 	\begin{equation}\label{eq:cal_day}
 		cal_{day} = \frac{1}{2}\Big(\cos \big(\pi (\frac{HOD}{12}+ 1)\big) + 1 \Big)
 	\end{equation}
+
+	%%%%%BILD ANFANG
+	\begin{figure}[tph]
+		\begin{center}
+			\includegraphics[]{./images/sinuszeit.png}
+			\caption{Visualisierung der Sinusfunktion \ref{eq:cal_day}}
+			\label{fig:sinustag}
+		\end{center}
+	\end{figure}
+	%%%%%BILD ENDE
+	
 	\item \textit{Kalendarischer Saisonalwert}\\
 	Die folgende Funktion transformiert den Tag des Jahres $DOY \in [1, \dots, 365]$ in eine Sinuswelle. Schaltjahre werden nicht berücksichtigt. Außerdem wird die Stunde des Tages $HOD \in [0, \dots, 23]$ mit einbezogen. Diese spielt für den Funktionswert jedoch nur eine untergeordnete Rolle. Das Maximum wird am 1.Juli, das Minimum am 1.Januar erreicht. Die Funktion bildet ebenfalls auf das Intervall $[0,1]$ ab.
 	\begin{equation}\label{eq:cal_seas}
 		cal_{seas} = \frac{1}{2}\Big(\cos\big(\pi (\frac{DOY -1 + \frac{HOD}{24}}{\frac{365}{2}}+ 1)\big) + 1\Big)
 	\end{equation}
 	
+	%%%%%BILD ANFANG
+	\begin{figure}[tph]
+		\begin{center}
+			\includegraphics[]{./images/sinusdatum.png}
+			\caption{Visualisierung der Sinusfunktion \ref{eq:cal_seas}}
+			\label{fig:sinusjahr}
+		\end{center}
+	\end{figure}
+	%%%%%BILD ENDE
+
 \end{itemize}
 
-\highlight{Eventuell erwähnen, das diese Formeln nicht optimal sind. Grund: Höchste Tagestemperatur i.A. nicht um 12 Uhr sondern um 13-14 Uhr, Höchste Jahrestemperatur i.A. nicht am 1.Juli sondern Mitte August. Außerdem ist z.B. $dal_{day}(HOD=6Uhr) = dal_{day}(HOD=18Uhr)$}
+Anzumerken ist hierbei, dass diese Formeln keine ideale Repräsentation der Zusammenhänge zwischen einer zeitlichen Komponente mit der Wetterlage darstellt. Beispielsweise ist der wärmste Zeitpunkt eher im August, also einen Monat später, anzusiedeln. Die Tageshöchsttemperaturen weichen sogar noch stärker ab. In den Wintermonaten liegen diese zwischen 13 und 14 Uhr und in den Sommermonaten sogar erst zwischen 16 und 17 Uhr.
+\highlight{quelle: https://www.wissenschaft.de/erde-klima/warum-ist-es-nicht-mittags-am-heissesten/}
+
+\highlight{Außerdem ist z.B. $dal_{day}(HOD=6Uhr) = dal_{day}(HOD=18Uhr)$}
 
 \subsection{Analyse der Datenbasis}
+\highlight{Korrelationskoeffizient fand Schlüter nicht so gut}
 Der Korrelationskoeffizient gibt Aufschluss darüber, ob zwischen zwei größen ein linearer Zusammenhang besteht. Er kann als Entscheidungshilfe zur Auswahl der Input-Größen für das neuronale Netz dienen. In Abbildung \ref{fig:corr} wird die Korrelation zwischen den Größen relative Luftfeuchte ($RH$), Sonnenscheindauer ($SD$), Temperatur ($T$), Windgeschwindigkeit ($v$), Windrichtung ($\varphi$) sowie die in Kapitel \ref{section:gen_daten} beschriebenen kalendarischen Daten $cal_{day}$ und $cal_{seas}$ dargestellt. 
 
 
@@ -511,7 +539,7 @@ Datenlücken müssen vor dem Training mit dem neuronalen Netz entfernt werden. I
 \highlight{Grafik wo und wie lange es im Datensatz Lücken gibt --> Heatmap}
 
 \subsection{Winddaten als Vektoren}\label{section:Winddaten_vec}
-Die Windmessung erfolgt (von modernen Laser- oder Schallmessungen abgesehen) üblicher Weise mithilfe einens Schalenanemometers und einer Windfahne. Zu jedem Messzeitpunkt werden also zwei Werte aufgenommen. Die Windgeschwindigkeit $v$ wird in $m/s$ gemessen. Die Windrichtung $\varphi$ wird typischer Weise in Grad angegeben, es gilt also $\varphi \in [0,360)$. Norden wird dabei mit $\varphi_{north} = 0^\circ$ gewählt. Dieses $(v,\varphi)$-Tupel lässt sich als Polarkoordinate interpretieren. Jedoch tritt hier das in Kapitel \ref{section:circ_data} beschriebene Problem der zirkulären Daten auf, da $\varphi_{north} = 0^\circ = 360^\circ$ gilt.
+Die Windmessung erfolgt (von modernen Laser- oder Schallmessungen abgesehen) üblicherweise mithilfe eines Schalenanemometers und einer Windfahne. Zu jedem Messzeitpunkt werden also zwei Werte aufgenommen. Die Windgeschwindigkeit $v$ wird in $m/s$ gemessen. Die Windrichtung $\varphi$ wird typischer Weise in Grad angegeben, es gilt also $\varphi \in [0,360)$. Norden wird dabei mit $\varphi_{north} = 0^\circ$ gewählt. Dieses $(v,\varphi)$-Tupel lässt sich als Polarkoordinate interpretieren. Jedoch tritt hier das in Kapitel \ref{section:circ_data} beschriebene Problem der zirkulären Daten auf, da $\varphi_{north} = 0^\circ = 360^\circ$ gilt.
 
 Es gilt zu belegen, dass sich dieses Problem umgehen lässt, indem der Wind nicht in polaren sondern kartesischen Koordinaten dargestellt wird. Der Windvektor, der durch das $(v,\varphi)$-Tupel beschrieben ist, wird so in eine $v_x$ und eine $v_y$ Komponente zerlegt. Dieses Vorgehen ist in Abbildung \ref{fig:pol2cart} skizziert.
 
@@ -553,7 +581,7 @@ Die hier beschriebene Umwandlung kann der Abbildung \ref{fig:pol2cart2} anhand r
 
 \subsection{Normierung}
 
-\highlight{Erklärung, warum Normierung nötig ist. Tabelle überdenken.}
+\highlight{Erklärung, warum Normierung nötig ist: (Einflüsse gleichgewichtig, Daten minmax normiert, d.h. auf Intervall [0,1] ), Tabelle überdenken.}
 
 %%%%%TABELLE ANFANG
 \begin{table}[ht]
@@ -634,6 +662,7 @@ welche Regularisierung}
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 \chapter{Diskussion und Ausblick}
+\highlight{Wichtig zu erwähnen, dass Zeitkomponente möglicherweise nicht notwendig. Sagen, dass dieser weggelassen werden sollte und Ergebnis betrachtet werden sollte.}
 
 \section{Diskussion der Ergebnisse}
 \highlight{Ergebnisse in Kontext setzen. War unser Modell vergleichsweise gut?}
@@ -659,7 +688,6 @@ welche Regularisierung}
 
 \highlight{Wir betrachten Günzburg und binden westliche Stationen ein. Was würde passieren, wenn man stattdessen östliche hernimmt?}
 
-\subsection{Vergleich mit Benchmarkmodell}
 
 \highlight{
 	\begin{itemize}
@@ -669,6 +697,10 @@ welche Regularisierung}
 }
 
 \section{Weiterentwicklung des Modells}
+
+Im Laufe der Arbeit kamen einige Verbesserungmöglichkeiten und Ideen auf. Einige sind Verbesserungen und Veränderungen innerhakb dieser Seminararbeit. 
+Andere Ideen schlagen vollkommen neuartige Ansätze vor. Nachfolgend genannte Ansätze können in Folgearbeiten näher betrachtet werden.
+
 \highlight{
 	Einteilen in Punkte für Modellerweiterung und grundsätzlicher Modelländerung.
 	Ideen, mit dem man das Modell / die Ergebnisse verbessern kann:
