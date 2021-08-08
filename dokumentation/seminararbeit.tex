@@ -380,7 +380,7 @@ Während die gemessenen Daten die aktuelle Wetterlage an einigen Standorten Deut
 \end{figure}
 %%%%%BILD ENDE
 
-\subsection{Reale Messdaten}
+\subsection{Reale Messdaten}\label{section:realeMessdaten}
 Die realen Messdaten werden vom Deutschen Wetterdienst über einen Webserver kostenlos zur Verfügung gestellt. In dieser Arbeit sind die Daten in stündlicher Auflösung von vier Messtationen (Münsingen-Apfelstetten, Stötten, Günzburg und Laupheim) im Ulmer Umkreis zum Einsatz gekommen. Die genaue geographische Lage kann der Abbildung \ref{fig:map} entnommen werden. Der Deutsche Wetterdienst betreibt im Ulmer Umkreis zwar noch weitere Wetterstationen, jedoch messen diese die Windgeschwindigkeit und Windrichtung nicht. Insgesamt umfasst der Datensatz den Zeitraum Anfang 2016 bis Ende 2021. Davon sind jedoch rund $20\%$ Datenlücken. Diese werden in Kapitel \ref{section:Datenlücken} genauer beleuchtet. 
 
 %%%%%BILD ANFANG
@@ -416,7 +416,7 @@ Zur Prognose der Windgeschwindigkeit und Windrichtung können neben deren selbst
 
 Um einen tieferen Einblick in das Verhalten des Windes an der jeweiligen Messstation zu erhalten, bieten sich Windrosen zur Visualisierung an. Dabei wird die Häufigkeit der Windgeschwindigkeit in Abhängigkeit der Windrichtung radial dargestellt. Der Abbildung \ref{fig:windroses} können die Windrosen für die vier ausgewählten Messstationen entnommen werden. Wie in den südlichen Regionen Deutschlands zu erwarten, ist die vorherschende Windrichtung West bis Südwest. 
 
-Bei detaillierter Analyse fällt jedoch auf, dass der Wind an der Messstationen Münsingen-Apfelstetten besonders bei Leichtwind sehr volatil ist. Der Grund hierfür könnte in der Tatsache begründet sein, dass sich die Messstation in einem flachen Tal mit Nord-Südlicher Ausrichtung befindet. Des Weiteren ist zu erkennen, dass unter den vier Messstationen in Stötten die stärksten Winde auftreten. 
+Bei detaillierter Analyse fällt jedoch auf, dass der Wind an der Messstation Münsingen-Apfelstetten besonders bei leichtem Wind sehr volatil ist. Der Grund hierfür könnte in der Tatsache begründet sein, dass sich die Messstation in einem flachen Tal mit Nord-Südlicher Ausrichtung befindet. Des Weiteren ist zu erkennen, dass unter den vier Messstationen in Stötten die stärksten Winde auftreten. 
 
 %%%%%BILD ANFANG
 \begin{figure}[tph]
@@ -698,8 +698,16 @@ welche Regularisierung}
 
 \section{Weiterentwicklung des Modells}
 
-Im Laufe der Arbeit kamen einige Verbesserungmöglichkeiten und Ideen auf. Einige sind Verbesserungen und Veränderungen innerhakb dieser Seminararbeit. 
-Andere Ideen schlagen vollkommen neuartige Ansätze vor. Nachfolgend genannte Ansätze können in Folgearbeiten näher betrachtet werden.
+Im Laufe der Arbeit kamen einige Verbesserungmöglichkeiten und Ideen auf. Einige sind Verbesserungen und Veränderungen innerhalb dieser Seminararbeit. 
+Andere Ideen schlagen vollkommen neuartige Ansätze vor. Im Folgenden beschriebende Ideen können in Folgearbeiten näher betrachtet werden.
+
+\subsection{Veränderungsvorschläge}
+
+Bereits in Kapitel \ref{section:realeMessdaten} wurde darauf hingewiesen, dass einige der berücksichtigten Messstationen sehr wechselhafte Winde besitzen. Die Verwendung von Messdaten eines oder mehrerer Standorte in Küstenlage könnten einen guten Vergleich herstellen. 
+Die Windlage an Küsten dürfte eindeutiger sein, als die im süddeutschen Raum. Bessere Ergebnisse bei einem gleichen verwendeten Modell würden bedeuten, dass das vorgestellte Modell nicht gut mit volatilen Winddaten umgehen kann und das Modell verändert werden sollte.
+
+
+\subsection{Neue Ansätze}
 
 \highlight{
 	Einteilen in Punkte für Modellerweiterung und grundsätzlicher Modelländerung.
