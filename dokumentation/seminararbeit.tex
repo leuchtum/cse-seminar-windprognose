@@ -707,21 +707,22 @@ Bereits in Kapitel \ref{section:realeMessdaten} wurde darauf hingewiesen, dass e
 Die Windlage an Küsten dürfte eindeutiger sein, als die im süddeutschen Raum. Bessere Ergebnisse bei einem gleichen verwendeten Modell würden bedeuten, dass das vorgestellte Modell nicht gut mit volatilen Winddaten umgehen kann und das Modell dementsprechend angepasst werden sollte.
 \newline
 In dieser Arbeit wurden Messdaten des Deutschen Wetterdienstes verwendet, welche häufig Datenlücken enthielten. Es könnten darüber hinaus Satellitendaten verwendet werden, auf die während auftretender Fehlstellen zurückgegriffen werden kann. 
-
+Diese Vorgehensweise kann zu einer größeren Datenvielfalt und somit möglicherweise zu besseren Ergebnissen führen.
+\newline
+nuuuuuw
 
 
 \subsection{Neue Ansätze}
 Das Modell, welches \citeauthor{2019_Chen_MultifactorSpatiotemporalCorrelation} in seinem Paper im Jahr 2019 vorstellte \cite{2019_Chen_MultifactorSpatiotemporalCorrelation} ist aufgrund der Verwendung von Messdaten mehrerer Standorte dem hier entwickelten Modell sehr ähnlich. 
 \citeauthor{2019_Chen_MultifactorSpatiotemporalCorrelation} verwendete kein RNN, sondern ein CNN mit LSTM Zellen. Ein CNN könnte für den Umgang mit mehreren Input-Standorten geeigneter sein als ein RNN.
 \newline
-nuww
+Eine weiterführende Idee davon wäre ein Ensemble-Modell, wie beispielsweise das Modell von \citeauthor{2017_Zhang_HybridMethodShortTerm} \cite{2017_Zhang_HybridMethodShortTerm}, zu entwickeln. Hierbei werden mehrere Prognoseansätze, welche jeweils gute Prognosen bei unterschiedlicher Datenbasis liefern können, kombiniert. 
+Hierbei können jeweils die Stärken der Ansätze ausgenutzt werden und due Schwächen anderer verringert werden. Einen solchen Ansatz zu entwickeln wäre für eine zukünftige Arbeit äußerst interessant.
 
 \highlight{
 	Einteilen in Punkte für Modellerweiterung und grundsätzlicher Modelländerung.
 	Ideen, mit dem man das Modell / die Ergebnisse verbessern kann:
 	\begin{enumerate}
-		\item Ensemble-Modell
-		\item Satellitendaten nutzen
 		\item Zeitlich geringere Auflösung nehmen, weil wir in Ulm relativ instationäre und leichte Winde haben
 		\item MFSTC Modell für mehrere Standorte
 		\item SARIMA Modell kann unsere Ergebnisse besser in Kontext setzen: Es kann sein, dass Datenlage in Süddeutschland auch für herkömmliches Modell schwer vorherzusagen ist. Es kann aber auch sein, dass unser Modell nicht genau genug ist.
