@@ -709,14 +709,15 @@ Die Windlage an Küsten dürfte eindeutiger sein, als die im süddeutschen Raum.
 In dieser Arbeit wurden Messdaten des Deutschen Wetterdienstes verwendet, welche häufig Datenlücken enthielten. Es könnten darüber hinaus Satellitendaten verwendet werden, auf die während auftretender Fehlstellen zurückgegriffen werden kann. 
 Diese Vorgehensweise kann zu einer größeren Datenvielfalt und somit möglicherweise zu besseren Ergebnissen führen.
 \newline
-nuuuuuw
+\citeauthor{2019_Chen_MultifactorSpatiotemporalCorrelation} \cite{2019_Chen_MultifactorSpatiotemporalCorrelation} konnten mittels einer Multifactor Spatiotemporal Correlation 3D-Matrix 
+(gleichzeitig mehrere Korrelationen zwischen Standorten und meteorologischen Faktoren in den Dimensionen Zeit und Raum berücksichtigt)
 
 
 \subsection{Neue Ansätze}
-Das Modell, welches \citeauthor{2019_Chen_MultifactorSpatiotemporalCorrelation} in seinem Paper im Jahr 2019 vorstellte \cite{2019_Chen_MultifactorSpatiotemporalCorrelation} ist aufgrund der Verwendung von Messdaten mehrerer Standorte dem hier entwickelten Modell sehr ähnlich. 
-\citeauthor{2019_Chen_MultifactorSpatiotemporalCorrelation} verwendete kein RNN, sondern ein CNN mit LSTM Zellen. Ein CNN könnte für den Umgang mit mehreren Input-Standorten geeigneter sein als ein RNN.
+Das Modell, welches \citeauthor{2019_Chen_MultifactorSpatiotemporalCorrelation} in ihrem Paper im Jahr 2019 vorstellten \cite{2019_Chen_MultifactorSpatiotemporalCorrelation} ist aufgrund der Verwendung von Messdaten mehrerer Standorte dem hier entwickelten Modell sehr ähnlich. 
+\citeauthor{2019_Chen_MultifactorSpatiotemporalCorrelation} verwendeten kein RNN, sondern ein CNN mit LSTM Zellen. Ein CNN könnte für den Umgang mit mehreren Input-Standorten geeigneter sein als ein RNN.
 \newline
-Eine weiterführende Idee davon wäre ein Ensemble-Modell, wie beispielsweise das Modell von \citeauthor{2017_Zhang_HybridMethodShortTerm} \cite{2017_Zhang_HybridMethodShortTerm}, zu entwickeln. Hierbei werden mehrere Prognoseansätze, welche jeweils gute Prognosen bei unterschiedlicher Datenbasis liefern können, kombiniert. 
+Eine weiterführende Idee davon wäre ein Ensemble-Modell, wie beispielsweise das Modell der Forschungsgruppe \citeauthor{2017_Zhang_HybridMethodShortTerm} \cite{2017_Zhang_HybridMethodShortTerm}, zu entwickeln. Hierbei werden mehrere Prognoseansätze, welche jeweils gute Prognosen bei unterschiedlicher Datenbasis liefern können, kombiniert. 
 Hierbei können jeweils die Stärken der Ansätze ausgenutzt werden und due Schwächen anderer verringert werden. Einen solchen Ansatz zu entwickeln wäre für eine zukünftige Arbeit äußerst interessant.
 
 \highlight{
