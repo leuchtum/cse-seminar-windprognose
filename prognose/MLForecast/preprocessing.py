@@ -92,6 +92,38 @@ def pol2cart(df, speed="WS", direction="WD", x="WX", y="WY"):
     return df
 
 
+def cart2pol(df, speed="WS", direction="WD", x="WX", y="WY"):
+    df = df.copy()
+
+    while any("WX" in key for key in df.keys()):
+        # get keys
+        for key in df.keys():
+            if x in key:
+                xkey = key
+            elif y in key:
+                ykey = key
+
+        wind = df[[xkey, ykey]]
+        wind = wind.dropna()
+
+        wx = wind[xkey]
+        wy = wind[ykey]
+        
+        ws = np.sqrt(wx*wx + wy*wy)
+        wd = np.arctan2(-wx,-wy) / np.pi * 180 + 180
+
+        appendix = wx.name.replace(x, "")
+        assert appendix == wy.name.replace(y, "")
+
+        ws.name = speed + appendix
+        wd.name = direction + appendix
+
+        df = pd.concat([ws, wd, df], axis=1)
+        df = df.drop([xkey, ykey], axis=1)
+
+    return df
+
+
 def split_test_val_train(x, y, split):
     assert sum(split) == 1
     x_test = x[:int(len(x)*split[0])]

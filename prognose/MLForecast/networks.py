@@ -158,7 +158,7 @@ class LSTMseq2seq(ModelNN):
 
 
 class LSTMseq2vec(ModelNN):
-    def __init__(self, structure, config):
+    def __init__(self, structure=None, config=None):
         super().__init__()
         self.structure = structure
         self.config = config
