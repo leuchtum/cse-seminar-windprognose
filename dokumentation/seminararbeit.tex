@@ -682,11 +682,11 @@ Tabelle: Welche Lossfunktion, Metric, Prognosehorizont, Historie, tatsächliche 
 welche Regularisierung}
 
 \section{Ergebnisse}
-Insgesamt wurden 71 neuronale Netze mit jeweils unterschiedlichen Konfigurationen trainiert. Während des Trainings wurde das am das Modell zwischengespeichert, wenn sich die Prognosegüte nach einer Epoche verbessert hat. Das Training wurde nach 10 Epochen, in der sich die Güte nicht verbessert hat, abgebrochen. Trainiert wurde stets mit dem Datensatz, bei dem der Wind in eine x- und y-Komponente umgewandelt worden ist. Die nachfolgende Tabelle fässt die das Training und die Prognosegüte zusammen:
+Insgesamt wurden 71 neuronale Netze mit jeweils unterschiedlichen Konfigurationen trainiert. Während des Trainings wurde das Modell zwischengespeichert, wenn sich die Prognosegüte nach einer Epoche verbessert hat. Das Training wurde nach 10 Epochen, in denen sich die Güte nicht verbessert hat, abgebrochen. Trainiert wurde stets mit dem Datensatz, bei dem der Wind in eine x- und y-Komponente umgewandelt worden ist. Die nachfolgende Tabelle fässt das Training und die Prognosegüte zusammen:
 
 \begin{table}[ht]
 	\centering
-	\caption{\highlight{TODO}}
+	\caption{Zusammenfassung der Konfigurationen der trainierten Netze.}
 	\begin{tabular}{|C{2.5cm}|C{1.8cm}|C{2cm}|C{2cm}|C{2cm}|C{1.8cm}|C{1.8cm}|}
 	\hline
 	\rowcolor{color80}
@@ -737,17 +737,39 @@ Insgesamt wurden 71 neuronale Netze mit jeweils unterschiedlichen Konfiguratione
 %%%%%BILD ANFANG
 \begin{figure}[tph]
 	\begin{center}
-		\includegraphics[width=0.9\linewidth]{./images/güte_über_zeit.png}
+		\includegraphics[width=\linewidth]{./images/Güte über Prognosehorizont sd via xy-cropped.jpg}
 		\caption{\highlight{Grafik nicht final!}}
 		\label{fig:güte_über_zeit}
 	\end{center}
 \end{figure}
 %%%%%BILD ENDE
 
-\subsection{Unterschied bei kartesischer Darstellung des Windes}
+\subsection{Vergleich der verschiedenen Varianten}
+
+%%%%%BILD ANFANG
+\begin{figure}[tph]
+	\begin{center}
+		\includegraphics[width=\linewidth]{./images/barplot_mae-cropped.jpg}
+		\caption{\highlight{TODO}}
+		\label{fig:barplot_mae}
+	\end{center}
+\end{figure}
+%%%%%BILD ENDE
+
+%%%%%BILD ANFANG
+\begin{figure}[tph]
+	\begin{center}
+		\includegraphics[width=\linewidth]{./images/barplot_mse-cropped.jpg}
+		\caption{\highlight{TODO}}
+		\label{fig:barplot_mse}
+	\end{center}
+\end{figure}
+%%%%%BILD ENDE
+
+\subsubsection{Unterschied bei kartesischer Darstellung des Windes}
 \highlight{Vergleich kartesisch und polar am besten Modell}
 
-\subsection{Unterschied bei Einbeziehung weiterer Messstationen}
+\subsubsection{Unterschied bei Einbeziehung weiterer Messstationen}
 
 \highlight{Was passiert, wenn die umliegenden Stationen mit einbezogen werden und was wenn nicht? Sind Unterschiede zu sehen?}
 
