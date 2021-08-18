@@ -182,7 +182,7 @@ bibliography=numbered
 	\textbf{Abgabedatum:}
 
 	
-tba
+\highlight{tba}
 	%\today 
             
     
@@ -381,7 +381,7 @@ Während die gemessenen Daten die aktuelle Wetterlage an einigen Standorten Deut
 %%%%%BILD ENDE
 
 \subsection{Reale Messdaten}\label{section:realeMessdaten}
-Die realen Messdaten werden vom Deutschen Wetterdienst über einen Webserver kostenlos zur Verfügung gestellt. In dieser Arbeit sind die Daten in stündlicher Auflösung von vier Messtationen (Münsingen-Apfelstetten, Stötten, Günzburg und Laupheim) im Ulmer Umkreis zum Einsatz gekommen. Die genaue geographische Lage kann der Abbildung \ref{fig:map} entnommen werden. Der Deutsche Wetterdienst betreibt im Ulmer Umkreis zwar noch weitere Wetterstationen, jedoch messen diese die Windgeschwindigkeit und Windrichtung nicht. Insgesamt umfasst der Datensatz den Zeitraum Anfang 2016 bis Ende 2021. Davon sind jedoch rund $20\%$ Datenlücken. Diese werden in Kapitel \ref{section:Datenlücken} genauer beleuchtet. 
+Die realen Messdaten werden vom Deutschen Wetterdienst über einen Webserver kostenlos zur Verfügung gestellt. In dieser Arbeit sind die Daten in stündlicher Auflösung von vier Messtationen (Münsingen-Apfelstetten, Stötten, Günzburg und Laupheim) im Ulmer Umkreis zum Einsatz gekommen. Die genaue geographische Lage kann der Abbildung \ref{fig:map} entnommen werden. Der Deutsche Wetterdienst betreibt im Ulmer Umkreis zwar noch weitere Wetterstationen, jedoch messen diese die Windgeschwindigkeit und Windrichtung nicht. Insgesamt umfasst der Datensatz den Zeitraum Anfang 2016 bis Ende 2021. Davon sind jedoch rund $20\%$ Datenlücken (Genaue Darstellung siehe Heatmap \ref{fig:heatmap}). Diese werden in Kapitel \ref{section:Datenlücken} genauer beleuchtet. 
 
 %%%%%BILD ANFANG
 \begin{figure}[tph]
@@ -393,10 +393,20 @@ Die realen Messdaten werden vom Deutschen Wetterdienst über einen Webserver kos
 \end{figure}
 %%%%%BILD ENDE
 
+%%%%%BILD ANFANG
+\begin{figure}[tph]
+	\begin{center}
+		\includegraphics[width=\linewidth]{./images/Datenausfälle_all-cropped.jpg}
+		\caption{Heatmap der Datenausfälle aller Datenreihen, wobei rot einen solchen kennzeichnet. Zu beachten ist, dass durch die Bildauflösung nur Datenausfälle von mehr wie $~40h$ dargestellt werden können.}
+		\label{fig:heatmap}
+	\end{center}
+\end{figure}
+%%%%%BILD ENDE
+
 Zur Prognose der Windgeschwindigkeit und Windrichtung können neben deren selbst auch andere Messgrößen wie Sonnenscheindauer, Luftdruck, Temperatur und Luftfeuchtigkeit genutzt werden. Jedoch wird nicht jede dieser Größen an jeder Messstation bestimmt. Die folgende Tabelle \ref{tab:messgrößen} gibt einen detaillierteren Aufschluss über die tatsächlich gemessenen Größen.
 
 %%%%%TABELLE ANFANG
-\begin{table}[ht]
+\begin{table}[tph]
 	\centering
 	\caption{Gemessene Größen je Messstation}
 	\begin{tabular}{|l|c|c|c|c|c|}
@@ -416,19 +426,19 @@ Zur Prognose der Windgeschwindigkeit und Windrichtung können neben deren selbst
 
 Um einen tieferen Einblick in das Verhalten des Windes an der jeweiligen Messstation zu erhalten, bieten sich Windrosen zur Visualisierung an. Dabei wird die Häufigkeit der Windgeschwindigkeit in Abhängigkeit der Windrichtung radial dargestellt. Der Abbildung \ref{fig:windroses} können die Windrosen für die vier ausgewählten Messstationen entnommen werden. Wie in den südlichen Regionen Deutschlands zu erwarten, ist die vorherschende Windrichtung West bis Südwest. 
 
-Bei detaillierter Analyse fällt jedoch auf, dass der Wind an der Messstation Münsingen-Apfelstetten besonders bei leichtem Wind sehr volatil ist. Der Grund hierfür könnte in der Tatsache begründet sein, dass sich die Messstation in einem flachen Tal mit Nord-Südlicher Ausrichtung befindet. Des Weiteren ist zu erkennen, dass unter den vier Messstationen in Stötten die stärksten Winde auftreten. 
+Bei detaillierter Analyse fällt jedoch auf, dass der Wind an der Messstation Münsingen- Apfelstetten besonders bei leichtem Wind sehr volatil ist. Der Grund hierfür könnte in der Tatsache begründet sein, dass sich die Messstation in einem flachen Tal mit Nord-Südlicher Ausrichtung befindet. Des Weiteren ist zu erkennen, dass unter den vier Messstationen in Stötten die stärksten Winde auftreten. In dieser Arbeit wird die Windgeschwindigkeit für die Messstation in Günzburg prognostiziert. 
 
 %%%%%BILD ANFANG
 \begin{figure}[tph]
 	\begin{center}
-		\includegraphics[]{./images/windroses.pdf}
+		\includegraphics[width=0.9\linewidth]{./images/windroses.pdf}
 		\caption{Windrosen der vier ausgewählten Messstationen}
 		\label{fig:windroses}
 	\end{center}
 \end{figure}
 %%%%%BILD ENDE
 
-In dieser Arbeit wird die Windgeschwindigkeit für die Messstation in Günzburg prognostiziert. Die übrigen Messstation dienen lediglich der Prognoseverbesserung.
+
 
 \subsection{Generierte Messdaten}\label{section:gen_daten}
 Die Wetterlage in Deutschland weist wiederkehrende Trends innerhalb eines Tages und auch innerhalb eines Jahres auf. Offensichtlich ist es am Tag wärmer als in der Nacht und im Sommer wärmer als im Winter. Um diese Information für das Modell nutzbar zu machen, werden zusätzlich zu den gemessenen Daten zwei weitere Variablen eingeführt, nämlich die Tageszeit und die Jahreszeit. 
@@ -535,8 +545,6 @@ Datenlücken müssen vor dem Training mit dem neuronalen Netz entfernt werden. I
 	Eine Interpolation längerer Daten ist nicht mehr sinnhaft. Daher wird der Datensatz, wie in Abbildung \ref{fig:preprocessing} im vierten Schritt verdeutlicht, entlang großer Datenlücken aufgeteilt.
 
 \end{itemize}
-
-\highlight{Grafik wo und wie lange es im Datensatz Lücken gibt --> Heatmap}
 
 \subsection{Winddaten als Vektoren}\label{section:Winddaten_vec}
 Die Windmessung erfolgt (von modernen Laser- oder Schallmessungen abgesehen) üblicherweise mithilfe eines Schalenanemometers und einer Windfahne. Zu jedem Messzeitpunkt werden also zwei Werte aufgenommen. Die Windgeschwindigkeit $v$ wird in $m/s$ gemessen. Die Windrichtung $\varphi$ wird typischer Weise in Grad angegeben, es gilt also $\varphi \in [0,360)$. Norden wird dabei mit $\varphi_{north} = 0^\circ$ gewählt. Dieses $(v,\varphi)$-Tupel lässt sich als Polarkoordinate interpretieren. Jedoch tritt hier das in Kapitel \ref{section:circ_data} beschriebene Problem der zirkulären Daten auf, da $\varphi_{north} = 0^\circ = 360^\circ$ gilt.
@@ -738,7 +746,7 @@ Insgesamt wurden 71 neuronale Netze mit jeweils unterschiedlichen Konfiguratione
 \begin{figure}[tph]
 	\begin{center}
 		\includegraphics[width=\linewidth]{./images/Güte über Prognosehorizont sd via xy-cropped.jpg}
-		\caption{\highlight{Grafik nicht final!}}
+		\caption{\highlight{TODO}}
 		\label{fig:güte_über_zeit}
 	\end{center}
 \end{figure}
