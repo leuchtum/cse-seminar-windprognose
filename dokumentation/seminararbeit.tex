@@ -604,7 +604,7 @@ Die hier beschriebene Umwandlung kann der Abbildung \ref{fig:pol2cart2} anhand r
 \section{Generierung der Trainingsbeispiele}
 Nachdem die Rohdaten aufgearbeitet worden sind, gilt es nun tatsächliche Trainingsbeispiele (Samples) zu generieren. Dieser Prozess wird in Abbildung \ref{fig:sampling} dargestellt, wobei die Grafik als Fortsetzung von Abbildung \ref{fig:preprocessing} verstanden werden kann. Das Ziel des Samplings ist die Generierung eins Pools aus Trainingsbeispielen, womit das neuronale Netz angelernt werden kann.
 
-Zunächst müssen die Größen der Moving-Windows (siehe Abb. \ref{fig:sampling})festgelegt werden. Bei den Inputdaten gibt die Größe $n$ des Moving-Windows an, wieviele historische Zeitschritte für die Prognose genutzt werden. Das heißt, bei einer Prognose zum Zeitpunkt $t_0$ werden die Daten zu den Zeitpunkten $t_{n-1}, \dots, t_0$ als Inputdaten verwendet. Die Größe $m$ des Moving-Window auf den Labeldaten gibt den Prognosehorizont an. Das Ziel ist es also bei einer Prognose zum Zeitpunkt $t_0$ die Windgeschwindigkeiten \highlight{(und Windrichtungen?)} zu den Zeitpunkten $t_1, \dots, t_m$ vorherzusagen.
+Zunächst müssen die Größen der Moving-Windows (siehe Abb. \ref{fig:sampling}) festgelegt werden. Bei den Inputdaten gibt die Größe $n$ des Moving-Windows an, wieviele historische Zeitschritte für die Prognose genutzt werden (im Folgenden Prognosehistorie genannt). Das heißt, bei einer Prognose zum Zeitpunkt $t_0$ werden die Daten zu den Zeitpunkten $t_{n-1}, \dots, t_0$ als Inputdaten verwendet. Die Größe $m$ des Moving-Window auf den Labeldaten gibt den Prognosehorizont an. Das Ziel ist es also bei einer Prognose zum Zeitpunkt $t_0$ die Windgeschwindigkeiten \highlight{(und Windrichtungen?)} zu den Zeitpunkten $t_1, \dots, t_m$ vorherzusagen. In dieser Arbeit wurde für $n=144$ und für $m=12$ gewählt, die Prognosehistorie beträgt also sechs Tage und der Prognosehorizont zwölf Stunden. Diese Werte wurden unter Berücksichtigung der Literaturrecherche gewählt.
 
 Das Ergebnis der Datenaufbereitung, beschrieben im Kapitel \ref{section:Datenaufbereitung}, sind datenlückenfreie Fragmentpaare. Ein solches Fragmentpaar besteht aus einem Input- und einem Labeldatensatz. Darüber werden nun die im vorherigen Schritt definierten Moving-Windows \qm{geschoben}. Die Schrittweite wird dabei kleinstmöglich gewählt, so entstehen am meisten Samples. Das Sampling wird auf jedem Fragmentpaar angewandt.
 
@@ -629,18 +629,83 @@ Das Ergebnis der Datenaufbereitung, beschrieben im Kapitel \ref{section:Datenauf
 
 \chapter{Implementierung}
 
-\section{Festlegung der Modellarchitektur \highlight{(Arbeitstitel)}}
+\section{Konfiguration des Modells}
+
+Das Verhalten eines neuronalen Netzes ist von einer Vielzahl an Hyperparametern abhängig (u.a. Modellarchitektur, Lernraten und Lernverfahren, Initialisierung der Gewichte). Das Optimum aller Konfigurationen lässt sich im Allgemeinen nur annähern, wobei die Suche nach diesem einen großen zeitlichen und rechenintensiven Aufwand mit sich bringt.
+
+Um den Aufwand in einem akzeptablen Maß zu halten, haben wir einige Parameter vorab festgelegt und andere iterativ bestimmt:
+
+\begin{itemize}
+	\item Vorab festgelegte Parameter
+	\begin{itemize}
+		\item Optimizer
+		
+		Als Optimizer wurde Adam gewählt. Er zeichnet sich durch eine hohe Konvergenzgeschwindigkeit und Robustheit aus und entspricht dem Stand der Technik. Die internen Abfallraten $\beta_1$ und $\beta_2$ liefern mit ihren Standardwerten im Allgemeinen gute Ergebnisse \cite{2017_Kingma_AdamMethodStochastic}, weshalb diese nicht verändert wurden. Die Lernrate wurde auf $0.001$ festgelegt.
+
+		\item Lossfunktion
+		
+		Als Lossfunktion wurde MSE gewählt. Hier durch fallen besonders schlechte Prognosen stärker ins Gewicht.
+
+	\end{itemize}
+
+	\item Iterativ bestimmte Parameter
+	\begin{itemize}
+		\item Anzahl der Neuronen pro Schicht
+		
+		Die Anzahl der Neuronen einer Schicht haben großen Einfluss auf das Verhalten des Netzes, insbesondere in Hinblick auf Over- und Underfitting. Dabei wurden die Anzahl iterativ verändert und je nach Ausgang erhöht oder verringert. Auch wurde das Verhältnis der Neuronenanzahl zwischen zwei Schichten verändert. Im Folgenden wird eine Schicht mit $x$ bzw. $y$ Neuronen SCHICHT($x$) bzw. SCHICHT($y$) bezeichnet. $x$ und $y$ wurden dabei aus $[8,12,16,24,32,48,64,128]$ gewählt.
+
+		\item Dropoutrate
+		
+		Eine Dropoutschicht hilft besonders bei rekrutenten neuronalen Netzen Overfitting sowie bekannte Probleme wie dem \qm{vanishing gradient} und \qm{exploding gradient} entgegenzuwirken. Die Dropoutrate definiert dabei den Prozentsatz an Neuronen, die zeitweise bei einem Lernschritt nicht berücksichtigt werden. Im Folgenden wird eine Dropoutschicht mit einer Rate $d$ als DROP($d$) bezeichnet. In dieser Arbeit wurde $d \in [0.1, 0.2, 0.3, 0.4]$ gewählt.
+		\item Modellarchitektur
+		
+		Die Literaturrecherche hat gezeigt, dass die rekrutenten neuronalen Netze, speziell bei Verwendung von LSTM Zellen, sehr vielversprechende Ergebnisse liefern. Daher kommen in dieser Arbeit ebenso neuronale Netze mit LSTM Zellen zum Einsatz. Die Modellarchitektur hat großen Einfluss auf das Prognoseergebnis, weshalb mehrere Architekturen getestet wurden. $x$ und $y$ sind dabei die Anzahl der Neuronen und $d$ die Dropoutrate. Die Anzahl der Neuronen in der Eingabeschicht IN und Ausgabeschicht OUT wird durch den Datensatz definiert und wird hier nicht festgelegt:
+
+		\begin{itemize}
+			\item IN – LSTM($x$) – DROP($d$) – DENSE($y$) – DROP($d$) – OUT
+			\item IN – LSTM($x$) – DROP($d$) – LSTM($y$) – DROP($d$) – OUT
+			\item IN – LSTM($x$) – DROP($d$) – LSTM($y$) – OUT
+			\item IN – DENSE($x$) – DROP($d$) – LSTM($y$) – OUT
+			\item IN – LSTM($x$) – DROP($d$) – DENSE($y$) – OUT
+			\item IN – LSTM($x$) – DROP($d$) – DENSE($x$) – DROP($d$) – DENSE($y$) – OUT
+
+		\end{itemize}
+
+
+		
+	\end{itemize}
+\end{itemize}
+
 \highlight{Begründen aus welchen Gründen wir uns für diese drei Methoden entschieden haben 
 (RNNseq2seq, RNNseq2vec, DNN) z.B. Datengrundlage, Zeitaspekt; 
 Tabelle: Welche Lossfunktion, Metric, Prognosehorizont, Historie, tatsächliche Architektur (Schichten, Neuronen), 
 welche Regularisierung}
 
-\section{Trainingsphase und Optimierung}
-\highlight{Random search über Konfigurationen aus Tabelle und daraus optimales NN; optional Grafik über Fehler, Loss, etc.}
-
 \section{Ergebnisse}
+Insgesamt wurden 71 neuronale Netze mit jeweils unterschiedlichen Konfigurationen trainiert. Während des Trainings wurde das am das Modell zwischengespeichert, wenn sich die Prognosegüte nach einer Epoche verbessert hat. Das Training wurde nach 10 Epochen, in der sich die Güte nicht verbessert hat, abgebrochen. Trainiert wurde stets mit dem Datensatz, bei dem der Wind in eine x- und y-Komponente umgewandelt worden ist. Die nachfolgende Tabelle fässt die das Training und die Prognosegüte zusammen:
 
-\highlight{Hier nur Performance der verschiedenen Netze. Analyse der Ergebnisse kommt im nächsten Kapitel}
+\begin{table}[ht]
+	\centering
+	\caption{\highlight{TODO}}
+	\begin{tabular}{|C{2.5cm}|C{1.8cm}|C{2cm}|C{2cm}|C{2cm}|C{1.8cm}|C{1.8cm}|}
+	\hline
+	\rowcolor{color80}
+	\textbf{Netzwerk Architektur} & \textbf{Anzahl trainierter Netze} & \textbf{Anzahl $x$ Neuronen} & \textbf{Anzahl $y$ Neuronen} & \textbf{Dropout-rate $d$} & \textbf{$MAE$ bestes Modell} & \textbf{$MSE$ bestes Modell} \\
+	\hline
+	IN – LSTM(x) – DROP(d) – DENSE(y) – DROP(d) – OUT & 9 & 8-32 & 8-96 & 0,3 & 0,8743 & 1,35 \\
+	\hline
+	IN – LSTM(x) – DROP(d) – LSTM(y) – DROP(d) – OUT & 9 & 16-64 & 16-64 & 0,3 & 0,8734 & 1,3448 \\
+	\hline
+	IN – LSTM(x) – DROP(d) – LSTM(y) – OUT & 10 & 16-64 & 8-32 & 0,2-0,3 & 0,8697 & 1,3378 \\
+	\hline
+	IN – DENSE(x) – DROP(d) – LSTM(y) – OUT & 15 & 26-64 & 16-32 & 0,2-0,4 & \textbf{0,8576} & \textbf{1,2807} \\
+	\hline
+	IN – LSTM(x) – DROP(d) – DENSE(y) – OUT & 19 & 16-32 & 16-32 & 0,1-0,3 & 0,8664 & 1,3212 \\
+	\hline
+	IN – LSTM(x) – DROP(d) – DENSE(x) – DROP(d) – DENSE(y) – OUT & 9 & 16-128 & 12-64 & 0,3 & 0,8643 & 1,3022\\
+	\hline
+	\end{tabular}
+\end{table}
 
 \section{Benchmarkmodell}
 \highlight{
