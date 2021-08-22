@@ -804,10 +804,12 @@ Die Windlage an Küsten dürfte eindeutiger sein, als die im süddeutschen Raum.
 In dieser Arbeit wurden Messdaten des Deutschen Wetterdienstes verwendet, welche häufig Datenlücken enthielten. Es könnten darüber hinaus Satellitendaten verwendet werden, auf die während auftretender Fehlstellen zurückgegriffen werden kann. 
 Diese Vorgehensweise kann zu einer größeren Datenvielfalt und somit möglicherweise zu besseren Ergebnissen führen.
 \newline
-\citeauthor{2019_Chen_MultifactorSpatiotemporalCorrelation} \cite{2019_Chen_MultifactorSpatiotemporalCorrelation} konnten mittels einer Multifactor Spatiotemporal Correlation 3D-Matrix 
-(gleichzeitig mehrere Korrelationen zwischen Standorten und meteorologischen Faktoren in den Dimensionen Zeit und Raum berücksichtigt)
-
-
+\citeauthor{2019_Chen_MultifactorSpatiotemporalCorrelation} \cite{2019_Chen_MultifactorSpatiotemporalCorrelation} konnten mittels einer Multifactor Spatiotemporal Correlation 3D-Matrix in ihren Eingabedaten zur selben Zeit mehrere Korrelationen zwischen Standorten und meteorologischen Faktoren in zeitlicher und räumlicher Dimension berücksichtigen. 
+Da das in dieser Arbeit vorgestellte Modell ebenfalls die Daten mehrerer Standorte mit einbezieht, könnte die Anwendung dieser Methode in der Datenaufbereitung zu verbesserten Ergebnissen führen. 
+\newline
+In dieser Arbeit wurden die Ergebnisse mit üblichen Fehlermaßen bewertet. Ideen innerhalb dieses Modells, wie die andere Darstellung des Windvektors oder die Verwendung mehrerer Standorte in den Inputdaten, wurden dann mit dem Standardmodell verglichen. 
+Jedoch ist dadurch unklar, wie gut das Modell im Gegensatz zu anderen üblichen Modellen abschneidet. Ein Vergleich mit einem häufig verwendeten Modell, wie dem SARIMA Modell, könnten aufschlussreiche Informationen liefern. 
+Schneiden nämlich beide Modelle weniger gut ab, so sollten Prozesse in der Datenaufbereitung verändert werden oder neue Daten von anderen Standorten verwendet werden. Ein Vergleichsmodell sollte in einer weiterführenden Arbeit verwirklicht werden, um die hier enstandenen Ergebnisse einordnen zu können und mögliche Verbesserungsmöglichkeiten aufzudecken.
 \subsection{Neue Ansätze}
 Das Modell, welches \citeauthor{2019_Chen_MultifactorSpatiotemporalCorrelation} in ihrem Paper im Jahr 2019 vorstellten \cite{2019_Chen_MultifactorSpatiotemporalCorrelation} ist aufgrund der Verwendung von Messdaten mehrerer Standorte dem hier entwickelten Modell sehr ähnlich. 
 \citeauthor{2019_Chen_MultifactorSpatiotemporalCorrelation} verwendeten kein RNN, sondern ein CNN mit LSTM Zellen. Ein CNN könnte für den Umgang mit mehreren Input-Standorten geeigneter sein als ein RNN.
@@ -819,8 +821,6 @@ Hierbei können jeweils die Stärken der Ansätze ausgenutzt werden und due Schw
 	Einteilen in Punkte für Modellerweiterung und grundsätzlicher Modelländerung.
 	Ideen, mit dem man das Modell / die Ergebnisse verbessern kann:
 	\begin{enumerate}
-		\item Zeitlich geringere Auflösung nehmen, weil wir in Ulm relativ instationäre und leichte Winde haben
-		\item MFSTC Modell für mehrere Standorte
 		\item SARIMA Modell kann unsere Ergebnisse besser in Kontext setzen: Es kann sein, dass Datenlage in Süddeutschland auch für herkömmliches Modell schwer vorherzusagen ist. Es kann aber auch sein, dass unser Modell nicht genau genug ist.
 	\end{enumerate}
 }
