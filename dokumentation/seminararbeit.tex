@@ -752,7 +752,9 @@ Um diese zu beantworten wurde das optimiere Modell aus Kapitel \ref{section:erge
 	\item Messdaten nur von der Messstation Günzburg, Windgeschwindigkeit und Windrichtung vektorisiert + kalendarische Daten
 \end{itemize}
 
-Rückblickend stellt sich dieses Vorgehen leider als methodischer Fehler heraus. Die optimale Konfiguration des neuronalen Netzes wurde mit dem ersten Datensatz ermittelt. Das bedeutet aber auch, dass die Konfiguration \textit{genau} auf diesen Datensatz \qm{maßgeschneidert} ist. Wir nutzen diese Konfiguration jedoch für alle drei Datensätze. Deutlich besser wäre es gewesen, für jeden Datensatz eine eigene optimale Konfiguration zu ermitteln. Durch diesen Fehler ist es möglich, dass die Performance des neuronalen Netzes mit Datensatz zwei und drei besser ist als im Folgenden beschrieben.
+Rückblickend muss an dieser Stelle auf zwei methodische Fehler hingewiesen werden. Zum einen fehlt hier ein vierter Datensatz, in dem die Winddaten nicht vektorisiert vorliegen und nur die Daten der Messtation Günzburg beinhaltet. So wäre der Vergleich untereinander aussagekräftiger. Der zweite methodische Fehler betrifft die Auswahl des besten Modells. Die optimale Konfiguration des neuronalen Netzes wurde mit dem ersten Datensatz ermittelt. Das bedeutet aber auch, dass die Konfiguration \textit{genau} auf diesen Datensatz \qm{maßgeschneidert} ist. Wir nutzen diese Konfiguration jedoch für alle drei Datensätze. Deutlich besser wäre es gewesen, für jeden Datensatz eine eigene optimale Konfiguration zu ermitteln. Durch diesen Fehler ist es möglich, dass die Performance des neuronalen Netzes mit Datensatz zwei und drei besser ist als im Folgenden beschrieben.
+
+\highlight{Hier noch schreiben, dass alle folgenden Analysen diese methodischen Fehler berücksichtigen müssen, bzw das man das im Hinterkopf behält}
 
 \subsection{Klassische Performance Indikatoren}
 Für die Analyse der Performance eines neuronalen Netzes im Bereich regressiver Problemstellungen eigen sich die Fehlermaße MAE und MSE (wie auch die Literatur bestätigt) gut. Die Vorteile liegen beim MAE in der Liniarität und dadruch in der einfachen Verständlichkeit, wohingegen der MSE deutlich sensibler auf Ausreißer reagiert und so weitere interessante Informationen liefern kann.
@@ -760,6 +762,7 @@ Für die Analyse der Performance eines neuronalen Netzes im Bereich regressiver 
 In den Abbildungen \ref{fig:barplot_mae} und \ref{fig:barplot_mse} ist der MAE bzw. MSE für die drei Datensätze aufgetragen. Vergleicht man diese Grafiken, so lassen sich folgende Erkenntnisse festhalten:
 
 \begin{itemize}
+	\item Die Windgeschwindigkeit lässt sich am 
 	\item \highlight{TODO}
 	\item \highlight{Was passiert, wenn die umliegenden Stationen mit einbezogen werden und was wenn nicht? Sind Unterschiede zu sehen?}
 
