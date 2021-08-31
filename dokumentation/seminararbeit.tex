@@ -840,10 +840,14 @@ Andere Ideen schlagen vollkommen neuartige Ansätze vor. Im Folgenden beschriebe
 
 \subsection{Veränderungsvorschläge}
 
-\highlight{Eingehen auf methodischen Fehler (beschrieben in \ref{section:diskussion_ergebnisse})}
-
-\highlight{Noch eine Idee, was man machen/ändern könnte: Zwei völlig seperate Modelle für Windrichtung und Windgeschwindikkeit aufstellen. Dadurch kann man auf beide Fälle seperat optimieren.}
-
+Kapitel \ref{section:diskussion_ergebnisse} umfasst eine genauere Beschreibung des methodischen Fehlers, welcher einen direkten Vergleich zwischen der unterschiedlichen Darstellung des Windes als Vektor verhindert. 
+Zum einen wäre es sinnvoll einen vierten Datensatz hinzuzufügen, welcher die Daten der Station Günzburg beinhaltet und die Winddaten in nicht vektorisierter Form vorliegen hat. 
+Der Vergleich der Ergebnisse kann dadurch deutlich mehr an Aussagekraft gewinnen. 
+Darüber hinaus wurden die optimalen Modellparameter anhand des ersten Datensatzes gefunden. 
+Es sollten noch weitere optimale Modellparameter für die anderen Datensätze verwendet werden um herauszufinden, ob sich die Prognosegüte mithilfe dieser neuen Konfigurationen verbessern kann. 
+\newline
+Dem vorigen Gedanken folgend könnte eine separate Optimierung zweier Modelle, eines um Windrichtung und eines um Windgeschwindigkeit vorherzusagen, die jeweils besten Prognosen ergeben. Hiermit erübrigen sich sogar die Überlegungen zu den unterschiedlichen Darstellungsweisen des Windes als Vektor.  
+\newline
 Bereits in Kapitel \ref{section:realeMessdaten} wurde darauf hingewiesen, dass einige der berücksichtigten Messstationen sehr wechselhafte Winddaten besitzen. Die Verwendung von Messdaten eines oder mehrerer Standorte in Küstenlage könnten einen guten Vergleich herstellen. 
 Die Windlage an Küsten dürfte eindeutiger sein, als die im süddeutschen Raum. Bessere Ergebnisse bei einem gleichen verwendeten Modell würden bedeuten, dass das vorgestellte Modell nicht gut mit volatilen Winddaten umgehen kann und das Modell dementsprechend angepasst werden sollte.
 \newline
@@ -856,14 +860,14 @@ Da das in dieser Arbeit vorgestellte Modell ebenfalls die Daten mehrerer Standor
 In dieser Arbeit wurden die Ergebnisse mit üblichen Fehlermaßen bewertet. Ideen innerhalb dieses Modells, wie die andere Darstellung des Windvektors oder die Verwendung mehrerer Standorte in den Inputdaten, wurden dann mit dem Standardmodell verglichen. 
 Jedoch ist dadurch unklar, wie gut das Modell im Gegensatz zu anderen üblichen Modellen abschneidet. Ein Vergleich mit einem häufig verwendeten Modell, wie dem SARIMA Modell, könnten aufschlussreiche Informationen liefern. 
 Schneiden nämlich beide Modelle weniger gut ab, so sollten Prozesse in der Datenaufbereitung verändert werden oder neue Daten von anderen Standorten verwendet werden. Ein Vergleichsmodell sollte in einer weiterführenden Arbeit verwirklicht werden, um die hier enstandenen Ergebnisse einordnen zu können und mögliche Verbesserungsmöglichkeiten aufzudecken.
+
 \subsection{Neue Ansätze}
+
 Das Modell, welches \citeauthor{2019_Chen_MultifactorSpatiotemporalCorrelation} in ihrem Paper im Jahr 2019 vorstellten \cite{2019_Chen_MultifactorSpatiotemporalCorrelation} ist aufgrund der Verwendung von Messdaten mehrerer Standorte dem hier entwickelten Modell sehr ähnlich. 
 \citeauthor{2019_Chen_MultifactorSpatiotemporalCorrelation} verwendeten kein RNN, sondern ein CNN mit LSTM Zellen. Ein CNN könnte für den Umgang mit mehreren Input-Standorten geeigneter sein als ein RNN.
 \newline
 Eine weiterführende Idee davon wäre ein Ensemble-Modell, wie beispielsweise das Modell der Forschungsgruppe \citeauthor{2017_Zhang_HybridMethodShortTerm} \cite{2017_Zhang_HybridMethodShortTerm}, zu entwickeln. Hierbei werden mehrere Prognoseansätze, welche jeweils gute Prognosen bei unterschiedlicher Datenbasis liefern können, kombiniert. 
 Hierbei können jeweils die Stärken der Ansätze ausgenutzt werden und due Schwächen anderer verringert werden. Einen solchen Ansatz zu entwickeln wäre für eine zukünftige Arbeit äußerst interessant.
-
-
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %                                                                     %
 %                                                                     %
