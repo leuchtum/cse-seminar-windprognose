@@ -747,19 +747,19 @@ Rückblickend muss an dieser Stelle auf zwei methodische Fehler hingewiesen werd
 
 \highlight{Hier noch schreiben, dass alle folgenden Analysen diese methodischen Fehler berücksichtigen müssen, bzw das man das im Hinterkopf behält}
 
-\subsection{Klassische Performance Indikatoren}
+\subsection{Klassische Performance Indikatoren}\label{section:klassische_perf_indi}
 Für die Analyse der Performance eines neuronalen Netzes im Bereich regressiver Problemstellungen eigen sich die Fehlermaße MAE und MSE (wie auch die Literatur bestätigt) gut. Die Vorteile liegen beim MAE in der Liniarität und dadruch in der einfachen Verständlichkeit, wohingegen der MSE deutlich sensibler auf Ausreißer reagiert und so weitere interessante Informationen liefern kann.
 
-In den Abbildungen \ref{fig:barplot_mae} und \ref{fig:barplot_mse} ist der MAE bzw. MSE für die drei Datensätze aufgetragen. Vergleicht man diese Grafiken, so lassen sich folgende Erkenntnisse festhalten:
+In den Abbildungen \ref{fig:barplot_mae} und \ref{fig:barplot_mse} ist der MAE bzw. MSE für die drei Datensätze aufgetragen. Vergleicht man diese Grafiken, so lassen sich (zusätzlich zu den in Kapitel \ref{section:klassische_perf_indi} bereits diskutierten) folgende Erkenntnisse festhalten:
 
 \begin{itemize}
-	\item Werden die Fehlermaße für die Datensätze \qm{XY Vektorisierung, Alle Stationen} und \qm{Ohne XY Vektorisierung, Alle Stationen} miteinander verglichen, so fällt auf, dass die Windgeschwindigkeit deutlich besser prognostiziert werden kann, wenn die Winddaten vektorisiert vorliegen. 
+	\item Werden die Fehlermaße für die Datensätze \qm{Wind vektorisiert, alle Messstationen} und \qm{Wind nicht vektorisiert, alle Messstationen} miteinander verglichen, so fällt auf, dass die Windgeschwindigkeit deutlich besser prognostiziert werden kann, wenn die Winddaten vektorisiert vorliegen. 
 	
-	Für die Prognose der Windrichtung kann kein intuitives Ergebnis aus den Grafiken entnommen werden. Zwar ist der MAE der vektorisierten Winddaten geringfügig kleiner als für die nicht vektorisierten, der MSE für die vektorisierten Winddaten hingegen ist größer. Hierbei muss jedoch beachtet werden, dass das neuronale Netz im Falle der vektorisierten Winddaten Informationen über die zirkulären Eigenschaften besitzt. So ist beispielsweise eine Prognose von $10^\circ$ anstatt $350^\circ$ mit einem Delta von $20^\circ$ relativ gut, die Fehlermaße interpretieren dies jedoch als ein Delta von $340^\circ$. Das deutlich höhere Fehlermaß MSE für den Datensatz \qm{XY Vektorisierung, Alle Stationen} gegenüber dem Datensatz \qm{Ohne XY Vektorisierung, Alle Stationen} kann sich also über die hohe Sensitivität für Ausreißer beim MSE erklären lassen.
+	Für die Prognose der Windrichtung kann kein intuitives Ergebnis aus den Grafiken entnommen werden. Zwar ist der MAE der vektorisierten Winddaten geringfügig kleiner als für die nicht vektorisierten, der MSE für die vektorisierten Winddaten hingegen ist größer. Hierbei muss jedoch beachtet werden, dass das neuronale Netz im Falle der vektorisierten Winddaten Informationen über die zirkulären Eigenschaften besitzt. So ist beispielsweise eine Prognose von $10^\circ$ anstatt $350^\circ$ mit einem Delta von $20^\circ$ relativ gut, die Fehlermaße interpretieren dies jedoch als ein Delta von $340^\circ$. Das deutlich höhere Fehlermaß MSE für den Datensatz \qm{Wind vektorisiert, alle Messstationen} gegenüber dem Datensatz \qm{Wind nicht vektorisiert, alle Messstationen} kann sich also über die hohe Sensitivität für Ausreißer beim MSE erklären lassen.
 
 	Idealer Weise wäre also ein Fehlermaß, welches die Zirkularität und somit nur die tatsächliche Differenz  berücksichtigt. Dies wäre über den Sinus und Kosinus möglich. Da dieses Fehlermaß nicht implementiert wurde, muss für die Beurteilung der Prognosegüte der Windrichtung auf den etwas robusteren MAE zurückgegriffen werden.
 
-	\item Bei dem Vergleich beider Fehlermaße für die Datensätze \qm{XY Vektorisierung, Alle Stationen} und \qm{XY Vektorisierung, Eine Station} fällt auf, dass die Windgeschwindigkeit besser prognostiziert werden kann, wenn die Daten aller Messstationen berücksichtigt werden. 
+	\item Bei dem Vergleich beider Fehlermaße für die Datensätze \qm{Wind vektorisiert, alle Messstationen} und \qm{Wind vektorisiert, nur Messstation Günzburg} fällt auf, dass die Windgeschwindigkeit besser prognostiziert werden kann, wenn die Daten aller Messstationen berücksichtigt werden. 
 	
 	Für die Prognosegüte der Windrichtung kann keine Verbesserung festgestellt werden.\\
 	(Einerseits $MAE_{Alle} < MAE_{Eine}$, andererseits $MSE_{Alle} > MSE_{Eine}$)
@@ -795,7 +795,9 @@ Vergleicht man die drei Grafiken, so lassen sich folgende Schlüsse ziehen:
 
 \begin{itemize}
 	\item Je ferner die Vorhersage in der Zukunft liegt, desto größer wird Fehler der Prognose sowohl für die Windgeschwindigkeit als auch für die Windrichtung. Lediglich der Fehler der Windgeschwindigkeit für den Datensatz \qm{Wind nicht vektorisiert, alle Messstationen} ist im Vergleich auch für unmittelbare Prognosen hoch.
-	\item Die Vorhersage der Windrichtung scheint deutlich besser zu sein, wenn die Winddaten vektorisiert wurden. \highlight{DUPLIKAT VON OBEN}
+	\item Sehr große Ausreißer ($MAE > 6$) für die Prognose der Windgeschwindigkeit treten fast ausschließlich für den Datensatz \qm{Wind vektorisiert, nur Messstation Günzburg} auf. Es scheint also als wäre die Prognose nicht nur besser, sondern auch robuster wenn alle Messstationen genutzt werden.
+	\item In 75\% der Fälle (Quantil 3, Oberkante Boxplot) ist die Abweichung zwischen der prognostizierten und wahren Windgeschwindigkeit kleiner als $1.8 m/s$. In 50\% der Fälle (Median, Strich in Boxplot) ist der Fehler bereits unter $1 m/s$.
+	\item Nur für $t_1$ und $t_2$ und nur bei vektorisierten Winddaten ist der Fehler in 75\% aller Fälle für die prognostizierte Windgeschwindigkeit kleiner als $45^\circ$ (\qm{akzeptabler Fehler}, entspricht dem Unterschied zwischen Wind aus Süd und Wind aus Südwest)
 \end{itemize}
 
 %%%%%BILD ANFANG
@@ -839,6 +841,8 @@ Andere Ideen schlagen vollkommen neuartige Ansätze vor. Im Folgenden beschriebe
 \subsection{Veränderungsvorschläge}
 
 \highlight{Eingehen auf methodischen Fehler (beschrieben in \ref{section:diskussion_ergebnisse})}
+
+\highlight{Noch eine Idee, was man machen/ändern könnte: Zwei völlig seperate Modelle für Windrichtung und Windgeschwindikkeit aufstellen. Dadurch kann man auf beide Fälle seperat optimieren.}
 
 Bereits in Kapitel \ref{section:realeMessdaten} wurde darauf hingewiesen, dass einige der berücksichtigten Messstationen sehr wechselhafte Winddaten besitzen. Die Verwendung von Messdaten eines oder mehrerer Standorte in Küstenlage könnten einen guten Vergleich herstellen. 
 Die Windlage an Küsten dürfte eindeutiger sein, als die im süddeutschen Raum. Bessere Ergebnisse bei einem gleichen verwendeten Modell würden bedeuten, dass das vorgestellte Modell nicht gut mit volatilen Winddaten umgehen kann und das Modell dementsprechend angepasst werden sollte.
