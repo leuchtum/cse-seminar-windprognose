@@ -753,11 +753,16 @@ Für die Analyse der Performance eines neuronalen Netzes im Bereich regressiver 
 In den Abbildungen \ref{fig:barplot_mae} und \ref{fig:barplot_mse} ist der MAE bzw. MSE für die drei Datensätze aufgetragen. Vergleicht man diese Grafiken, so lassen sich folgende Erkenntnisse festhalten:
 
 \begin{itemize}
-	\item Die Windgeschwindigkeit lässt sich am 
-	\item \highlight{TODO}
-	\item \highlight{Was passiert, wenn die umliegenden Stationen mit einbezogen werden und was wenn nicht? Sind Unterschiede zu sehen?}
+	\item Werden die Fehlermaße für die Datensätze \qm{XY Vektorisierung, Alle Stationen} und \qm{Ohne XY Vektorisierung, Alle Stationen} miteinander verglichen, so fällt auf, dass die Windgeschwindigkeit deutlich besser prognostiziert werden kann, wenn die Winddaten vektorisiert vorliegen. 
+	
+	Für die Prognose der Windrichtung kann kein intuitives Ergebnis aus den Grafiken entnommen werden. Zwar ist der MAE der vektorisierten Winddaten geringfügig kleiner als für die nicht vektorisierten, der MSE für die vektorisierten Winddaten hingegen ist größer. Hierbei muss jedoch beachtet werden, dass das neuronale Netz im Falle der vektorisierten Winddaten Informationen über die zirkulären Eigenschaften besitzt. So ist beispielsweise eine Prognose von $10^\circ$ anstatt $350^\circ$ mit einem Delta von $20^\circ$ relativ gut, die Fehlermaße interpretieren dies jedoch als ein Delta von $340^\circ$. Das deutlich höhere Fehlermaß MSE für den Datensatz \qm{XY Vektorisierung, Alle Stationen} gegenüber dem Datensatz \qm{Ohne XY Vektorisierung, Alle Stationen} kann sich also über die hohe Sensitivität für Ausreißer beim MSE erklären lassen.
 
-	\item\highlight{Wir betrachten Günzburg und binden westliche Stationen ein. Was würde passieren, wenn man stattdessen östliche hernimmt?}
+	Idealer Weise wäre also ein Fehlermaß, welches die Zirkularität und somit nur die tatsächliche Differenz  berücksichtigt. Dies wäre über den Sinus und Kosinus möglich. Da dieses Fehlermaß nicht implementiert wurde, muss für die Beurteilung der Prognosegüte der Windrichtung auf den etwas robusteren MAE zurückgegriffen werden.
+
+	\item Bei dem Vergleich beider Fehlermaße für die Datensätze \qm{XY Vektorisierung, Alle Stationen} und \qm{XY Vektorisierung, Eine Station} fällt auf, dass die Windgeschwindigkeit besser prognostiziert werden kann, wenn die Daten aller Messstationen berücksichtigt werden. 
+	
+	Für die Prognosegüte der Windrichtung kann keine Verbesserung festgestellt werden.\\
+	(Einerseits $MAE_{Alle} < MAE_{Eine}$, andererseits $MSE_{Alle} > MSE_{Eine}$)
 \end{itemize}
 
 %%%%%BILD ANFANG
