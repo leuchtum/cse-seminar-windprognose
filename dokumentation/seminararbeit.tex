@@ -304,9 +304,31 @@ Die Fragen, welche innerhalb dieses Abschnittes beschrieben wurden, sollen darau
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \chapter{Grundlagen}
 Dieses Kapitel soll die Grundlagen von Neuronalen Netzen, insbesondere die Funktionsweise von RNNs und von LSTM Zellen, vermitteln, da auf diesen Technologien das vorgestellte Windprognosemodell basiert. 
-Darüber hinaus wird beschrieben um was es sich bei zirkulären Daten handelt und was diese im Rahmen von Neuronalen Netzen für Herausforderungen darstellen können.
+Darüber hinaus wird beschrieben um was es sich bei zirkulären Daten handelt und was diese im Rahmen von neuronalen Netzen für Herausforderungen darstellen können.
 
 \section{Neuronale Netze zur Zeitreihenprognose}
+
+Ein künstliches neuronales Netz ist klassischer Weise in Schichten (Layers) aufgebaut. Jede Schicht besteht aus mindestens einem, meistens aber vielen Neuronen. Bezeichnet werden die Schichten Input-, Hidden- und Output-Layer. In Abbildung \ref{fig:nn} ist ein solches neuronales Netz schematisch dargestellt.
+
+%%%%%BILD ANFANG
+\begin{figure}[tph]
+	\begin{center}
+		\includegraphics[width=0.6\linewidth]{./images/knn_allg.pdf}
+		\caption{Schematische Darstellung eines klassischen neuronalen Netzes}
+		\label{fig:nn}
+	\end{center}
+\end{figure}
+%%%%%BILD ENDE
+
+Neuronen zwischen zwei Schichten sind durch gewichtete Verbindungen miteinander verknüpft. Die Gewichte aller Verbindungen sind die \qm{Stellschrauben} des neuronalen Netzes. In diesen ist die Fähigkeit der Vorhersage codiert. Im Lernprozess werden diese Gewichte sukzessive geändert.
+
+Ein Neuron besitzt im Allgemeinen mindestens eine Eingabe und genau eine Ausgabe, wobei diese als die Aktivität des Neurons bezeichnet wird. Die Eingaben entsprechen den gewichteten Verbindungen zu den Vorgängerneuronen. Die Summe aller Eingaben wird zusammen mit dem sogenannten Bias (Trainierbarer Parameter pro Neuron, der einen Offset der summerten Eingabe ermöglicht.) über die Aktivierungsfunktion in die Aktivität des Neurons umgewandelt. 
+
+Die Eingabedaten werden dem neuronalen Netz durch den Input-Vektor $\mathrm{x}$ präsentiert und durch das Netz propagiert. Die Aktivitäten der Neuronen in der Output-Layer werden im Output-Vektor $\mathrm{y}$ gesammelt. Dieser Vektor gleicht dem Prognoseergebnis. Im Trainingsprozess wird der Output-Vektor mit dem zu erwartenden Ergebnis verglichen. Der Fehler zwischen Prognose und dem erwarteten Ergebnis wird durch das neuronale Netz zurück propagiert. Dabei werden die Gewichte der Verbindungen so angepasst, dass der ermittelte Fehler verringert wird (sog. Backpropagation). 
+
+RNN
+LSTM, insbesondere Vor und Nachteile
+
 \highlight{ein paar Grundlagen zu neuronalen Netzen; 
 Beschreibung NN allgemein, RNN, LSTM Zellen und warum gut für Prognose}
 
