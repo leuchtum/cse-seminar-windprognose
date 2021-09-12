@@ -386,7 +386,7 @@ In den folgenden Unterkapiteln wird beschrieben woher die letztlich verwendeten 
 
 \section{Datenbasis}\label{section:datenbasis}
 Zur Erstellung des Modells wurde eine Kombination aus gemessenen Daten von Stationen des Deutschen Wetterdienstes (DWD) sowie künstlich generierten Daten verwendet.
-Während die gemessenen Daten die aktuelle Wetterlage an einigen Standorten Deutschlands beinhalten, geben die generierten Daten darüber hinaus weitere Informationen zu saisonalen und täglichen Abhängigkeiten. Die Zusammensetzung des Rohdatzensatzes kann der Abbildung \ref{fig:rohdatensatz} entnommen werden. Nach der in Kapitel \ref{section:Datenaufbereitung} beschriebenen Datenaufbereitung kann dieser Datensatz zum Training des neuronalen Netzes genutzt werden.
+Während die gemessenen Daten die aktuelle Wetterlage an einigen Standorten Deutschlands beinhalten, geben die generierten Daten darüber hinaus weitere Informationen zu saisonalen und täglichen Abhängigkeiten. Die Zusammensetzung des Rohdatzensatzes wird in Abbildung \ref{fig:rohdatensatz} Schamatisch dargestellt. Nach der in Kapitel \ref{section:Datenaufbereitung} beschriebenen Datenaufbereitung kann dieser Datensatz zum Training des neuronalen Netzes genutzt werden.
 
 %%%%%BILD ANFANG
 \begin{figure}[tph]
@@ -399,7 +399,7 @@ Während die gemessenen Daten die aktuelle Wetterlage an einigen Standorten Deut
 %%%%%BILD ENDE
 
 \subsection{Reale Messdaten}\label{section:realeMessdaten}
-Die realen Messdaten werden vom Deutschen Wetterdienst über einen Webserver kostenlos zur Verfügung gestellt. In dieser Arbeit sind die Daten in stündlicher Auflösung von vier Messtationen (Münsingen-Apfelstetten, Stötten, Günzburg und Laupheim) im Ulmer Umkreis zum Einsatz gekommen. Die genaue geographische Lage kann der Abbildung \ref{fig:map} entnommen werden. Der Deutsche Wetterdienst betreibt im Ulmer Umkreis zwar noch weitere Wetterstationen, jedoch messen diese die Windgeschwindigkeit und Windrichtung nicht. Insgesamt umfasst der Datensatz den Zeitraum Anfang 2016 bis Ende 2021. Davon sind jedoch rund $20\%$ Datenlücken (Genaue Darstellung siehe Heatmap \ref{fig:heatmap}). Diese werden in Kapitel \ref{section:Datenlücken} genauer beleuchtet. 
+Die realen Messdaten werden vom Deutschen Wetterdienst über einen Webserver kostenlos zur Verfügung gestellt. In dieser Arbeit sind die Daten in stündlicher Auflösung von vier Messtationen (Münsingen-Apfelstetten, Stötten, Günzburg und Laupheim) im Ulmer Umkreis zum Einsatz gekommen. Die geographische Lage der Messtationen kann in Abbildung \ref{fig:map} eingesehen werden. Der Deutsche Wetterdienst betreibt im Ulmer Umkreis noch weitere Wetterstationen, welche jedoch nicht die Windgeschwindigkeit und Windrichtung messen. Insgesamt umfasst der Datensatz den Zeitraum Anfang 2016 bis Ende 2021. Davon sind jedoch rund $20\%$ Datenlücken (Genaue Darstellung siehe Heatmap \ref{fig:heatmap}). Diese werden in Kapitel \ref{section:Datenlücken} genauer beschrieben. 
 
 %%%%%BILD ANFANG
 \begin{figure}[tph]
@@ -442,9 +442,9 @@ Zur Prognose der Windgeschwindigkeit und Windrichtung können neben deren selbst
 \end{table}
 %%%%%TABELLE ENDE
 
-Um einen tieferen Einblick in das Verhalten des Windes an der jeweiligen Messstation zu erhalten, bieten sich Windrosen zur Visualisierung an. Dabei wird die Häufigkeit der Windgeschwindigkeit in Abhängigkeit der Windrichtung radial dargestellt. Der Abbildung \ref{fig:windroses} können die Windrosen für die vier ausgewählten Messstationen entnommen werden. Wie in den südlichen Regionen Deutschlands zu erwarten, ist die vorherschende Windrichtung West bis Südwest. 
+Um einen tieferen Einblick in das Verhalten des Windes an der jeweiligen Messstation zu erhalten, bieten sich Windrosen zur Visualisierung an. Dabei wird die Häufigkeit der Windgeschwindigkeit in Abhängigkeit der Windrichtung radial dargestellt. Abbildung \ref{fig:windroses} können die Windrosen für die vier ausgewählten Messstationen entnommen werden. Wie in den südlichen Regionen Deutschlands zu erwarten, ist die vorherrschende Windrichtung West bis Südwest. 
 
-Bei detaillierter Analyse fällt jedoch auf, dass der Wind an der Messstation Münsingen- Apfelstetten besonders bei leichtem Wind sehr volatil ist. Der Grund hierfür könnte in der Tatsache begründet sein, dass sich die Messstation in einem flachen Tal mit Nord-Südlicher Ausrichtung befindet. Des Weiteren ist zu erkennen, dass unter den vier Messstationen in Stötten die stärksten Winde auftreten. In dieser Arbeit wird die Windgeschwindigkeit für die Messstation in Günzburg prognostiziert. 
+Jedoch fällt auf, dass der Wind an der Messstation Münsingen-Apfelstetten besonders bei leichtem Wind sehr volatil ist. Der Grund hierfür könnte in der Tatsache begründet sein, dass sich die Messstation in einem flachen Tal mit Nord-Südlicher Ausrichtung befindet. Des Weiteren ist zu erkennen, dass unter den vier Messstationen in Stötten die stärksten Winde auftreten. In dieser Arbeit wird die Windgeschwindigkeit für die Messstation in Günzburg prognostiziert. 
 
 %%%%%BILD ANFANG
 \begin{figure}[tph]
@@ -546,23 +546,23 @@ Die Datenaufbereitung ist häufig eines der aufwendigeren Teile eines Machine-Le
 
 \subsection{Interpolation über Datenlücken}\label{section:Datenlücken}
 
-In realen Messsystemen kann es immer wieder zu Ausfällen kommen (z.B. vereistes Anemometer oder verschmutzte Sensoren). Auch kann es bei der Übertragung oder Speicherung der Daten zu Fehlern kommen. Der Deutsche Wetterdienst hat daher ein mehrstüfiges Validationssystem und kennzeichnet Fehler entsprechend. In den Rohdaten (siehe Kap. \ref{section:datenbasis}) ist dies meist als Wert $-999$ gekennzeichnet. Es kann sich also darauf verlassen werden, dass die verbleibenden \qm{wahren} Daten glaubhaft sind. 
+In realen Messsystemen kann es häufig zu Ausfällen kommen, was beispielsweise die Folge eines vereisten Anemometers oder verschmutzter Sensoren ist. Auch kann es bei der Übertragung oder Speicherung der Daten zu Fehlern kommen. Der Deutsche Wetterdienst hat daher ein mehrstufiges Validierungssystem und kennzeichnet Fehler entsprechend. In den Rohdaten (siehe Kap. \ref{section:datenbasis}) ist dies meist als Wert $-999$ gekennzeichnet. Es kann sich also darauf verlassen werden, dass die verbleibenden Daten fehlerfrei sind. 
 
-Datenlücken müssen vor dem Training mit dem neuronalen Netz entfernt werden. In Abhängigkeit der Länge des Zeitraums $\Delta t$, über den sich eine Datenlücke erstreckt, wird die Datenlücke entfernt:
+Datenlücken müssen vor dem Training des neuronalen Netzes entfernt werden. In Abhängigkeit der Länge des Zeitraums $\Delta t$, über den sich eine Datenlücke erstreckt, wird entschieden wie mit der Datenlücke umgegangen wird:
 
 \begin{itemize}
 	\item $\Delta t \leq 4h$
 	
-	Tritt eine kurze Datenlücke auf, so werden die fehlenden Werte durch eine lineare Interpolation anhand der direkt umschließenden wahren Werte ergänzt.
+	Tritt eine kurze Datenlücke auf, so werden die fehlenden Werte durch eine lineare Interpolation anhand der direkt umschließenden Werte ergänzt. Die Grenze von 4 Stunden wurde festgelegt und könnte jederzeit erweitert oder verringert werden.
 
 	\item $\Delta t > 4h$
 
-	Eine Interpolation längerer Daten ist nicht mehr sinnhaft. Daher wird der Datensatz, wie in Abbildung \ref{fig:preprocessing} im vierten Schritt verdeutlicht, entlang großer Datenlücken aufgeteilt.
+	Eine Interpolation längerer Datenlücken ist nicht mehr sinnhaft, da die zwischenzeitliche Wetterlage mit einer Interpolation sicherlich fehlerhaft werden würde. Daher werden diese Datenlücken entfernt und der Datensatz, wie in Abbildung \ref{fig:preprocessing} im vierten Schritt verdeutlicht, entlang dieser großen Datenlücken aufgeteilt.
 
 \end{itemize}
 
 \subsection{Winddaten als Vektoren}\label{section:Winddaten_vec}
-Die Windmessung erfolgt (von modernen Laser- oder Schallmessungen abgesehen) üblicherweise mithilfe eines Schalenanemometers und einer Windfahne. Zu jedem Messzeitpunkt werden also zwei Werte aufgenommen. Die Windgeschwindigkeit $v$ wird in $m/s$ gemessen. Die Windrichtung $\varphi$ wird typischer Weise in Grad angegeben, es gilt also $\varphi \in [0,360)$. Norden wird dabei mit $\varphi_{north} = 0^\circ$ gewählt. Dieses $(v,\varphi)$-Tupel lässt sich als Polarkoordinate interpretieren. Jedoch tritt hier das in Kapitel \ref{section:circ_data} beschriebene Problem der zirkulären Daten auf, da $\varphi_{north} = 0^\circ = 360^\circ$ gilt.
+Die Windmessung erfolgt, von modernen Laser- oder Schallmessungen abgesehen, üblicherweise mithilfe eines Schalenanemometers und einer Windfahne. Zu jedem Messzeitpunkt werden also zwei Werte aufgenommen. Die Windgeschwindigkeit $v$ wird in $m/s$ gemessen. Die Windrichtung $\varphi$ wird typischerweise in Grad angegeben, es gilt also $\varphi \in [0,360)$. Norden wird dabei mit $\varphi_{north} = 0^\circ$ gewählt. Dieses $(v,\varphi)$-Tupel lässt sich als Polarkoordinate interpretieren. Jedoch tritt hier das in Kapitel \ref{section:circ_data} beschriebene Problem der zirkulären Daten auf, da $\varphi_{north} = 0^\circ = 360^\circ$ gilt.
 
 Es gilt zu belegen, dass sich dieses Problem umgehen lässt, indem der Wind nicht in polaren sondern kartesischen Koordinaten dargestellt wird. Der Windvektor, der durch das $(v,\varphi)$-Tupel beschrieben ist, wird so in eine $v_x$ und eine $v_y$ Komponente zerlegt. Dieses Vorgehen ist in Abbildung \ref{fig:pol2cart} skizziert.
 
@@ -620,9 +620,9 @@ Zudem kann es passieren, dass eine Größe mit extrem großem Wertebereich gegen
 \section{Generierung der Trainingsbeispiele}
 Nachdem die Rohdaten aufgearbeitet worden sind, gilt es nun tatsächliche Trainingsbeispiele (Samples) zu generieren. Dieser Prozess wird in Abbildung \ref{fig:sampling} dargestellt, wobei die Grafik als Fortsetzung von Abbildung \ref{fig:preprocessing} verstanden werden kann. Das Ziel des Samplings ist die Generierung eins Pools aus Trainingsbeispielen, womit das neuronale Netz angelernt werden kann.
 
-Zunächst müssen die Größen der Moving-Windows (siehe Abb. \ref{fig:sampling}) festgelegt werden. Bei den Inputdaten gibt die Größe $n$ des Moving-Windows an, wieviele historische Zeitschritte für die Prognose genutzt werden (im Folgenden Prognosehistorie genannt). Das heißt, bei einer Prognose zum Zeitpunkt $t_0$ werden die Daten zu den Zeitpunkten $t_{n-1}, \dots, t_0$ als Inputdaten verwendet. Die Größe $m$ des Moving-Window auf den Labeldaten gibt den Prognosehorizont an. Das Ziel ist es also bei einer Prognose zum Zeitpunkt $t_0$ die Windgeschwindigkeiten und Windrichtungen zu den Zeitpunkten $t_1, \dots, t_m$ vorherzusagen. In dieser Arbeit wurde für $n=144$ und für $m=12$ gewählt, die Prognosehistorie beträgt also sechs Tage und der Prognosehorizont zwölf Stunden. Diese Werte wurden unter Berücksichtigung der Literaturrecherche gewählt.
+Zunächst müssen die Größen der Moving-Windows (siehe Abb. \ref{fig:sampling}) festgelegt werden. Bei den Inputdaten gibt die Größe $n$ des Moving-Windows an, wieviele historische Zeitschritte für die Prognose genutzt werden (im Folgenden Prognosehistorie genannt). Das heißt, bei einer Prognose zum Zeitpunkt $t_0$ werden die Daten zu den Zeitpunkten $t_{n-1}, \dots, t_0$ als Inputdaten verwendet. Die Größe $m$ des Moving-Window auf den Labeldaten gibt den Prognosehorizont an. Das Ziel ist es also bei einer Prognose zum Zeitpunkt $t_0$ die Windgeschwindigkeiten und Windrichtungen zu den Zeitpunkten $t_1, \dots, t_m$ vorherzusagen. In dieser Arbeit wurde für $n=144$ und für $m=12$ gewählt, die Prognosehistorie beträgt also sechs Tage und der Prognosehorizont zwölf Stunden. Diese Werte wurden unter Berücksichtigung der Literaturrecherche, siehe Kapitel \ref{section:literatur}, gewählt.
 
-Das Ergebnis der Datenaufbereitung, beschrieben im Kapitel \ref{section:Datenaufbereitung}, sind datenlückenfreie Fragmentpaare. Ein solches Fragmentpaar besteht aus einem Input- und einem Labeldatensatz. Darüber werden nun die im vorherigen Schritt definierten Moving-Windows \qm{geschoben}. Die Schrittweite wird dabei kleinstmöglich gewählt, so entstehen am meisten Samples. Das Sampling wird auf jedem Fragmentpaar angewandt.
+Das Ergebnis der Datenaufbereitung, beschrieben im Kapitel \ref{section:Datenaufbereitung}, sind datenlückenfreie Fragmentpaare. Ein solches Fragmentpaar besteht aus einem Input- und einem Labeldatensatz. Darüber werden nun die im vorherigen Schritt definierten Moving-Windows \qm{geschoben}. Die Schrittweite wird dabei kleinstmöglich gewählt, so entstehen die meisten Samples. Das Sampling wird auf jedem Fragmentpaar angewandt.
 
 %%%%%BILD ANFANG
 \begin{figure}[tph]
@@ -702,7 +702,7 @@ Um den Aufwand in einem akzeptablen Maß zu halten, haben wir einige Parameter v
 
 
 \section{Ergebnisse}\label{section:ergebnisse_training}
-Insgesamt wurden 71 neuronale Netze mit jeweils unterschiedlichen Konfigurationen trainiert. Während des Trainings wurde das Modell zwischengespeichert, wenn sich die Prognosegüte nach einer Epoche verbessert hat. Das Training wurde nach 10 Epochen, in denen sich die Güte nicht verbessert hat, abgebrochen. Trainiert wurde stets mit dem Datensatz, bei dem der Wind in eine x- und y-Komponente umgewandelt worden ist. Die nachfolgende Tabelle fässt das Training und die Prognosegüte zusammen:
+Insgesamt wurden 71 neuronale Netze mit jeweils unterschiedlichen Konfigurationen trainiert. Während des Trainings wurde das Modell zwischengespeichert, wenn sich die Prognosegüte nach einer Epoche verbessert hat. Das Training wurde nach 10 Epochen, in denen sich die Güte nicht verbessert hat, abgebrochen. Trainiert wurde stets mit dem Datensatz, bei dem der Wind in eine x- und y-Komponente umgewandelt worden ist. Tabelle \ref{tab:ergebnisse} fasst das Training und die Prognosegüte zusammen:
 
 \begin{table}[ht]
 	\centering
@@ -725,6 +725,7 @@ Insgesamt wurden 71 neuronale Netze mit jeweils unterschiedlichen Konfiguratione
 	IN – LSTM(x) – DROP(d) – DENSE(x) – DROP(d) – DENSE(y) – OUT & 9 & 16-128 & 12-64 & 0,3 & 0,8643 & 1,3022\\
 	\hline
 	\end{tabular}
+	\label{tab:ergebnisse}
 \end{table}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -771,9 +772,9 @@ In den Abbildungen \ref{fig:barplot_mae} und \ref{fig:barplot_mse} ist der MAE b
 \begin{itemize}
 	\item Werden die Fehlermaße für die Datensätze \qm{Wind vektorisiert, alle Messstationen} und \qm{Wind nicht vektorisiert, alle Messstationen} miteinander verglichen, so fällt auf, dass die Windgeschwindigkeit deutlich besser prognostiziert werden kann, wenn die Winddaten vektorisiert vorliegen. 
 	
-	Für die Prognose der Windrichtung kann kein intuitives Ergebnis aus den Grafiken entnommen werden. Zwar ist der MAE der vektorisierten Winddaten geringfügig kleiner als für die nicht vektorisierten, der MSE für die vektorisierten Winddaten hingegen ist größer. Hierbei muss jedoch beachtet werden, dass das neuronale Netz im Falle der vektorisierten Winddaten Informationen über die zirkulären Eigenschaften besitzt. So ist beispielsweise eine Prognose von $10^\circ$ anstatt $350^\circ$ mit einem Delta von $20^\circ$ relativ gut, die Fehlermaße interpretieren dies jedoch als ein Delta von $340^\circ$. Das deutlich höhere Fehlermaß MSE für den Datensatz \qm{Wind vektorisiert, alle Messstationen} gegenüber dem Datensatz \qm{Wind nicht vektorisiert, alle Messstationen} kann sich also über die hohe Sensitivität für Ausreißer beim MSE erklären lassen.
+	Für die Prognose der Windrichtung kann kein intuitives Ergebnis aus den Grafiken entnommen werden. Zwar ist der MAE der vektorisierten Winddaten geringfügig kleiner als für die nicht vektorisierten, der MSE für die vektorisierten Winddaten ist hingegen größer. Hierbei muss jedoch beachtet werden, dass das neuronale Netz im Falle der vektorisierten Winddaten Informationen über die zirkulären Eigenschaften besitzt. So ist beispielsweise eine Prognose von $10^\circ$ anstatt $350^\circ$ mit einem Delta von $20^\circ$ relativ gut. Die Fehlermaße interpretieren dies jedoch als ein Delta von $340^\circ$. Das deutlich höhere Fehlermaß MSE für den Datensatz \qm{Wind vektorisiert, alle Messstationen} gegenüber dem Datensatz \qm{Wind nicht vektorisiert, alle Messstationen} kann sich also über die hohe Sensitivität für Ausreißer beim MSE erklären lassen.
 
-	Idealer Weise wäre also ein Fehlermaß, welches die Zirkularität und somit nur die tatsächliche Differenz  berücksichtigt. Dies wäre über den Sinus und Kosinus möglich. Da dieses Fehlermaß nicht implementiert wurde, muss für die Beurteilung der Prognosegüte der Windrichtung auf den etwas robusteren MAE zurückgegriffen werden.
+	Ideal wäre also ein Fehlermaß, welches die Zirkularität und somit nur die tatsächliche Differenz berücksichtigt. Dies wäre über den Sinus und Kosinus möglich. Da dieses Fehlermaß nicht implementiert wurde, muss für die Beurteilung der Prognosegüte der Windrichtung auf den etwas robusteren MAE zurückgegriffen werden.
 
 	\item Bei dem Vergleich beider Fehlermaße für die Datensätze \qm{Wind vektorisiert, alle Messstationen} und \qm{Wind vektorisiert, nur Messstation Günzburg} fällt auf, dass die Windgeschwindigkeit besser prognostiziert werden kann, wenn die Daten aller Messstationen berücksichtigt werden. 
 	
@@ -810,7 +811,7 @@ In dieser Arbeit wurde ein Prognosehorizont von zwölf Stunden gewählt. Trägt 
 Vergleicht man die drei Grafiken, so lassen sich folgende Schlüsse ziehen:
 
 \begin{itemize}
-	\item Je ferner die Vorhersage in der Zukunft liegt, desto größer wird Fehler der Prognose sowohl für die Windgeschwindigkeit als auch für die Windrichtung. Lediglich der Fehler der Windgeschwindigkeit für den Datensatz \qm{Wind nicht vektorisiert, alle Messstationen} ist im Vergleich auch für unmittelbare Prognosen hoch.
+	\item Je ferner die Vorhersage in der Zukunft liegt, desto größer wird der Fehler der Prognose sowohl für die Windgeschwindigkeit als auch für die Windrichtung. Lediglich der Fehler der Windgeschwindigkeit für den Datensatz \qm{Wind nicht vektorisiert, alle Messstationen} ist im Vergleich auch für unmittelbare Prognosen hoch.
 	\item Sehr große Ausreißer ($MAE > 6$) für die Prognose der Windgeschwindigkeit treten fast ausschließlich für den Datensatz \qm{Wind vektorisiert, nur Messstation Günzburg} auf. Es scheint also als wäre die Prognose nicht nur besser, sondern auch robuster wenn alle Messstationen genutzt werden.
 	\item In 75\% der Fälle (Quantil 3, Oberkante Boxplot) ist die Abweichung zwischen der prognostizierten und wahren Windgeschwindigkeit kleiner als $1.8 m/s$. In 50\% der Fälle (Median, Strich in Boxplot) ist der Fehler bereits unter $1 m/s$.
 	\item Nur für $t_1$ und $t_2$ und nur bei vektorisierten Winddaten ist der Fehler in 75\% aller Fälle für die prognostizierte Windgeschwindigkeit kleiner als $45^\circ$ (\qm{akzeptabler Fehler}, entspricht dem Unterschied zwischen Wind aus Süd und Wind aus Südwest)
@@ -848,7 +849,7 @@ Vergleicht man die drei Grafiken, so lassen sich folgende Schlüsse ziehen:
 
 \section{Diskussion der kalendarischen Features}
 
-Bei der Präsentation dieser Arbeit wurde die Sinnhaftigkeit der kalendarischen Daten als Features hinterfragt, da Saisonalitäten in den Winddaten und in der Temperatur selbst zu erkennen sind. Daher wurde aus dem Datensatz \qm{Wind vektorisiert, alle Messstationen} ein vierter Datensatz erzeugt, in dem die Features \textit{kalendarischer Tageswert} $cal_{day}$ und \textit{kalendarischer Saisonalwert} $cal_{seas}$ auf null gesetzt wurden. Zu jedem Zeitpunkt gilt also $cal_{day} = cal_{seas} = 0$. Das neuronale Netz kann hieraus keine Information ziehen und die Gewichte zu den jeweiligen Neuronen werden im Trainingsprozess \qm{genullt}.
+Bei der Präsentation dieser Arbeit wurde die Sinnhaftigkeit der kalendarischen Daten als Feature hinterfragt, da Saisonalitäten in den Winddaten und in der Temperatur selbst zu erkennen sind. Daher wurde aus dem Datensatz \qm{Wind vektorisiert, alle Messstationen} ein vierter Datensatz erzeugt, in dem die Features \textit{kalendarischer Tageswert} $cal_{day}$ und \textit{kalendarischer Saisonalwert} $cal_{seas}$ auf null gesetzt wurden. Zu jedem Zeitpunkt gilt also $cal_{day} = cal_{seas} = 0$. Das neuronale Netz kann hieraus keine Information ziehen und die Gewichte zu den jeweiligen Neuronen werden im Trainingsprozess \qm{genullt}.
 
 Vergleicht man nun die Prognosegüte für den Datensatz \qm{Wind vektorisiert, alle Messstationen} mit dem eben beschriebenen, so stellt man fest, dass die kalendarischen Daten durchaus wertvolle Informationen beinhalten. Der MAE verschlechtert sich durch die fehlenden kalendarischen Informationen von $0.8576$ auf $0.8911$, der MSE von $1.2807$ auf $1.3862$. Dies entspricht einer relativen Verschlechterung von $3.9\%$ bzw. $8.2\%$.
 
