@@ -836,8 +836,12 @@ Vergleicht man die drei Grafiken, so lassen sich folgende Schlüsse ziehen:
 \end{figure}
 %%%%%BILD ENDE
 
-\section{Diskussion der gewählten Features}
-\highlight{Wichtig zu erwähnen, dass Zeitkomponente möglicherweise nicht notwendig. Sagen, dass dieser weggelassen werden sollte und Ergebnis betrachtet werden sollte.}
+\section{Diskussion der kalendarischen Features}
+
+Bei der Präsentation dieser Arbeit wurde die Sinnhaftigkeit der kalendarischen Daten als Features hinterfragt, da Saisonalitäten in den Winddaten und in der Temperatur selbst zu erkennen sind. Daher wurde aus dem Datensatz \qm{Wind vektorisiert, alle Messstationen} ein vierter Datensatz erzeugt, in dem die Features \textit{kalendarischer Tageswert} $cal_{day}$ und \textit{kalendarischer Saisonalwert} $cal_{seas}$ auf null gesetzt wurden. Zu jedem Zeitpunkt gilt also $cal_{day} = cal_{seas} = 0$. Das neuronale Netz kann hieraus keine Information ziehen und die Gewichte zu den jeweiligen Neuronen werden im Trainingsprozess \qm{genullt}.
+
+Vergleicht man nun die Prognosegüte für den Datensatz \qm{Wind vektorisiert, alle Messstationen} mit dem eben beschriebenen, so stellt man fest, dass die kalendarischen Daten durchaus wertvolle Informationen beinhalten. Der MAE verschlechtert sich durch die fehlenden kalendarischen Informationen von $0.8576$ auf $0.8911$, der MSE von $1.2807$ auf $1.3862$. Dies entspricht einer relativen Verschlechterung von $3.9\%$ bzw. $8.2\%$.
+
 
 \section{Weiterentwicklung des Modells}
 

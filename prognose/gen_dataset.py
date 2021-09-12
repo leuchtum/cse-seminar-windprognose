@@ -20,7 +20,7 @@ if __name__ == '__main__':
     INTERPOLATE = 4
     SPLIT = (.05, .3, .65)  # TEST, VAL, TRAIN
     
-    POL = "s" # xy, sd, s for wind xy, speed & dir, speed only
+    POL = "xy" # xy, sd, s for wind xy, speed & dir, speed only
     if POL == "xy":
         LABEL_COLUMNS = ["WX_01886", "WY_01886"]
     elif POL == "sd":
@@ -42,7 +42,12 @@ if __name__ == '__main__':
     df_dwd = dwd.get_data(drop_before=START, drop_after=END)
     cal = MLForecast.sources.CalendricalDataHourly(start=START, end=END)
     df_cal = cal.get_data()
-
+    
+    ZEROTIME = True
+    if ZEROTIME:
+        df_cal[df_cal.columns] = 0
+        INDENT += "_ZEROTIME"
+        
     df = pd.concat([df_dwd, df_cal], axis=1)
 
     print("INTERPOLATE AND POL2CART")
@@ -89,7 +94,7 @@ if __name__ == '__main__':
             
     def save_other_data(obj, name):
         with open(get_name(name, ".pkl"), 'wb') as f:
-            pickle.dump(obj, f, protocol=4)
+            pickle.dump(obj, f)#, protocol=4)
       
     save_other_data(df_dwd, "dwddf")      
     save_other_data(df, "rootdf")
