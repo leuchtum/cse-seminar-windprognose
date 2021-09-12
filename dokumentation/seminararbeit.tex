@@ -478,7 +478,7 @@ Die Darstellung von zeitlichen Daten ist jedoch zyklisch. Sowohl Sekunden, Minut
 
 Anzumerken ist hierbei, dass diese Formeln keine ideale Repräsentation der Zusammenhänge zwischen einer zeitlichen Komponente mit der Wetterlage darstellt. Beispielsweise ist der wärmste Zeitpunkt eher im August, also einen Monat später, anzusiedeln. Die Tageshöchsttemperaturen weichen sogar noch stärker ab. In den Wintermonaten liegen diese zwischen 13 und 14 Uhr und in den Sommermonaten sogar erst zwischen 16 und 17 Uhr. \cite{2017__WarumIstEs}
 
-\highlight{Außerdem ist z.B. $dal_{day}(HOD=6Uhr) = dal_{day}(HOD=18Uhr)$}
+Des Weiteren ist die Codierung kalendarischer Daten über diese Methode nicht eindeutig, so gilt z.B. $dal_{day}(HOD=6Uhr) = dal_{day}(HOD=18Uhr)$. Abhilfe könnte hier eine zweite um $\pi/2$ bzw. $6h$ verschobene Sinusfunktion leisten, wodurch der Zeitpunkt eindeutig zugeordnet werden kann. Dies wurde in dieser Arbeit jedoch nicht implementiert.
 
 \subsection{Analyse der Datenbasis}
 \highlight{Korrelationskoeffizient fand Schlüter nicht so gut}
