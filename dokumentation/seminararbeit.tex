@@ -480,26 +480,26 @@ Anzumerken ist hierbei, dass diese Formeln keine ideale Repräsentation der Zusa
 
 Des Weiteren ist die Codierung kalendarischer Daten über diese Methode nicht eindeutig, so gilt z.B. $dal_{day}(HOD=6Uhr) = dal_{day}(HOD=18Uhr)$. Abhilfe könnte hier eine zweite um $\pi/2$ bzw. $6h$ verschobene Sinusfunktion leisten, wodurch der Zeitpunkt eindeutig zugeordnet werden kann. Dies wurde in dieser Arbeit jedoch nicht implementiert.
 
-\subsection{Analyse der Datenbasis}
-\highlight{Korrelationskoeffizient fand Schlüter nicht so gut}
-Der Korrelationskoeffizient gibt Aufschluss darüber, ob zwischen zwei größen ein linearer Zusammenhang besteht. Er kann als Entscheidungshilfe zur Auswahl der Input-Größen für das neuronale Netz dienen. In Abbildung \ref{fig:corr} wird die Korrelation zwischen den Größen relative Luftfeuchte ($RH$), Sonnenscheindauer ($SD$), Temperatur ($T$), Windgeschwindigkeit ($v$), Windrichtung ($\varphi$) sowie die in Kapitel \ref{section:gen_daten} beschriebenen kalendarischen Daten $cal_{day}$ und $cal_{seas}$ dargestellt. 
+% \subsection{Analyse der Datenbasis}
+% \highlight{Korrelationskoeffizient fand Schlüter nicht so gut}
+% Der Korrelationskoeffizient gibt Aufschluss darüber, ob zwischen zwei größen ein linearer Zusammenhang besteht. Er kann als Entscheidungshilfe zur Auswahl der Input-Größen für das neuronale Netz dienen. In Abbildung \ref{fig:corr} wird die Korrelation zwischen den Größen relative Luftfeuchte ($RH$), Sonnenscheindauer ($SD$), Temperatur ($T$), Windgeschwindigkeit ($v$), Windrichtung ($\varphi$) sowie die in Kapitel \ref{section:gen_daten} beschriebenen kalendarischen Daten $cal_{day}$ und $cal_{seas}$ dargestellt. 
 
 
 
-Da die Größen Windstärke und Windrichtung prognostiziert werden sollen, sind die Korrelationen zwischen dieser und anderer Größen natürlich von besonderem Interesse. Aus Abbildung \ref{fig:corr} lässt sich erkennen, dass der Luftdruck in einem Zusammenhang mit der Windgeschwindigkeit steht (Fällt $RH$ steigt $v$). Ebenso lässt sich aus der Korrelation zwischen Windgeschwindigkeit und der Temperatur bzw. dem kalendarischen Saisonalwert $cal_{seas}$ eine erhöhte Windgeschwindigkeit im Winter ablesen. Der kalendarische Tageswert $cal_{day}$ scheint jedoch nicht in einem linearen Zusammenhang mit der Windgeschwindigkeit zu stehen.
+% Da die Größen Windstärke und Windrichtung prognostiziert werden sollen, sind die Korrelationen zwischen dieser und anderer Größen natürlich von besonderem Interesse. Aus Abbildung \ref{fig:corr} lässt sich erkennen, dass der Luftdruck in einem Zusammenhang mit der Windgeschwindigkeit steht (Fällt $RH$ steigt $v$). Ebenso lässt sich aus der Korrelation zwischen Windgeschwindigkeit und der Temperatur bzw. dem kalendarischen Saisonalwert $cal_{seas}$ eine erhöhte Windgeschwindigkeit im Winter ablesen. Der kalendarische Tageswert $cal_{day}$ scheint jedoch nicht in einem linearen Zusammenhang mit der Windgeschwindigkeit zu stehen.
 
-\bigskip
-An dieser Stelle ist es wichtig zu erwähnen, dass der Korrelationskoeffizient nur einen linearen Zusammenhang zwischen zwei größen abbildet. Komplexere Zusammenhänge werden nicht erkannt \cite{2020_Ranjan_EstimatingNonlinearCorrelation}. Es ist also möglich, dass eine Größe für die Prognose wertvolle Information enthält, jedoch nicht mit der Windgeschwindigkeit korreliert.
+% \bigskip
+% An dieser Stelle ist es wichtig zu erwähnen, dass der Korrelationskoeffizient nur einen linearen Zusammenhang zwischen zwei größen abbildet. Komplexere Zusammenhänge werden nicht erkannt \cite{2020_Ranjan_EstimatingNonlinearCorrelation}. Es ist also möglich, dass eine Größe für die Prognose wertvolle Information enthält, jedoch nicht mit der Windgeschwindigkeit korreliert.
 
-%%%%%BILD ANFANG
-\begin{figure}[tph]
-	\begin{center}
-		\includegraphics[]{./images/corr.pdf}
-		\caption{Korrelationskoeffizienten für die Messdaten der Station in Stötten \highlight{(Ändern zu Günzburg, da diese prognostiziert wird)} sowie kalendarische Daten im Zeitraum 01.01.2016 bis 31.12.2020.}
-		\label{fig:corr}
-	\end{center}
-\end{figure}
-%%%%%BILD ENDE
+% %%%%%BILD ANFANG
+% \begin{figure}[tph]
+% 	\begin{center}
+% 		\includegraphics[]{./images/corr.pdf}
+% 		\caption{Korrelationskoeffizienten für die Messdaten der Station in Stötten \highlight{(Ändern zu Günzburg, da diese prognostiziert wird)} sowie kalendarische Daten im Zeitraum 01.01.2016 bis 31.12.2020.}
+% 		\label{fig:corr}
+% 	\end{center}
+% \end{figure}
+% %%%%%BILD ENDE
 
 \section{Datenaufbereitung}\label{section:Datenaufbereitung}
 Die Datenaufbereitung ist häufig eines der aufwendigeren Teile eines Machine-Learning Projektes. Daher wird in dieser Arbeit auf diesen Teil vertieft eingegangen. Abbildung \ref{fig:preprocessing} skizziert den Ablauf der Datenaufbereitung. Dabei werden die folgenden fünf Schritte durchlaufen, die in den nachfolgenden Kapiteln detaillierter beschrieben werden:
