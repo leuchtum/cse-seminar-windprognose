@@ -181,9 +181,7 @@ bibliography=numbered
 	\vspace{1cm}
 	\textbf{Abgabedatum:}
 
-	
-\highlight{tba}
-	%\today 
+	\today 
             
     
 \end{titlepage}
@@ -224,8 +222,6 @@ Windgeschwindigkeit und -richtung eine bis 24 Stunden im Voraus vorhersagen kann
 meteorologischen Daten auch eine örtliche Diskretisierung einfließen, welche in dieser Arbeit validiert werden soll.
 
 \section{Einordnung in die Literatur}\label{section:literatur}
-
-\highlight{MFSTC in Ausblick, Erklären warum Daten der Standorte einfach übergeben (wenige Standorte?);(Ausblick kleinere Intervalle der Daten?), Ausblick statt RNN CNN??\bigskip}
 
 In der bestehenden Literatur im Bereich der Windgeschwindigkeits-, beziehungsweise Wettervorhersage, ist eine Entfernung von 
 deterministischen Modellen \cite{1963_Lorenz_DeterministicNonperiodicFlow} hin zu Zeitreihenanalyse auf Basis historischer Messdaten erkennbar. 
@@ -480,8 +476,7 @@ Die Darstellung von zeitlichen Daten ist jedoch zyklisch. Sowohl Sekunden, Minut
 
 \end{itemize}
 
-Anzumerken ist hierbei, dass diese Formeln keine ideale Repräsentation der Zusammenhänge zwischen einer zeitlichen Komponente mit der Wetterlage darstellt. Beispielsweise ist der wärmste Zeitpunkt eher im August, also einen Monat später, anzusiedeln. Die Tageshöchsttemperaturen weichen sogar noch stärker ab. In den Wintermonaten liegen diese zwischen 13 und 14 Uhr und in den Sommermonaten sogar erst zwischen 16 und 17 Uhr.
-\highlight{quelle: https://www.wissenschaft.de/erde-klima/warum-ist-es-nicht-mittags-am-heissesten/}
+Anzumerken ist hierbei, dass diese Formeln keine ideale Repräsentation der Zusammenhänge zwischen einer zeitlichen Komponente mit der Wetterlage darstellt. Beispielsweise ist der wärmste Zeitpunkt eher im August, also einen Monat später, anzusiedeln. Die Tageshöchsttemperaturen weichen sogar noch stärker ab. In den Wintermonaten liegen diese zwischen 13 und 14 Uhr und in den Sommermonaten sogar erst zwischen 16 und 17 Uhr. \cite{2017__WarumIstEs}
 
 \highlight{Außerdem ist z.B. $dal_{day}(HOD=6Uhr) = dal_{day}(HOD=18Uhr)$}
 
@@ -491,7 +486,7 @@ Der Korrelationskoeffizient gibt Aufschluss darüber, ob zwischen zwei größen 
 
 
 
-Da die Größen Windstärke und \highlight{Windrichtung?} prognostiziert werden sollen, sind die Korrelationen zwischen dieser und anderer Größen natürlich von besonderem Interesse. Aus Abbildung \ref{fig:corr} lässt sich erkennen, dass der Luftdruck in einem Zusammenhang mit der Windgeschwindigkeit steht (Fällt $RH$ steigt $v$). Ebenso lässt sich aus der Korrelation zwischen Windgeschwindigkeit und der Temperatur bzw. dem kalendarischen Saisonalwert $cal_{seas}$ eine erhöhte Windgeschwindigkeit im Winter ablesen. Der kalendarische Tageswert $cal_{day}$ scheint jedoch nicht in einem linearen Zusammenhang mit der Windgeschwindigkeit zu stehen.
+Da die Größen Windstärke und Windrichtung prognostiziert werden sollen, sind die Korrelationen zwischen dieser und anderer Größen natürlich von besonderem Interesse. Aus Abbildung \ref{fig:corr} lässt sich erkennen, dass der Luftdruck in einem Zusammenhang mit der Windgeschwindigkeit steht (Fällt $RH$ steigt $v$). Ebenso lässt sich aus der Korrelation zwischen Windgeschwindigkeit und der Temperatur bzw. dem kalendarischen Saisonalwert $cal_{seas}$ eine erhöhte Windgeschwindigkeit im Winter ablesen. Der kalendarische Tageswert $cal_{day}$ scheint jedoch nicht in einem linearen Zusammenhang mit der Windgeschwindigkeit zu stehen.
 
 \bigskip
 An dieser Stelle ist es wichtig zu erwähnen, dass der Korrelationskoeffizient nur einen linearen Zusammenhang zwischen zwei größen abbildet. Komplexere Zusammenhänge werden nicht erkannt \cite{2020_Ranjan_EstimatingNonlinearCorrelation}. Es ist also möglich, dass eine Größe für die Prognose wertvolle Information enthält, jedoch nicht mit der Windgeschwindigkeit korreliert.
@@ -506,8 +501,6 @@ An dieser Stelle ist es wichtig zu erwähnen, dass der Korrelationskoeffizient n
 \end{figure}
 %%%%%BILD ENDE
 
-\highlight{Grafikidee: Windgeschwindigkeit über Uhrzeit}
-
 \section{Datenaufbereitung}\label{section:Datenaufbereitung}
 Die Datenaufbereitung ist häufig eines der aufwendigeren Teile eines Machine-Learning Projektes. Daher wird in dieser Arbeit auf diesen Teil vertieft eingegangen. Abbildung \ref{fig:preprocessing} skizziert den Ablauf der Datenaufbereitung. Dabei werden die folgenden fünf Schritte durchlaufen, die in den nachfolgenden Kapiteln detaillierter beschrieben werden:
 
@@ -515,7 +508,7 @@ Die Datenaufbereitung ist häufig eines der aufwendigeren Teile eines Machine-Le
 \begin{figure}[tph]
 	\begin{center}
 		\includegraphics[]{./images/preprocessing.pdf}
-		\caption{Ablauf der Datenaufbereitung. \highlight{Beschreiben, dass die grünroten Box der Datensatz ist}}
+		\caption{Ablauf der Datenaufbereitung. Der Datensatz wird vertikal dargestellt, wobei Datenlücken rot sind.}
 		\label{fig:preprocessing}
 	\end{center}
 \end{figure}
@@ -523,7 +516,7 @@ Die Datenaufbereitung ist häufig eines der aufwendigeren Teile eines Machine-Le
 
 \begin{enumerate}
 	\item Im Rohdatensatz gibt es einige kürzere und längere Datenlücken (In Abb. \ref{fig:preprocessing} dargestellt als rote Segmente). Über kurze Datenlücken wird linear interpoliert. Außerdem werden die Winddaten von der polaren in eine kartesische Darstellung umgewandelt.
-	\item Aus dem durch Schritt 1. generierten Datensatz werden die Spalten gewählt, die es zu prognostizieren gilt (In Abb. \ref{fig:preprocessing} dargestellt durch verdunkelte Spalten). In dieser Arbeit wird die Windgeschwindigkeit \highlight{(und Windgeschwindigkeit?)} einer Station gewählt.
+	\item Aus dem durch Schritt 1. generierten Datensatz werden die Spalten gewählt, die es zu prognostizieren gilt (In Abb. \ref{fig:preprocessing} dargestellt durch verdunkelte Spalten). In dieser Arbeit wird die Windgeschwindigkeit und Windgeschwindigkeit einer Station gewählt.
 	\item Der Datensatz wird nun in einen Inputdatensatz und einen Labeldatensatz (In Abb. \ref{fig:preprocessing} verdunkelt) aufgeteilt.
 	\item Die verbleibenden längeren Datenlücken im Input- und Labeldatensatz werden \qm{herausgeschnitten}. Übrig bleiben Fragmentpaare, die keine Fehlstellen enthalten.
 	\item Der Inputdatensatz (hellgrün) wird normiert. Dieser Schritt erleichtert das Training des neuronalen Netzes.
@@ -551,8 +544,6 @@ Die Windmessung erfolgt (von modernen Laser- oder Schallmessungen abgesehen) üb
 
 Es gilt zu belegen, dass sich dieses Problem umgehen lässt, indem der Wind nicht in polaren sondern kartesischen Koordinaten dargestellt wird. Der Windvektor, der durch das $(v,\varphi)$-Tupel beschrieben ist, wird so in eine $v_x$ und eine $v_y$ Komponente zerlegt. Dieses Vorgehen ist in Abbildung \ref{fig:pol2cart} skizziert.
 
-\highlight{Gleichung pol2cart?}
-
 %%%%%BILD ANFANG
 \begin{figure}[tph]
 	\begin{center}
@@ -562,8 +553,6 @@ Es gilt zu belegen, dass sich dieses Problem umgehen lässt, indem der Wind nich
 	\end{center}
 \end{figure}
 %%%%%BILD ENDE
-
-\highlight{Evtl erwähnen, dass wenn diese Umwandlung genutzt wird, nach dem NN wieder zurück umgewandelt wird. d.h. $(v,\varphi) \rightarrow (v_x,v_y) \rightarrow(v,\varphi)$}
 
 Die hier beschriebene Umwandlung kann der Abbildung \ref{fig:pol2cart2} anhand realer Messdaten entnommen werden. Im oberen Teil ist die Häufigkeitsverteilung in $(v,\varphi)$-Form dargestellt. Die zirkuläre Eigenschaft $\varphi_{north} = 0^\circ = 360^\circ$ ist hier nicht sichtbar. Die Häufigkeitsverteilung für die umgewandelten Koordinaten in $(v_x,v_y)$-Form hingegen ist klar um den Ursprung verteilt. Hier lässt sich die zirkuläre Eigenschaft gut erkennen. Das strahlenartige Muster erklärt sich durch die diskrete Angabe der Windrichtung in $10^\circ$ Schritten. Bei einer feineren Auflösung wäre die Verteilung weniger verzerrt.
 
@@ -623,7 +612,7 @@ Das Ergebnis der Datenaufbereitung, beschrieben im Kapitel \ref{section:Datenauf
 \end{figure}
 %%%%%BILD ENDE
 
-Abschließend werden die Samples, wie in Anwendungen des maschinellen Lernens üblich \highlight{Quelle}, in drei Teile aufgeteilt. Diese haben die folgende Anwendung und Aufteilung:
+Abschließend werden die Samples, wie in Anwendungen des maschinellen Lernens üblich \cite{2020_Shah_TrainValidationTest}, in drei Teile aufgeteilt. Diese haben die folgende Anwendung und Aufteilung:
 
 \begin{itemize}
 	\item \textit{Trainings-Satz, $65\%$}
