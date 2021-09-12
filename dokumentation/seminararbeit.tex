@@ -578,18 +578,15 @@ Die hier beschriebene Umwandlung kann der Abbildung \ref{fig:pol2cart2} anhand r
 \end{figure}
 %%%%%BILD ENDE
 
-\subsection{Aufteilung in Input- und Labeldatensatz}
-\highlight{
-	\begin{itemize}
-		\item Warum teilen?
-		\item Größen konkret nennen
-		\item Mit Grafik erklären
-	\end{itemize}
-}
-
 \subsection{Normierung}
 
-\highlight{Erklärung, warum Normierung nötig ist: (Einflüsse gleichgewichtig, Daten minmax normiert, d.h. auf Intervall [0,1] ), Tabelle überdenken.}
+Es ist im Bereich des maschinellen Lernens üblich die Eingabedaten im Zuge der Datenaufbereitung zu normieren. Das ist insbesondere für Daten mit stark unterschiedlichen Wertebereichen wichtig. 
+
+Eine negative Temperatur mag zwar für den Menschen sehr intuitiv sein, für das neuronale Netz enthält das Vorzeichen jedoch keine relevanten Informationen. Auch ist die Änderung von $1010 hPa$ auf $980 hPa$ für den Menschen klar ersichtlich, relativ ist sie jedoch nur sehr gering. 
+
+Zudem kann es passieren, dass eine Größe mit extrem großem Wertebereich gegenüber einer mit sehr kleinem Wertebereich als wichtiger erscheint und so dominant wirkt.
+
+Übliche Funktionen sind die $z$-Normierung (Normierung über Standardabweichung und Mittelwert) sowie die $minmax$-Normierung (Normierung über Minimum und Maximum). In dieser Arbeit wurde die letztere genutzt. Die ursprünglichen und angepassten Wertebereiche können der Tabelle \ref{tab:messgrößen} entnommen werden.
 
 %%%%%TABELLE ANFANG
 \begin{table}[ht]
@@ -612,7 +609,7 @@ Die hier beschriebene Umwandlung kann der Abbildung \ref{fig:pol2cart2} anhand r
 \section{Generierung der Trainingsbeispiele}
 Nachdem die Rohdaten aufgearbeitet worden sind, gilt es nun tatsächliche Trainingsbeispiele (Samples) zu generieren. Dieser Prozess wird in Abbildung \ref{fig:sampling} dargestellt, wobei die Grafik als Fortsetzung von Abbildung \ref{fig:preprocessing} verstanden werden kann. Das Ziel des Samplings ist die Generierung eins Pools aus Trainingsbeispielen, womit das neuronale Netz angelernt werden kann.
 
-Zunächst müssen die Größen der Moving-Windows (siehe Abb. \ref{fig:sampling}) festgelegt werden. Bei den Inputdaten gibt die Größe $n$ des Moving-Windows an, wieviele historische Zeitschritte für die Prognose genutzt werden (im Folgenden Prognosehistorie genannt). Das heißt, bei einer Prognose zum Zeitpunkt $t_0$ werden die Daten zu den Zeitpunkten $t_{n-1}, \dots, t_0$ als Inputdaten verwendet. Die Größe $m$ des Moving-Window auf den Labeldaten gibt den Prognosehorizont an. Das Ziel ist es also bei einer Prognose zum Zeitpunkt $t_0$ die Windgeschwindigkeiten \highlight{(und Windrichtungen?)} zu den Zeitpunkten $t_1, \dots, t_m$ vorherzusagen. In dieser Arbeit wurde für $n=144$ und für $m=12$ gewählt, die Prognosehistorie beträgt also sechs Tage und der Prognosehorizont zwölf Stunden. Diese Werte wurden unter Berücksichtigung der Literaturrecherche gewählt.
+Zunächst müssen die Größen der Moving-Windows (siehe Abb. \ref{fig:sampling}) festgelegt werden. Bei den Inputdaten gibt die Größe $n$ des Moving-Windows an, wieviele historische Zeitschritte für die Prognose genutzt werden (im Folgenden Prognosehistorie genannt). Das heißt, bei einer Prognose zum Zeitpunkt $t_0$ werden die Daten zu den Zeitpunkten $t_{n-1}, \dots, t_0$ als Inputdaten verwendet. Die Größe $m$ des Moving-Window auf den Labeldaten gibt den Prognosehorizont an. Das Ziel ist es also bei einer Prognose zum Zeitpunkt $t_0$ die Windgeschwindigkeiten und Windrichtungen zu den Zeitpunkten $t_1, \dots, t_m$ vorherzusagen. In dieser Arbeit wurde für $n=144$ und für $m=12$ gewählt, die Prognosehistorie beträgt also sechs Tage und der Prognosehorizont zwölf Stunden. Diese Werte wurden unter Berücksichtigung der Literaturrecherche gewählt.
 
 Das Ergebnis der Datenaufbereitung, beschrieben im Kapitel \ref{section:Datenaufbereitung}, sind datenlückenfreie Fragmentpaare. Ein solches Fragmentpaar besteht aus einem Input- und einem Labeldatensatz. Darüber werden nun die im vorherigen Schritt definierten Moving-Windows \qm{geschoben}. Die Schrittweite wird dabei kleinstmöglich gewählt, so entstehen am meisten Samples. Das Sampling wird auf jedem Fragmentpaar angewandt.
 
@@ -620,20 +617,28 @@ Das Ergebnis der Datenaufbereitung, beschrieben im Kapitel \ref{section:Datenauf
 \begin{figure}[tph]
 	\begin{center}
 		\includegraphics[]{./images/sampling.pdf}
-		\caption{\highlight{{TODO}}}
+		\caption{Generierung der Samples aus den aufbereiteten Fragmenten über zwei Moving-Windows.}
 		\label{fig:sampling}
 	\end{center}
 \end{figure}
 %%%%%BILD ENDE
 
-\highlight{
-	An dieser Stelle feht noch, dass die Samples in drei Teile getrennt werden:
-	\begin{itemize}
-		\item Warum trennen?
-		\item Aufteilung in Trainings (65\%), Validierung(30\%) und Testdaten (5\%)
-		\item Wieviele Samples haben wir?
-	\end{itemize}
-}
+Abschließend werden die Samples, wie in Anwendungen des maschinellen Lernens üblich \highlight{Quelle}, in drei Teile aufgeteilt. Diese haben die folgende Anwendung und Aufteilung:
+
+\begin{itemize}
+	\item \textit{Trainings-Satz, $65\%$}
+	
+	Mit diesen Samples wird das neuronale Netz tatsächlich trainiert. 
+
+	\item \textit{Validierungs-Satz, $25\%$}
+	
+	Diese Samples werden beim Training zur Validierung genutzt. So kann Over- bzw. Underfitting erkannt werden.
+
+	\item \textit{Test-Satz, $10\%$}
+	
+	Mit den restlichen Samples wird die Performance des neuronalen Netzes ermittelt. 
+
+\end{itemize}
 
 \chapter{Implementierung}
 
@@ -684,10 +689,6 @@ Um den Aufwand in einem akzeptablen Maß zu halten, haben wir einige Parameter v
 	\end{itemize}
 \end{itemize}
 
-\highlight{Begründen aus welchen Gründen wir uns für diese drei Methoden entschieden haben 
-(RNNseq2seq, RNNseq2vec, DNN) z.B. Datengrundlage, Zeitaspekt; 
-Tabelle: Welche Lossfunktion, Metric, Prognosehorizont, Historie, tatsächliche Architektur (Schichten, Neuronen), 
-welche Regularisierung}
 
 \section{Ergebnisse}\label{section:ergebnisse_training}
 Insgesamt wurden 71 neuronale Netze mit jeweils unterschiedlichen Konfigurationen trainiert. Während des Trainings wurde das Modell zwischengespeichert, wenn sich die Prognosegüte nach einer Epoche verbessert hat. Das Training wurde nach 10 Epochen, in denen sich die Güte nicht verbessert hat, abgebrochen. Trainiert wurde stets mit dem Datensatz, bei dem der Wind in eine x- und y-Komponente umgewandelt worden ist. Die nachfolgende Tabelle fässt das Training und die Prognosegüte zusammen:
@@ -727,12 +728,10 @@ Insgesamt wurden 71 neuronale Netze mit jeweils unterschiedlichen Konfiguratione
 
 \chapter{Diskussion und Ausblick}
 
-\highlight{NEU: (2 Sätze)}
 In diesem Kapitel werden die erhaltenen Ergebnisse zunächst eingeordnet und kritisch betrachtet.
 Im Anschluss werden Verbesserungsmöglichkeiten des Modells und neue Ansätze für die Fragestellungen dieser Arbeit aufgeführt, welche die erhaltenen Ergebnisse verbessern können, jedoch im Rahmen dieser Arbeit nicht ausgeführt werden konnten.
 
 \section{Diskussion der Ergebnisse}\label{section:diskussion_ergebnisse}
-\highlight{Intro kam davor, jetzt reicht: (1 neuer Satz)} 
 Zunächst werden folgend die Fragen aufgeführt, welche im Rahmen dieser Arbeit beantwortet werden sollen.
 
 
@@ -751,7 +750,7 @@ Um diese zu beantworten wurde das optimierte Modell aus Kapitel \ref{section:erg
 
 Rückblickend muss an dieser Stelle auf zwei methodische Fehler hingewiesen werden. Zum einen fehlt hier ein vierter Datensatz, in dem die Winddaten nicht vektorisiert vorliegen und nur die Daten der Messtation Günzburg beinhaltet. So wäre der Vergleich untereinander aussagekräftiger. Der zweite methodische Fehler betrifft die Auswahl des besten Modells. Die optimale Konfiguration des neuronalen Netzes wurde mit dem ersten Datensatz ermittelt. Das bedeutet aber auch, dass die Konfiguration \textit{genau} auf diesen Datensatz \qm{maßgeschneidert} ist. Wir nutzen diese Konfiguration jedoch für alle drei Datensätze. Deutlich besser wäre es gewesen, für jeden Datensatz eine eigene optimale Konfiguration zu ermitteln. Durch diesen Fehler ist es möglich, dass die Performance des neuronalen Netzes mit Datensatz zwei und drei besser ist als im Folgenden beschrieben.
 
-\highlight{Hier noch schreiben, dass alle folgenden Analysen diese methodischen Fehler berücksichtigen müssen, bzw das man das im Hinterkopf behält}
+Diese methodischen Fehler müssen bei der Beurteilung der folgenden Analysen stets mit berücksichtigt werden.
 
 \subsection{Klassische Performance Indikatoren}\label{section:klassische_perf_indi}
 Für die Analyse der Performance eines neuronalen Netzes im Bereich regressiver Problemstellungen eigen sich die Fehlermaße MAE und MSE (wie auch die Literatur bestätigt) gut. Die Vorteile liegen beim MAE in der Liniarität und dadruch in der einfachen Verständlichkeit, wohingegen der MSE deutlich sensibler auf Ausreißer reagiert und so weitere interessante Informationen liefern kann.
