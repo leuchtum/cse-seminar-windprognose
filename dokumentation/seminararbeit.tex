@@ -326,12 +326,9 @@ Ein Neuron besitzt im Allgemeinen mindestens eine Eingabe und genau eine Ausgabe
 
 Die Eingabedaten werden dem neuronalen Netz durch den Input-Vektor $\mathrm{x}$ präsentiert und durch das Netz propagiert. Die Aktivitäten der Neuronen in der Output-Layer werden im Output-Vektor $\mathrm{y}$ gesammelt. Dieser Vektor gleicht dem Prognoseergebnis. Im Trainingsprozess wird der Output-Vektor mit dem zu erwartenden Ergebnis verglichen. Der Fehler zwischen Prognose und dem erwarteten Ergebnis wird durch das neuronale Netz zurück propagiert. Dabei werden die Gewichte der Verbindungen so angepasst, dass der ermittelte Fehler verringert wird (sog. Backpropagation). 
 
-RNN
-LSTM, insbesondere Vor und Nachteile
+Ein wie eben beschriebenes klassisches neuronales Netz kann ausschließlich aus den präsentierten Eingabedaten genau eine Prognose erstellen. Es hat keine Informationen darüber, was in einem vorherigen Schritt prognostiziert wurde. Diese Eigenschaft werden durch sogenannte rekurrente Neuronen geändert. Ein rekurrentes Neuron führt seine eigene Aktivität als Eingabe in nächsten Prognoseschritt zurück, es entsteht ein \qm{Feedback-Loop}. Das neuronale Netz erhält damit eine Art Kurzzeitgedächtnis. Ein einfaches rekurrentes neuronales Netz bringt jedoch einige Probleme mit sich. Hierzu zählen divergierende Gradienten (exploding gradients) und Gradienten, die schnell null werden und so den Lernprozess stoppen (vanishing gradients). 
 
-\highlight{ein paar Grundlagen zu neuronalen Netzen; 
-Beschreibung NN allgemein, RNN, LSTM Zellen und warum gut für Prognose}
-
+Eine Weiterentwicklung eines einfachen rekurrenten Neurons ist die LSTM Zelle (Long Short Term Memory) wie sie schematisch in Abbildung \ref{fig:lstm} zu sehen ist. Durch eine spezielle Verschaltung von Aktivierungsfunktion und historischen Aktivitäten werden die Problematiken (exploding \& vanishing gradients) gelöst und zusätzlich ein Langzeitgedächtnis eingeführt.
 
 %%%%%BILD ANFANG
 \begin{figure}[tph]
@@ -342,6 +339,8 @@ Beschreibung NN allgemein, RNN, LSTM Zellen und warum gut für Prognose}
 	\end{center}
 \end{figure}
 %%%%%BILD ENDE
+
+Die Eigenschaft eines rekurrenten Netzes mit LSTM Zellen eignen sich besonders für die Zeitreihenprognose. Gerade für die Vorhersage des Windes ist dies von Bedeutung, da beispielsweise ein fallender Luftdruck über mehrere Zeitpunkte auf eine erhöhte Windgeschwindigkeit hinweisen kann. LSTM Zellen werden auch in neuronalen Netzen in vielen anderen Projekten eingesetzt (siehe \ref{section:literatur}). Daher wird auch in dieser Arbeit ein rekurrentes neuronales Netz mit LSTM Zellen zum Einsatz kommen.
 
 \newpage
 
